@@ -12,7 +12,8 @@ function Invoke-CursorAgent {
     param(
         [Parameter(Mandatory=$true)][string]$Prompt,
         [Parameter(Mandatory=$true)][string]$OutputFile,
-        [switch]$ApproveMcps
+        [switch]$ApproveMcps,
+        [switch]$Force
     )
 
     Write-Host "Running Cursor agent with model '$Model' -> $OutputFile"
@@ -27,6 +28,10 @@ function Invoke-CursorAgent {
 
     if ($ApproveMcps) {
         $args += "--approve-mcps"
+    }
+
+    if ($Force) {
+        $args += "--force"
     }
 
     $output = & $AgentCommand @args 2>&1
@@ -74,7 +79,7 @@ $metadata = [ordered]@{
     model = $Model
     output_root = $outputRootAbsolute
     workspace_trust = "explicit --trust"
-    discovery_mcp_approval = "explicit --approve-mcps"
+    discovery_mcp_approval = "explicit --approve-mcps --force"
     discovery_corestory = "enabled"
     validation_corestory = "disabled"
 }
@@ -93,7 +98,7 @@ try {
 
     $discoveryPrompt = Get-Content $promptPath -Raw
     $discoveryFile = Join-Path $runDir "P01.discovery.md"
-    $discovery = Invoke-CursorAgent -Prompt $discoveryPrompt -OutputFile $discoveryFile -ApproveMcps
+    $discovery = Invoke-CursorAgent -Prompt $discoveryPrompt -OutputFile $discoveryFile -ApproveMcps -Force
 
     Write-Host "Disabling CoreStory MCP '$CoreStoryMcp' for independent validation..."
     & $AgentCommand mcp disable $CoreStoryMcp
@@ -124,7 +129,7 @@ $discovery
 Run ID: $runId
 Model: $Model
 Workspace trust: explicit --trust
-Discovery MCP approval: explicit --approve-mcps
+Discovery MCP approval: explicit --approve-mcps --force
 
 Artifacts:
 - `P01.discovery.md` — CoreStory-assisted discovery result
@@ -134,9 +139,9 @@ Artifacts:
 - `mcp-discovery.txt` — MCP state after CoreStory was enabled for discovery
 - `mcp-validation.txt` — MCP state after CoreStory was disabled for validation
 - `mcp-after.txt` — MCP state after CoreStory was restored
-- `metadata.json` — run metadata, including the pinned model, workspace trust, MCP approval, and absolute output path
+- `metadata.json` — run metadata, including the pinned model, workspace trust, MCP approval/force settings, and absolute output path
 
-Important: discovery explicitly approves MCP use in the non-interactive Cursor session. Validation does not pass `--approve-mcps` and runs after CoreStory has been disabled. Review the MCP snapshots and Cursor session/transcript before treating the run as controlled evidence.
+Important: discovery explicitly approves MCP use and uses `--force` in the non-interactive Cursor session because `--approve-mcps` alone was observed to reject CoreStory MCP calls. Validation does not pass `--approve-mcps` or `--force` and runs after CoreStory has been disabled. Review the MCP snapshots and Cursor session/transcript before treating the run as controlled evidence.
 "@
     $summary | Set-Content (Join-Path $runDir "README.md") -Encoding UTF8
 
