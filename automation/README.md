@@ -110,7 +110,7 @@ Once P01 passes these checks, the same harness can be generalized to iterate ser
 cd C:\Users\carys\cs_non-determinism-main\cs_non-determinism-main
 agent mcp list
 agent models
-.\automation\run-p01-smoke-test.ps1 -SourceRoot "C:\PATH\TO\CUSTOMER\SOURCE" -CoreStoryMcp "corestory"
+.\automation\run-p01-smoke-test.ps1 -SourceRoot "C:\Users\carys\cts" -CoreStoryMcp "corestory"
 .\automation\run-p01-smoke-test.ps1 `
   -SourceRoot "C:\path\to\customer-source" `
   -CoreStoryMcp "corestory" `
