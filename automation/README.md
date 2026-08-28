@@ -159,4 +159,10 @@ agent -p "Use CoreStory application intelligence to identify the current project
   --output-format text `
   --trust `
   --approve-mcps
+
+cd C:\Users\carys\cs_non-determinism-main\cs_non-determinism-main
+
+.\automation\run-p01-smoke-test.ps1 `
+  -SourceRoot "C:\Users\carys\cts" `
+  -CoreStoryMcp "corestory"
 ```
