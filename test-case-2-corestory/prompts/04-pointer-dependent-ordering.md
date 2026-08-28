@@ -11,6 +11,14 @@ Include:
 - address-based identifiers that affect output or decisions
 - patterns similar to Coverity `POINTER_NONDETERMINISM`
 
+## Relevant Defect Patterns
+
+This investigation includes source patterns associated with:
+
+- Coverity `POINTER_NONDETERMINISM`
+
+Treat this name as an investigation pattern, not as evidence that a corresponding Coverity defect exists. Establish the address variation, order-sensitive consumer, and observable application impact independently.
+
 ## Concrete Exemplar
 
 Use the following source pattern as a **concrete exemplar, not as a known defect**.
