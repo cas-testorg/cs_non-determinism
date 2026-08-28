@@ -189,4 +189,11 @@ Get-Content "$($run.FullName)\mcp-before.txt"
 Get-Content "$($run.FullName)\mcp-discovery.txt"
 Get-Content "$($run.FullName)\mcp-validation.txt"
 Get-Content "$($run.FullName)\mcp-after.txt"
+
+agent -p "You MUST use CoreStory MCP. Identify the current CoreStory project and return its name or identifier. Do not inspect local source files." `
+  --model gpt-5.4-high `
+  --mode=ask `
+  --output-format text `
+  --trust `
+  --approve-mcps
 ```
