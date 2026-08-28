@@ -134,4 +134,14 @@ The command above uses the default pinned model `gpt-5.4-high`. To make the sele
 ```powershell
 agent -p "Reply with exactly: TEST OK" --model gpt-5.4-high --mode=ask --output-format text --trust
 .\automation\run-p01-smoke-test.ps1 -SourceRoot "C:\Users\carys\cts" -CoreStoryMcp "corestory" -Model "gpt-5.4-high"
+Validate:
+$run = Get-ChildItem .\results\p01-smoke -Directory |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+
+$run.FullName
+Get-ChildItem $run.FullName
+
+Get-Content "$($run.FullName)\mcp-before.txt"
+Get-Content "$($run.FullName)\mcp-validation.txt"
 ```
