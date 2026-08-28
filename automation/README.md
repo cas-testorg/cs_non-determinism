@@ -152,4 +152,11 @@ agent -p "Use CoreStory application intelligence to identify this application's 
   --mode=ask `
   --output-format text `
   --trust
+
+agent -p "Use CoreStory application intelligence to identify the current project and report only the project name or identifier." `
+  --model gpt-5.4-high `
+  --mode=ask `
+  --output-format text `
+  --trust `
+  --approve-mcps
 ```
