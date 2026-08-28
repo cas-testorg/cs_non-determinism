@@ -2,6 +2,7 @@ param(
     [string]$SourceRoot = (Get-Location).Path,
     [string]$CoreStoryMcp = "corestory",
     [string]$AgentCommand = "agent",
+    [string]$Model = "gpt-5.4-high",
     [string]$OutputRoot = ".\results\p01-smoke"
 )
 
@@ -13,8 +14,8 @@ function Invoke-CursorAgent {
         [Parameter(Mandatory=$true)][string]$OutputFile
     )
 
-    Write-Host "Running Cursor agent -> $OutputFile"
-    $output = & $AgentCommand -p $Prompt --mode=ask --output-format text 2>&1
+    Write-Host "Running Cursor agent with model '$Model' -> $OutputFile"
+    $output = & $AgentCommand -p $Prompt --model $Model --mode=ask --output-format text 2>&1
     $exitCode = $LASTEXITCODE
     $output | Set-Content -Path $OutputFile -Encoding UTF8
 
@@ -46,6 +47,9 @@ $metadata = [ordered]@{
     validator = $validatorPath
     corestory_mcp = $CoreStoryMcp
     agent_command = $AgentCommand
+    model = $Model
+    discovery_corestory = "enabled"
+    validation_corestory = "disabled"
 }
 $metadata | ConvertTo-Json | Set-Content (Join-Path $runDir "metadata.json") -Encoding UTF8
 
@@ -89,6 +93,7 @@ $discovery
 # P01 Smoke-Test Run
 
 Run ID: $runId
+Model: $Model
 
 Artifacts:
 - `P01.discovery.md` — CoreStory-assisted discovery result
@@ -96,14 +101,15 @@ Artifacts:
 - `P01.validation.md` — local-source independent validation result
 - `mcp-before.txt` — MCP state before discovery
 - `mcp-validation.txt` — MCP state after CoreStory was disabled
-- `metadata.json` — run metadata
+- `metadata.json` — run metadata, including the pinned model
 
-Important: this smoke test disables the configured CoreStory MCP server before validation. Review `mcp-validation.txt` and the Cursor session/transcript before treating validation as independent.
+Important: this smoke test explicitly pins the same Cursor model for discovery and validation and disables the configured CoreStory MCP server before validation. Review `mcp-validation.txt` and the Cursor session/transcript before treating validation as independent.
 "@
     $summary | Set-Content (Join-Path $runDir "README.md") -Encoding UTF8
 
     Write-Host ""
     Write-Host "Smoke test complete: $runDir"
+    Write-Host "Model: $Model"
     Write-Host "Review P01.discovery.md and P01.validation.md before scaling to all prompts."
 }
 finally {
