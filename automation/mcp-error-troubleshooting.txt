@@ -107,3 +107,24 @@ Commands:
   ls                          Resume a chat session
   resume                      Resume the latest chat session
   help [command]              Display help for command
+
+
+Checking MCP configuration in source workspace...
+corestory: ready
+Enabling CoreStory MCP 'corestory' for discovery...
+MCP server 'corestory' is already enabled and approved
+corestory: ready
+Running Cursor agent with model 'gpt-5.4-high' -> C:\Users\carys\cs_non-determinism-main\cs_non-determinism-main\results\p01-smoke\20260828-182322\P01.discovery.md
+Disabling CoreStory MCP 'corestory' for independent validation...
+✓ Disabled MCP server: corestory
+The server will no longer be loaded or prompted for approval.
+corestory: disabled
+Running Cursor agent with model 'gpt-5.4-high' -> C:\Users\carys\cs_non-determinism-main\cs_non-determinism-main\results\p01-smoke\20260828-182322\P01.validation.md
+Re-enabling CoreStory MCP 'corestory' in source workspace...
+corestory: ready
+node.exe : error: unknown option '-tap_boxes'
+At C:\Users\carys\AppData\Local\cursor-agent\agent.ps1:65 char:1
++ & "$nodePath" "$scriptPath\versions\$versionName\index.js" $args
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: unknown option '-tap_boxes':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
