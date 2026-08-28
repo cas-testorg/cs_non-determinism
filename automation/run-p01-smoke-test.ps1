@@ -18,8 +18,10 @@ function Invoke-CursorAgent {
 
     Write-Host "Running Cursor agent with model '$Model' -> $OutputFile"
 
+    # Put all CLI options before the positional prompt. This prevents prompt text
+    # that contains dash-prefixed source identifiers (for example -tap_boxes)
+    # from being interpreted as additional Cursor CLI options on Windows.
     $args = @(
-        "-p", $Prompt,
         "--model", $Model,
         "--mode=ask",
         "--output-format", "text",
@@ -33,6 +35,9 @@ function Invoke-CursorAgent {
     if ($Force) {
         $args += "--force"
     }
+
+    $args += "-p"
+    $args += $Prompt
 
     $output = & $AgentCommand @args 2>&1
     $exitCode = $LASTEXITCODE
@@ -79,6 +84,7 @@ $metadata = [ordered]@{
     model = $Model
     output_root = $outputRootAbsolute
     workspace_trust = "explicit --trust"
+    prompt_transport = "positional prompt after all CLI options"
     discovery_mcp_approval = "explicit --approve-mcps --force"
     discovery_corestory = "enabled"
     validation_corestory = "disabled"
@@ -129,6 +135,7 @@ $discovery
 Run ID: $runId
 Model: $Model
 Workspace trust: explicit --trust
+Prompt transport: positional prompt after all CLI options
 Discovery MCP approval: explicit --approve-mcps --force
 
 Artifacts:
@@ -139,9 +146,9 @@ Artifacts:
 - `mcp-discovery.txt` — MCP state after CoreStory was enabled for discovery
 - `mcp-validation.txt` — MCP state after CoreStory was disabled for validation
 - `mcp-after.txt` — MCP state after CoreStory was restored
-- `metadata.json` — run metadata, including the pinned model, workspace trust, MCP approval/force settings, and absolute output path
+- `metadata.json` — run metadata, including the pinned model, workspace trust, MCP approval/force settings, prompt transport, and absolute output path
 
-Important: discovery explicitly approves MCP use and uses `--force` in the non-interactive Cursor session because `--approve-mcps` alone was observed to reject CoreStory MCP calls. Validation does not pass `--approve-mcps` or `--force` and runs after CoreStory has been disabled. Review the MCP snapshots and Cursor session/transcript before treating the run as controlled evidence.
+Important: discovery explicitly approves MCP use and uses `--force` in the non-interactive Cursor session because `--approve-mcps` alone was observed to reject CoreStory MCP calls. Validation does not pass `--approve-mcps` or `--force` and runs after CoreStory has been disabled. All CLI options are placed before the positional prompt so dash-prefixed source identifiers in long validation input are not parsed as Cursor options. Review the MCP snapshots and Cursor session/transcript before treating the run as controlled evidence.
 "@
     $summary | Set-Content (Join-Path $runDir "README.md") -Encoding UTF8
 
