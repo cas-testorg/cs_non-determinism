@@ -203,4 +203,22 @@ agent -p "Use the CoreStory MCP list_projects tool. This MCP call is explicitly 
   --output-format text `
   --trust `
   --approve-mcps
+
+agent -p "Use the CoreStory MCP list_projects tool. Return only the available CoreStory project names and identifiers." `
+  --model gpt-5.4-high `
+  --mode=ask `
+  --output-format text `
+  --trust `
+  --approve-mcps `
+  --force
+
+agent -p "Use the CoreStory MCP list_projects tool. Return only the available CoreStory project names and identifiers." `
+  --model gpt-5.4-high `
+  --mode=ask `
+  --output-format text `
+  --trust `
+  --approve-mcps `
+  --auto-review
 ```
+
+
