@@ -11,11 +11,25 @@ $ErrorActionPreference = "Stop"
 function Invoke-CursorAgent {
     param(
         [Parameter(Mandatory=$true)][string]$Prompt,
-        [Parameter(Mandatory=$true)][string]$OutputFile
+        [Parameter(Mandatory=$true)][string]$OutputFile,
+        [switch]$ApproveMcps
     )
 
     Write-Host "Running Cursor agent with model '$Model' -> $OutputFile"
-    $output = & $AgentCommand -p $Prompt --model $Model --mode=ask --output-format text --trust 2>&1
+
+    $args = @(
+        "-p", $Prompt,
+        "--model", $Model,
+        "--mode=ask",
+        "--output-format", "text",
+        "--trust"
+    )
+
+    if ($ApproveMcps) {
+        $args += "--approve-mcps"
+    }
+
+    $output = & $AgentCommand @args 2>&1
     $exitCode = $LASTEXITCODE
     $output | Set-Content -Path $OutputFile -Encoding UTF8
 
@@ -34,6 +48,8 @@ if (-not (Test-Path $promptPath)) { throw "P01 prompt not found: $promptPath" }
 if (-not (Test-Path $validatorPath)) { throw "Validation template not found: $validatorPath" }
 if (-not (Get-Command $AgentCommand -ErrorAction SilentlyContinue)) { throw "Cursor CLI command '$AgentCommand' was not found in PATH." }
 
+$resolvedSourceRoot = (Resolve-Path $SourceRoot).Path
+
 if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
     $outputRootAbsolute = $OutputRoot
 }
@@ -50,7 +66,7 @@ New-Item -ItemType Directory -Force -Path $runDir | Out-Null
 $metadata = [ordered]@{
     run_id = $runId
     started_at = (Get-Date).ToString("o")
-    source_root = (Resolve-Path $SourceRoot).Path
+    source_root = $resolvedSourceRoot
     prompt = $promptPath
     validator = $validatorPath
     corestory_mcp = $CoreStoryMcp
@@ -58,23 +74,26 @@ $metadata = [ordered]@{
     model = $Model
     output_root = $outputRootAbsolute
     workspace_trust = "explicit --trust"
+    discovery_mcp_approval = "explicit --approve-mcps"
     discovery_corestory = "enabled"
     validation_corestory = "disabled"
 }
 $metadata | ConvertTo-Json | Set-Content (Join-Path $runDir "metadata.json") -Encoding UTF8
 
-Push-Location $SourceRoot
+Push-Location $resolvedSourceRoot
 try {
-    Write-Host "Checking MCP configuration..."
+    Write-Host "Checking MCP configuration in source workspace..."
     & $AgentCommand mcp list | Tee-Object -FilePath (Join-Path $runDir "mcp-before.txt")
 
     Write-Host "Enabling CoreStory MCP '$CoreStoryMcp' for discovery..."
     & $AgentCommand mcp enable $CoreStoryMcp
     if ($LASTEXITCODE -ne 0) { throw "Could not enable MCP server '$CoreStoryMcp'. Check its identifier with 'agent mcp list'." }
 
+    & $AgentCommand mcp list | Tee-Object -FilePath (Join-Path $runDir "mcp-discovery.txt")
+
     $discoveryPrompt = Get-Content $promptPath -Raw
     $discoveryFile = Join-Path $runDir "P01.discovery.md"
-    $discovery = Invoke-CursorAgent -Prompt $discoveryPrompt -OutputFile $discoveryFile
+    $discovery = Invoke-CursorAgent -Prompt $discoveryPrompt -OutputFile $discoveryFile -ApproveMcps
 
     Write-Host "Disabling CoreStory MCP '$CoreStoryMcp' for independent validation..."
     & $AgentCommand mcp disable $CoreStoryMcp
@@ -105,26 +124,35 @@ $discovery
 Run ID: $runId
 Model: $Model
 Workspace trust: explicit --trust
+Discovery MCP approval: explicit --approve-mcps
 
 Artifacts:
 - `P01.discovery.md` — CoreStory-assisted discovery result
 - `P01.validation-prompt.md` — exact independent-validation input
 - `P01.validation.md` — local-source independent validation result
-- `mcp-before.txt` — MCP state before discovery
-- `mcp-validation.txt` — MCP state after CoreStory was disabled
-- `metadata.json` — run metadata, including the pinned model, workspace trust, and absolute output path
+- `mcp-before.txt` — MCP state before discovery setup
+- `mcp-discovery.txt` — MCP state after CoreStory was enabled for discovery
+- `mcp-validation.txt` — MCP state after CoreStory was disabled for validation
+- `mcp-after.txt` — MCP state after CoreStory was restored
+- `metadata.json` — run metadata, including the pinned model, workspace trust, MCP approval, and absolute output path
 
-Important: this smoke test explicitly pins the same Cursor model for discovery and validation, explicitly trusts the source workspace for non-interactive CLI execution, and disables the configured CoreStory MCP server before validation. Review `mcp-validation.txt` and the Cursor session/transcript before treating validation as independent.
+Important: discovery explicitly approves MCP use in the non-interactive Cursor session. Validation does not pass `--approve-mcps` and runs after CoreStory has been disabled. Review the MCP snapshots and Cursor session/transcript before treating the run as controlled evidence.
 "@
     $summary | Set-Content (Join-Path $runDir "README.md") -Encoding UTF8
 
     Write-Host ""
-    Write-Host "Smoke test complete: $runDir"
+    Write-Host "Smoke test analysis complete: $runDir"
     Write-Host "Model: $Model"
-    Write-Host "Review P01.discovery.md and P01.validation.md before scaling to all prompts."
+    Write-Host "Restoring CoreStory MCP before exit..."
 }
 finally {
-    Pop-Location
-    Write-Host "Re-enabling CoreStory MCP '$CoreStoryMcp'..."
+    # MCP configuration is workspace-scoped, so restoration must occur while
+    # the CLI is still running from the source workspace.
+    Write-Host "Re-enabling CoreStory MCP '$CoreStoryMcp' in source workspace..."
     & $AgentCommand mcp enable $CoreStoryMcp | Out-Null
+    & $AgentCommand mcp list | Tee-Object -FilePath (Join-Path $runDir "mcp-after.txt")
+    Pop-Location
 }
+
+Write-Host "Smoke test complete: $runDir"
+Write-Host "Review P01.discovery.md, P01.validation.md, and the MCP-state snapshots before scaling to all prompts."
