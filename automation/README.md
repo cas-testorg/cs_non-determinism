@@ -144,4 +144,12 @@ Get-ChildItem $run.FullName
 
 Get-Content "$($run.FullName)\mcp-before.txt"
 Get-Content "$($run.FullName)\mcp-validation.txt"
+Troubleshoot:
+cd C:\Users\carys\cts
+
+agent -p "Use CoreStory application intelligence to identify this application's project/workspace and report only the project name or identifier. Do not analyze source code." `
+  --model gpt-5.4-high `
+  --mode=ask `
+  --output-format text `
+  --trust
 ```
