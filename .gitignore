@@ -1,0 +1,2 @@
+# Automated experiment outputs are local run artifacts, not test inputs.
+results/
