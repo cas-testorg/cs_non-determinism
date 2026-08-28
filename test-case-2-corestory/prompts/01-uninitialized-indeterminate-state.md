@@ -11,6 +11,15 @@ Include:
 - sentinel or optional-state values consumed without the required validity check
 - indeterminate state that influences a branch, index, size, pointer, calculation, or downstream decision
 
+## Relevant Defect Patterns
+
+This investigation includes source patterns associated with:
+
+- Coverity `UNINIT`
+- Coverity `UNINIT_CTOR`
+
+Treat these names as investigation patterns, not as evidence that a corresponding Coverity defect exists. Establish the source mechanism and application impact independently.
+
 ## Concrete Exemplar
 
 Use the following source pattern as a **concrete exemplar, not as a known defect**.
