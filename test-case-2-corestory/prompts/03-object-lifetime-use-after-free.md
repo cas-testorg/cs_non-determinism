@@ -15,6 +15,14 @@ Include:
 - teardown ordering across threads or tasks
 - races between destruction and access
 
+## Relevant Defect Patterns
+
+This investigation includes source patterns associated with:
+
+- ThreadSanitizer `HEAP USE AFTER FREE`
+
+Treat this name as an investigation pattern, not as evidence that a corresponding ThreadSanitizer defect exists. Establish the ownership, destruction, stale-access path, and application impact independently.
+
 ## Concrete Exemplar
 
 Use the following source pattern as a **concrete exemplar, not as a known defect**.
