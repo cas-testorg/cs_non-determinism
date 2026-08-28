@@ -15,7 +15,7 @@ function Invoke-CursorAgent {
     )
 
     Write-Host "Running Cursor agent with model '$Model' -> $OutputFile"
-    $output = & $AgentCommand -p $Prompt --model $Model --mode=ask --output-format text 2>&1
+    $output = & $AgentCommand -p $Prompt --model $Model --mode=ask --output-format text --trust 2>&1
     $exitCode = $LASTEXITCODE
     $output | Set-Content -Path $OutputFile -Encoding UTF8
 
@@ -57,6 +57,7 @@ $metadata = [ordered]@{
     agent_command = $AgentCommand
     model = $Model
     output_root = $outputRootAbsolute
+    workspace_trust = "explicit --trust"
     discovery_corestory = "enabled"
     validation_corestory = "disabled"
 }
@@ -103,6 +104,7 @@ $discovery
 
 Run ID: $runId
 Model: $Model
+Workspace trust: explicit --trust
 
 Artifacts:
 - `P01.discovery.md` — CoreStory-assisted discovery result
@@ -110,9 +112,9 @@ Artifacts:
 - `P01.validation.md` — local-source independent validation result
 - `mcp-before.txt` — MCP state before discovery
 - `mcp-validation.txt` — MCP state after CoreStory was disabled
-- `metadata.json` — run metadata, including the pinned model and absolute output path
+- `metadata.json` — run metadata, including the pinned model, workspace trust, and absolute output path
 
-Important: this smoke test explicitly pins the same Cursor model for discovery and validation and disables the configured CoreStory MCP server before validation. Review `mcp-validation.txt` and the Cursor session/transcript before treating validation as independent.
+Important: this smoke test explicitly pins the same Cursor model for discovery and validation, explicitly trusts the source workspace for non-interactive CLI execution, and disables the configured CoreStory MCP server before validation. Review `mcp-validation.txt` and the Cursor session/transcript before treating validation as independent.
 "@
     $summary | Set-Content (Join-Path $runDir "README.md") -Encoding UTF8
 
