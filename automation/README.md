@@ -104,3 +104,15 @@ The smoke test is successful if:
 - CoreStory is re-enabled after the script exits.
 
 Once P01 passes these checks, the same harness can be generalized to iterate serially over all 10 Test Case 2 prompts and produce a normalized report dataset.
+
+## Real Example
+```powershell
+cd C:\Users\carys\cs_non-determinism-main\cs_non-determinism-main
+agent mcp list
+agent models
+.\automation\run-p01-smoke-test.ps1 -SourceRoot "C:\PATH\TO\CUSTOMER\SOURCE" -CoreStoryMcp "corestory"
+.\automation\run-p01-smoke-test.ps1 `
+  -SourceRoot "C:\path\to\customer-source" `
+  -CoreStoryMcp "corestory" `
+  -AgentCommand "cursor-agent"
+```
