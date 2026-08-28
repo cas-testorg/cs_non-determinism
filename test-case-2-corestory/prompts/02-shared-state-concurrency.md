@@ -12,6 +12,18 @@ Include:
 - non-thread-safe functions or APIs called from parallel execution
 - object-lifetime interactions involving shared state
 - synchronization whose coverage or ordering may be insufficient
+- thread or task creation without a proven join, detach, shutdown, or lifecycle-completion path
+- mutex unlock operations without a proven corresponding acquisition and ownership path
+
+## Relevant Defect Patterns
+
+This investigation includes source patterns associated with:
+
+- ThreadSanitizer `DATA RACE`
+- ThreadSanitizer `THREAD LEAK`
+- ThreadSanitizer `UNLOCK OF AN UNLOCKED MUTEX`
+
+Treat these names as investigation patterns, not as evidence that a corresponding ThreadSanitizer defect exists. Establish the source mechanism and application impact independently.
 
 ## Concrete Exemplar
 
@@ -57,11 +69,11 @@ Use this exemplar to identify semantically equivalent patterns elsewhere in the 
 
 For each candidate:
 
-1. Identify the shared object, variable, container, cache, singleton, static state, or external resource.
+1. Identify the shared object, variable, container, cache, singleton, static state, external resource, thread/task object, or synchronization primitive.
 
 2. Identify the relevant thread, task, worker, callback, or parallel entry points.
 
-3. Identify the operations performed on the shared state, including:
+3. Identify the operations performed on the shared state or synchronization/lifecycle object, including:
    - reads
    - writes
    - insertion or removal
@@ -69,32 +81,40 @@ For each candidate:
    - mutation through a `const` accessor
    - destruction or invalidation
    - calls into potentially non-thread-safe functions or APIs
+   - thread/task creation, join, detach, cancellation, shutdown, or destruction
+   - lock acquisition, ownership transfer, unlock, and error paths
 
-4. Determine whether those operations can overlap in time.
+4. Determine whether conflicting operations can overlap in time, whether a created thread/task can outlive its intended lifecycle, or whether an unlock can occur without ownership.
 
 5. Identify synchronization or lifecycle mechanisms, including:
    - mutexes or locks
    - atomics
    - barriers or joins
+   - detach or explicit shutdown semantics
    - thread confinement
    - immutable publication
    - pre-population or eager initialization
    - ownership rules
+   - RAII lock ownership
    - task ordering
 
 6. Trace the causal chain where supported:
 
-   **concurrent execution**  
-   → **shared state or non-thread-safe operation**  
-   → **conflicting access without sufficient protection**  
-   → **corrupted, stale, invalid, or schedule-dependent state**  
+   **concurrent execution or lifecycle/synchronization event**  
+   → **shared state, thread/task, or mutex operation**  
+   → **conflicting access, incomplete lifecycle, or invalid synchronization**  
+   → **corrupted, stale, leaked, invalid, or schedule-dependent state**  
    → **observable application impact**
 
 7. Distinguish among:
    - shared state that is effectively protected;
    - suspicious concurrency pattern with incomplete evidence of overlap;
    - established conflicting access;
-   - established data race or invalid synchronization;
+   - established data race;
+   - thread/task lifecycle that is correctly joined, detached, or shut down;
+   - established thread leak or incomplete thread lifecycle;
+   - mutex ownership that is correctly paired;
+   - established unlock-without-ownership or invalid synchronization;
    - schedule-dependent execution with a deterministic final result;
    - plausible nondeterministic manifestation requiring additional evidence;
    - confirmed schedule-dependent application result.
@@ -108,6 +128,8 @@ Do not report a finding solely because:
 - a global, static, cache, or singleton is present;
 - a function lacks an obvious local lock;
 - an API is generally known to be non-thread-safe without establishing concurrent use;
+- a thread or task is created without tracing its full lifecycle;
+- an unlock call exists without tracing the matching acquisition/ownership path;
 - different workers access the same object only for independent or read-only operations.
 
 ## Evidence Requirements
@@ -116,14 +138,14 @@ For each elevated candidate provide:
 
 - file and symbol
 - relevant source location
-- shared state or non-thread-safe operation
+- shared state, thread/task lifecycle, or synchronization operation
 - thread, task, or worker entry points
-- conflicting operations
-- evidence that operations can overlap
-- synchronization, ownership, pre-initialization, or mitigation mechanism, if present
+- conflicting operations or lifecycle/synchronization sequence
+- evidence that operations can overlap, a thread can leak, or mutex ownership is invalid
+- synchronization, ownership, pre-initialization, join/detach/shutdown, RAII, or other mitigation mechanism, if present
 - relevant application execution path
 - downstream application impact
-- whether a data race or synchronization defect is established
+- whether a data race, thread leak, or synchronization defect is established
 - whether nondeterministic behavior is established
 - confidence
 - missing evidence required for confirmation
