@@ -132,6 +132,6 @@ agent models
 The command above uses the default pinned model `gpt-5.4-high`. To make the selection explicit on the command line:
 
 ```powershell
-agent -p "Reply with exactly: TEST OK" --model gpt-5.4-high --mode=ask --output-format text
+agent -p "Reply with exactly: TEST OK" --model gpt-5.4-high --mode=ask --output-format text --trust
 .\automation\run-p01-smoke-test.ps1 -SourceRoot "C:\Users\carys\cts" -CoreStoryMcp "corestory" -Model "gpt-5.4-high"
 ```
