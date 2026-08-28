@@ -17,6 +17,20 @@ The smoke test intentionally runs only P01. Do not scale to all prompts until th
 
 Cursor CLI supports non-interactive execution with `agent -p` and MCP enable/disable commands. The harness uses Ask mode so the analysis should remain read-only.
 
+## Model Control
+
+The harness explicitly pins the same model for discovery and validation.
+
+Default:
+
+```text
+gpt-5.4-high
+```
+
+The selected model is passed with `--model` on every Cursor invocation and recorded in `metadata.json`. This prevents the smoke test from silently using Cursor `auto` model selection.
+
+The model can be overridden with `-Model` if a future controlled run requires a different model.
+
 ## Determine the CoreStory MCP Identifier
 
 Before running the harness:
@@ -50,13 +64,13 @@ If the CLI command is named `cursor-agent` instead:
 
 1. Records the current MCP list.
 2. Enables the configured CoreStory MCP server.
-3. Runs Test Case 2 P01 in a fresh non-interactive Cursor invocation.
+3. Runs Test Case 2 P01 in a fresh non-interactive Cursor invocation using the explicitly selected model.
 4. Saves the discovery result.
 5. Disables the CoreStory MCP server.
 6. Records MCP state for the validation phase.
 7. Builds an independent-validation prompt containing the discovery candidate set.
-8. Runs validation in a new Cursor invocation against local source only.
-9. Saves discovery, validation, exact validation input, MCP-state snapshots, and run metadata.
+8. Runs validation in a new Cursor invocation against local source only, using the same model as discovery.
+9. Saves discovery, validation, exact validation input, MCP-state snapshots, model selection, and run metadata.
 10. Re-enables CoreStory in a `finally` block even if the test fails.
 
 ## Output
@@ -96,6 +110,7 @@ Do not score the validation as independent if CoreStory was available or invoked
 The smoke test is successful if:
 
 - discovery completes with CoreStory enabled;
+- `gpt-5.4-high` (or the explicitly supplied `-Model`) is used for both stages;
 - the discovery result is saved;
 - CoreStory is disabled before validation;
 - validation completes in a separate invocation;
@@ -106,13 +121,16 @@ The smoke test is successful if:
 Once P01 passes these checks, the same harness can be generalized to iterate serially over all 10 Test Case 2 prompts and produce a normalized report dataset.
 
 ## Real Example
+
 ```powershell
 cd C:\Users\carys\cs_non-determinism-main\cs_non-determinism-main
 agent mcp list
 agent models
 .\automation\run-p01-smoke-test.ps1 -SourceRoot "C:\Users\carys\cts" -CoreStoryMcp "corestory"
-.\automation\run-p01-smoke-test.ps1 `
-  -SourceRoot "C:\path\to\customer-source" `
-  -CoreStoryMcp "corestory" `
-  -AgentCommand "cursor-agent"
+```
+
+The command above uses the default pinned model `gpt-5.4-high`. To make the selection explicit on the command line:
+
+```powershell
+.\automation\run-p01-smoke-test.ps1 -SourceRoot "C:\Users\carys\cts" -CoreStoryMcp "corestory" -Model "gpt-5.4-high"
 ```
