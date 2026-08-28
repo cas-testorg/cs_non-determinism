@@ -196,4 +196,11 @@ agent -p "You MUST use CoreStory MCP. Identify the current CoreStory project and
   --output-format text `
   --trust `
   --approve-mcps
+
+agent -p "Use the CoreStory MCP list_projects tool. This MCP call is explicitly approved. Return only the available CoreStory project names and identifiers." `
+  --model gpt-5.4-high `
+  --mode=ask `
+  --output-format text `
+  --trust `
+  --approve-mcps
 ```
