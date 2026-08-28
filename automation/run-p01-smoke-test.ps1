@@ -34,9 +34,17 @@ if (-not (Test-Path $promptPath)) { throw "P01 prompt not found: $promptPath" }
 if (-not (Test-Path $validatorPath)) { throw "Validation template not found: $validatorPath" }
 if (-not (Get-Command $AgentCommand -ErrorAction SilentlyContinue)) { throw "Cursor CLI command '$AgentCommand' was not found in PATH." }
 
-New-Item -ItemType Directory -Force -Path $OutputRoot | Out-Null
+if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
+    $outputRootAbsolute = $OutputRoot
+}
+else {
+    $outputRootAbsolute = Join-Path $repoRoot $OutputRoot
+}
+$outputRootAbsolute = [System.IO.Path]::GetFullPath($outputRootAbsolute)
+
+New-Item -ItemType Directory -Force -Path $outputRootAbsolute | Out-Null
 $runId = Get-Date -Format "yyyyMMdd-HHmmss"
-$runDir = Join-Path $OutputRoot $runId
+$runDir = Join-Path $outputRootAbsolute $runId
 New-Item -ItemType Directory -Force -Path $runDir | Out-Null
 
 $metadata = [ordered]@{
@@ -48,6 +56,7 @@ $metadata = [ordered]@{
     corestory_mcp = $CoreStoryMcp
     agent_command = $AgentCommand
     model = $Model
+    output_root = $outputRootAbsolute
     discovery_corestory = "enabled"
     validation_corestory = "disabled"
 }
@@ -101,7 +110,7 @@ Artifacts:
 - `P01.validation.md` — local-source independent validation result
 - `mcp-before.txt` — MCP state before discovery
 - `mcp-validation.txt` — MCP state after CoreStory was disabled
-- `metadata.json` — run metadata, including the pinned model
+- `metadata.json` — run metadata, including the pinned model and absolute output path
 
 Important: this smoke test explicitly pins the same Cursor model for discovery and validation and disables the configured CoreStory MCP server before validation. Review `mcp-validation.txt` and the Cursor session/transcript before treating validation as independent.
 "@
