@@ -1,6 +1,6 @@
 ﻿{
-    "run_id":  "20260828-182322",
-    "started_at":  "2026-08-28T18:23:22.5938846-05:00",
+    "run_id":  "20260828-185108",
+    "started_at":  "2026-08-28T18:51:08.4344274-05:00",
     "source_root":  "C:\\Users\\carys\\cts",
     "prompt":  "C:\\Users\\carys\\cs_non-determinism-main\\cs_non-determinism-main\\test-case-2-corestory\\prompts\\01-uninitialized-indeterminate-state.md",
     "validator":  "C:\\Users\\carys\\cs_non-determinism-main\\cs_non-determinism-main\\validation\\independent-source-validation.md",
@@ -9,6 +9,7 @@
     "model":  "gpt-5.4-high",
     "output_root":  "C:\\Users\\carys\\cs_non-determinism-main\\cs_non-determinism-main\\results\\p01-smoke",
     "workspace_trust":  "explicit --trust",
+    "prompt_transport":  "positional prompt after all CLI options",
     "discovery_mcp_approval":  "explicit --approve-mcps --force",
     "discovery_corestory":  "enabled",
     "validation_corestory":  "disabled"
