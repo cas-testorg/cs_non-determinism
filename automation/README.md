@@ -236,6 +236,14 @@ agent `
 (Get-Content $tokenLog).Count
 
 Get-Content $tokenLog -Tail 1
+
+cd C:\Users\carys\cs_non-determinism-main\cs_non-determinism-main
+git switch feature/paired-mini-benchmark
+
+.\automation\run-paired-mini-benchmark.ps1 `
+  -SourceRoot "C:\Users\carys\cts" `
+  -CoreStoryMcp "corestory" `
+  -PromptIds P01
 ```
 
 
