@@ -219,6 +219,23 @@ agent -p "Use the CoreStory MCP list_projects tool. Return only the available Co
   --trust `
   --approve-mcps `
   --auto-review
+
+cd C:\Users\carys\cts
+
+$tokenLog = "$HOME\token-metering\token_usage.jsonl"
+
+(Get-Content $tokenLog).Count
+
+agent `
+  --model gpt-5.4-high `
+  --mode=ask `
+  --output-format text `
+  --trust `
+  -p "Respond with exactly: TOKEN METERING TEST"
+
+(Get-Content $tokenLog).Count
+
+Get-Content $tokenLog -Tail 1
 ```
 
 
