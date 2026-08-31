@@ -229,6 +229,11 @@ Custom model: gpt-5.4
 OpenAI API Key: <proxy key>
 Override OpenAI Base URL: http://localhost:4000/v1
 
+$env:RUN_LABEL = "CURSOR-TEST"
+& "$env:LOCALAPPDATA\Programs\cursor\Cursor.exe"
+
+$env:RUN_LABEL = "P01-corestory"
+& "$env:LOCALAPPDATA\Programs\cursor\Cursor.exe"
 ```
 
 
