@@ -1,0 +1,3 @@
+﻿"prompt_id","condition","status","elapsed_seconds","request_count","input_tokens","output_tokens","reasoning_tokens","total_tokens","output_file"
+"P01","local","failed","5.977",,,,,,"C:\Users\carys\cs_non-determinism\results\paired-mini\20260830-184727\P01\local\discovery.md"
+"P01","corestory","failed","5.031",,,,,,"C:\Users\carys\cs_non-determinism\results\paired-mini\20260830-184727\P01\corestory\discovery.md"

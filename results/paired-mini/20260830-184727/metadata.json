@@ -1,0 +1,20 @@
+﻿{
+    "run_id":  "20260830-184727",
+    "started_at":  "2026-08-30T18:47:27.1996534-05:00",
+    "source_root":  "C:\\Users\\carys\\cts",
+    "prompt_ids":  [
+                       "P01"
+                   ],
+    "conditions":  [
+                       "local",
+                       "corestory"
+                   ],
+    "model":  "gpt-5.4-high",
+    "corestory_mcp":  "corestory",
+    "timeout_minutes":  90,
+    "validation_enabled":  false,
+    "token_metrics_enabled":  false,
+    "token_log_path":  null,
+    "experimental_design":  "Identical enhanced prompt and workspace rule; CoreStory MCP availability is the intended condition variable.",
+    "completed_at":  "2026-08-30T18:47:47.9565380-05:00"
+}

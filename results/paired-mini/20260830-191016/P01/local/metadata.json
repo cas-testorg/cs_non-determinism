@@ -1,0 +1,15 @@
+﻿{
+    "prompt_id":  "P01",
+    "condition":  "local",
+    "prompt_path":  "C:\\Users\\carys\\cs_non-determinism\\test-case-2-corestory\\prompts\\01-uninitialized-indeterminate-state.md",
+    "model":  "gpt-5.4-high",
+    "corestory_enabled":  false,
+    "mcp_approval":  "none; CoreStory disabled",
+    "started_at":  "2026-08-30T19:10:20.2677767-05:00",
+    "completed_at":  "2026-08-30T19:16:46.3405857-05:00",
+    "elapsed_seconds":  386.073,
+    "exit_code":  0,
+    "status":  "completed",
+    "timed_out":  false,
+    "token_metrics":  null
+}
