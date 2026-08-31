@@ -1,0 +1,15 @@
+﻿{
+    "prompt_id":  "P02",
+    "condition":  "corestory",
+    "prompt_path":  "C:\\Users\\carys\\cs_non-determinism\\test-case-2-corestory\\prompts\\02-shared-state-concurrency.md",
+    "model":  "gpt-5.4-high",
+    "corestory_enabled":  true,
+    "mcp_approval":  "--approve-mcps --force",
+    "started_at":  "2026-08-30T19:41:49.1979627-05:00",
+    "completed_at":  "2026-08-30T19:49:24.2806865-05:00",
+    "elapsed_seconds":  455.083,
+    "exit_code":  0,
+    "status":  "completed",
+    "timed_out":  false,
+    "token_metrics":  null
+}

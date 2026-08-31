@@ -1,0 +1,15 @@
+﻿{
+    "prompt_id":  "P04",
+    "condition":  "corestory",
+    "prompt_path":  "C:\\Users\\carys\\cs_non-determinism\\test-case-2-corestory\\prompts\\04-pointer-dependent-ordering.md",
+    "model":  "gpt-5.4-high",
+    "corestory_enabled":  true,
+    "mcp_approval":  "--approve-mcps --force",
+    "started_at":  "2026-08-30T19:53:20.9653161-05:00",
+    "completed_at":  "2026-08-30T20:00:47.5420583-05:00",
+    "elapsed_seconds":  446.577,
+    "exit_code":  0,
+    "status":  "completed",
+    "timed_out":  false,
+    "token_metrics":  null
+}

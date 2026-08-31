@@ -1,0 +1,15 @@
+﻿{
+    "prompt_id":  "P08",
+    "condition":  "local",
+    "prompt_path":  "C:\\Users\\carys\\cs_non-determinism\\test-case-2-corestory\\prompts\\08-schedule-dependent-heuristic-results.md",
+    "model":  "gpt-5.4-high",
+    "corestory_enabled":  false,
+    "mcp_approval":  "none; CoreStory disabled",
+    "started_at":  "2026-08-30T20:00:50.2835067-05:00",
+    "completed_at":  "2026-08-30T20:04:38.0572715-05:00",
+    "elapsed_seconds":  227.774,
+    "exit_code":  0,
+    "status":  "completed",
+    "timed_out":  false,
+    "token_metrics":  null
+}
