@@ -6,16 +6,6 @@ Built from the platform-walkthrough segments of prior kickoff demos (Lineage, Se
 
 ---
 
-## Who we're demoing to & what they care about
-
-| Stakeholder | Role | What lands for them |
-| :---- | :---- | :---- |
-| Sushil Gupta | Group Director, R\&D | Business value, POV success criteria |
-| Scott Chase | Executive Director, R\&D | Efficiency, production-risk reduction |
-| Kai Wang | Sr. Director, R\&D Engineering | Technical depth, workflow fit |
-| Fadi Maamari | VP of Engineering | Broader technical/org value |
-| Raymond Lee | Security Architect | Deployment, single-tenant, security posture |
-
 **Their environment:** 40–50M lines of C/C++ · Fusion Compiler and other products with heavy multithreading · Perforce for version control · C++17 / C++20.
 
 **Their two headline POV success criteria — the demo must visibly serve both:**
