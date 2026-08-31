@@ -37,7 +37,7 @@ Name-check that CoreStory is IDE- and tool-agnostic (VS Code, IntelliJ, Cursor, 
 
 The sequence retains the familiar platform walkthrough used in prior demos, but the sections now form one engineering story:
 
-**Understand the application → investigate a hard problem → bring that intelligence into the IDE → evaluate what changed → understand the impact of fixing it.**
+**Understand the application → see how that understanding is materialized → ask targeted questions → bring that intelligence into the IDE → evaluate what changed → understand the impact of fixing it.**
 
 ### 1. Landing page + Intelligence Layer — "this is your code" (3–4 min)
 
@@ -46,22 +46,24 @@ The sequence retains the familiar platform walkthrough used in prior demos, but 
 - **Synopsys tie-in:** A 40–50M-line codebase changes constantly. The useful abstraction is a maintained intelligence layer over the application, not a one-time context dump into an LLM.
 - **Keep brief:** Establish source → ingestion → application intelligence → continuously maintained context. Do not turn this into an architecture deep-dive unless the room asks.
 
-### 2. Chat with your code — establish application understanding (3–4 min)
-
-- **Show:** The in-workspace chat. Start with an architectural / execution-path question rather than asking Chat to act as a race detector. Recommended example:
-  - "Where are the major multithreaded execution paths in the CCD/skew optimization subsystem, and what shared state do they interact with?"
-- **Optional second question:** Ask for a high-level explanation of one of the returned subsystems or flows to show range.
-- **Say:** The purpose here is to establish the application context an engineer would normally have to build before investigating a difficult concurrency issue.
-- **Synopsys tie-in:** The answer should connect code-level facts to application structure and provide references back into the code. The references make the reasoning traceable.
-
-### 3. Documents — reusable application understanding (2–3 min)
+### 2. Documents — reusable application understanding (2–3 min)
 
 - **Show:** One or two default generated artifacts, then one custom-document example relevant to the POV, such as:
   - "Map the modules using multithreading and the shared/global state each touches."
   - "Extract the concurrency-control patterns used across this subsystem."
-- **Say:** The same intelligence used for Q&A can be materialized into reusable engineering knowledge rather than rediscovered in every conversation.
+- **Say:** This is one way the Intelligence Layer becomes immediately useful: application understanding can be materialized into reusable engineering knowledge rather than rediscovered in every conversation.
 - **Synopsys tie-in:** Useful for architecture comprehension, onboarding, modernization, parallelization, and modularization across a codebase too large for any individual engineer to hold in working memory.
+- **Transition to Chat:** "Documents give us reusable views of the application. But engineers are not limited to the views we've already generated — they can ask the Intelligence Layer questions directly."
 - **Keep brief:** Documents demonstrate persistence and reuse of understanding; they are not the hero moment in this demo.
+
+### 3. Chat with your code — move from prepared understanding to investigation (3–4 min)
+
+- **Show:** The in-workspace chat. Start with an architectural / execution-path question rather than asking Chat to act as a race detector. Recommended example:
+  - "Where are the major multithreaded execution paths in the CCD/skew optimization subsystem, and what shared state do they interact with?"
+- **Optional second question:** Ask for a high-level explanation of one of the returned subsystems or flows to show range.
+- **Say:** The purpose here is to move from prepared application knowledge into an ad hoc engineering question and establish the context an engineer would normally have to build before investigating a difficult concurrency issue.
+- **Synopsys tie-in:** The answer should connect code-level facts to application structure and provide references back into the code. The references make the reasoning traceable.
+- **Transition to IDE:** "Now we have application context and a direction for the investigation. The next question is whether that same intelligence can follow the engineer into the tool where the source-level work actually happens."
 
 ### 4. MCP in Cursor — the hero workflow (8–10 min)
 
@@ -128,7 +130,7 @@ Restate what was demonstrated versus what is still being measured.
 **Demonstrated in the workflow:**
 
 - CoreStory maintains application-level understanding over the ingested codebase.
-- That intelligence can be used directly through chat/documents and carried into an engineering agent through MCP.
+- That intelligence can be materialized into reusable documents, queried directly through chat, and carried into an engineering agent through MCP.
 - In the nondeterminism evaluation, CoreStory changed the investigation by surfacing different candidates in some cases and by adding application-path / downstream context.
 - The same intelligence can be used to reason about the blast radius of a proposed remediation.
 
@@ -141,7 +143,7 @@ Restate what was demonstrated versus what is still being measured.
 
 Recommended closing language:
 
-> "Today we demonstrated that CoreStory can give an engineering agent application-level context for investigating nondeterminism across a very large C/C++ codebase. We also showed how that same understanding carries from exploration into the IDE and then into change-impact analysis. We're continuing to measure the economics of that workflow — particularly token consumption and investigation effort — rather than asking you to take a token-savings claim on faith."
+> "Today we demonstrated that CoreStory can give an engineering agent application-level context for investigating nondeterminism across a very large C/C++ codebase. We also showed how that same understanding carries from reusable application knowledge, into direct Q&A, into the IDE, and then into change-impact analysis. We're continuing to measure the economics of that workflow — particularly token consumption and investigation effort — rather than asking you to take a token-savings claim on faith."
 
 Recommended sprint workflows:
 
@@ -155,13 +157,13 @@ Recommended sprint workflows:
 
 | Synopsys pain / goal | Demo segment to lean on |
 | :---- | :---- |
-| Nondeterminism investigation | §2 application understanding, §4 Cursor workflow, §5 controlled comparison |
+| Nondeterminism investigation | §3 targeted chat, §4 Cursor workflow, §5 controlled comparison |
 | High AI token cost (Cursor) | §4 MCP in Cursor; position measurement as part of the POV |
 | False positives / engineering effort | §4 mitigation / causal reasoning, §5 controlled comparison |
 | Production-risk reduction | §6 blast radius / change impact |
 | Automated code review | §6 change impact, §4 IDE integration |
 | Periodic full-codebase understanding | §1 Intelligence Layer / Living Intelligence |
-| Modernization / parallelization / modularization | §3 reusable docs, §6 impact analysis |
+| Modernization / parallelization / modularization | §2 reusable docs, §6 impact analysis |
 | Security / deployment approval | §8 single-tenant + Azure |
 
 ---
@@ -183,13 +185,14 @@ Recommended sprint workflows:
 When this outline stabilizes, create a compact presenter deck rather than duplicating the full script. Recommended slides:
 
 1. **POV goals / problem statement** — scale, nondeterminism, engineering-agent context.
-2. **Demo journey** — Understand → Investigate → IDE → Compare → Impact.
+2. **Demo journey** — Understand → Materialize → Ask → IDE → Compare → Impact.
 3. **Intelligence Layer** — maintained application understanding across the codebase.
-4. **Engineering-agent workflow** — the MCP investigation flow diagram.
-5. **Controlled comparison** — same model/source/prompt/rule; CoreStory access is the variable.
-6. **P02 example** — local and CoreStory-assisted investigations, emphasizing different paths and contextualization rather than raw finding count.
-7. **From finding to remediation** — blast radius / change-impact continuation.
-8. **What we demonstrated vs. what we are measuring** — keep claims explicit and defensible.
-9. **POV next steps / success metrics** — token economics, investigation effort, false-positive effort, runtime confirmation.
+4. **Reusable application knowledge** — documents and targeted generated views.
+5. **Engineering-agent workflow** — the MCP investigation flow diagram.
+6. **Controlled comparison** — same model/source/prompt/rule; CoreStory access is the variable.
+7. **P02 example** — local and CoreStory-assisted investigations, emphasizing different paths and contextualization rather than raw finding count.
+8. **From finding to remediation** — blast radius / change-impact continuation.
+9. **What we demonstrated vs. what we are measuring** — keep claims explicit and defensible.
+10. **POV next steps / success metrics** — token economics, investigation effort, false-positive effort, runtime confirmation.
 
 The deck should function as a presenter cheat sheet: minimal text on-screen, concise spoken lead-ins, key proof points, and transition lines back to the live product.
