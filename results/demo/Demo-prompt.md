@@ -1,0 +1,3 @@
+Investigate this application for pointer-dependent ordering that could contribute to nondeterministic behavior. Identify the strongest candidates, trace how pointer-dependent ordering could propagate through the application, and determine whether the application contains mechanisms that restore deterministic behavior before an observable result is produced.
+
+Identify the three highest-risk nondeterminism mechanisms in this application that warrant engineering investigation. For each, explain the execution path, shared or variable state involved, what could vary between equivalent executions, any determinism mechanisms already present, and what evidence would be needed to confirm it at runtime.
