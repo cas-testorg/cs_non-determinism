@@ -219,6 +219,11 @@ agent -p "Use the CoreStory MCP list_projects tool. Return only the available Co
   --trust `
   --approve-mcps `
   --auto-review
+
+.\automation\run-paired-mini-benchmark.ps1 `
+  -SourceRoot "C:\Users\carys\cts" `
+  -CoreStoryMcp "corestory" `
+  -PromptIds P02,P04,P08
 ```
 
 
