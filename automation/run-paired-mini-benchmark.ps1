@@ -96,32 +96,20 @@ function Invoke-CursorAgentTimed {
 
     Write-Host "[$($started.ToString('HH:mm:ss'))] Starting Cursor agent -> $OutputFile"
 
-    $job = Start-Job -ScriptBlock {
-        param($Cmd, $Args, $Dir)
-        Set-Location $Dir
-        $nativeOutput = & $Cmd @Args 2>&1
-        $code = $LASTEXITCODE
-        [pscustomobject]@{ ExitCode = $code; Output = @($nativeOutput) }
-    } -ArgumentList $AgentCommand, (,$argList), $WorkingDirectory
-
-    $completedJob = Wait-Job -Job $job -Timeout ($TimeoutMinutes * 60)
-    $timedOut = ($null -eq $completedJob)
-    $exitCode = $null
-    $output = @()
-
-    if ($timedOut) {
-        Stop-Job -Job $job -ErrorAction SilentlyContinue
-        $output = @("Cursor invocation timed out after $TimeoutMinutes minutes.")
-        $status = "timed_out"
-    } else {
-        $result = Receive-Job -Job $job
-        if ($result) {
-            $exitCode = $result.ExitCode
-            $output = @($result.Output)
-        }
-        $status = if ($exitCode -eq 0) { "completed" } else { "failed" }
+    # Use the same direct native invocation as the proven P01 smoke harness.
+    # Start-Job serializes/reshapes argument arrays across the job boundary and
+    # caused Cursor print mode to receive '-p' without the prompt text.
+    Push-Location $WorkingDirectory
+    try {
+        $nativeOutput = & $AgentCommand @argList 2>&1
+        $exitCode = $LASTEXITCODE
+    } finally {
+        Pop-Location
     }
-    Remove-Job -Job $job -Force -ErrorAction SilentlyContinue
+
+    $output = @($nativeOutput)
+    $status = if ($exitCode -eq 0) { "completed" } else { "failed" }
+    $timedOut = $false
 
     $output | Set-Content -Path $OutputFile -Encoding UTF8
     $completed = Get-Date
@@ -142,6 +130,7 @@ function Invoke-CursorAgentTimed {
         exit_code = $exitCode
         status = $status
         timed_out = $timedOut
+        timeout_note = "TimeoutMinutes is retained for compatibility but is not enforced while direct invocation is used for reliable prompt transport."
         token_metrics = $tokenMetrics
     }
 }
@@ -184,6 +173,7 @@ $runMetadata = [ordered]@{
     model = $Model
     corestory_mcp = $CoreStoryMcp
     timeout_minutes = $TimeoutMinutes
+    timeout_enforced = $false
     validation_enabled = $false
     token_metrics_enabled = [bool]$EnableTokenMetrics
     token_log_path = if ($EnableTokenMetrics) { $TokenLogPath } else { $null }
