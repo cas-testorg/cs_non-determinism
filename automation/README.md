@@ -236,6 +236,14 @@ $env:RUN_LABEL = "CURSOR-TEST"
 
 $env:RUN_LABEL = "P01-corestory"
 & "$env:LOCALAPPDATA\Programs\cursor\Cursor.exe"
+
+Analyze the current repository structure.
+
+Identify five major source-code subsystems, explain the apparent responsibility
+of each subsystem, and cite specific files that support your conclusions.
+
+Do not use MCP tools or external services. Base the answer only on the local
+repository.
 ```
 
 
