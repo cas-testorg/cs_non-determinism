@@ -224,6 +224,11 @@ agent -p "Use the CoreStory MCP list_projects tool. Return only the available Co
   -SourceRoot "C:\Users\carys\cts" `
   -CoreStoryMcp "corestory" `
   -PromptIds P02,P04,P08
+
+Custom model: gpt-5.4
+OpenAI API Key: <proxy key>
+Override OpenAI Base URL: http://localhost:4000/v1
+
 ```
 
 
