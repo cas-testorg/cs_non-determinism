@@ -11,33 +11,33 @@ flowchart LR
     A[ND Unit of Work] --> B[Normalize Evidence]
     B --> C[Workflow Dispatcher]
 
-    C --> D{Sufficient evidence?}
-    D -- No --> E[INCONCLUSIVE]
-    E --> F[HUMAN_TRIAGE_REQUIRED]
+    C --> D{Sufficient evidence}
+    D -->|No| E[INCONCLUSIVE]
+    E --> F[HUMAN TRIAGE REQUIRED]
     F --> G[Request Missing Evidence]
     G --> B
 
-    D -- Yes --> H{Application defect?}
-    H -- Yes --> I[APPLICATION_DEFECT]
-    I --> J[BUG_RESOLUTION]
+    D -->|Yes| H{Application defect}
+    H -->|Yes| I[APPLICATION DEFECT]
+    I --> J[BUG RESOLUTION]
     J --> K[Agentic Bug Resolution]
 
-    H -- No --> L{Route by work type}
-    L --> M[FEATURE_GAP_ANALYSIS]
-    L --> N[CODEBASE_ASSESSMENT]
-    L --> O[AUTOMATION_CONFIGURATION]
+    H -->|No| L{Route by work type}
+    L --> M[FEATURE GAP ANALYSIS]
+    L --> N[CODEBASE ASSESSMENT]
+    L --> O[AUTOMATION CONFIGURATION]
     L --> F
 
-    K --> P[CoreStory-Assisted Investigation]
+    K --> P[CoreStory Assisted Investigation]
     P --> Q[Synopsys SME Validation]
-    Q --> R{Confirmed ND defect?}
+    Q --> R{Confirmed ND defect}
 
-    R -- No --> S[Record Rejected Finding / False Positive]
-    R -- Yes --> T[Resolution / Fix]
+    R -->|No| S[Record Rejected Finding or False Positive]
+    R -->|Yes| T[Resolution or Fix]
     T --> U[Runtime Validation]
-    U --> V{Determinism restored?}
-    V -- No --> P
-    V -- Yes --> W[Successful Check-In]
+    U --> V{Determinism restored}
+    V -->|No| P
+    V -->|Yes| W[Successful Check-In]
 
     S --> X[Capture Metrics]
     W --> X
@@ -47,82 +47,69 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-
-    A[ND Unit of Work] --> B[Collect / Normalize Evidence]
+    A[ND Unit of Work] --> B[Collect and Normalize Evidence]
 
     B --> B1[Possible Inputs]
     B1 --> B2[Known Runtime Divergence]
-    B1 --> B3[Checksum / Runtime Logs]
+    B1 --> B3[Checksum or Runtime Logs]
     B1 --> B4[TSan Finding]
     B1 --> B5[Coverity Finding]
-    B1 --> B6[Cursor / AI Scan Finding]
-    B1 --> B7[Customer / Test Report]
+    B1 --> B6[Cursor or AI Scan Finding]
+    B1 --> B7[Customer or Test Report]
 
     B --> C[Workflow Dispatcher]
+    C --> D{Sufficient evidence to classify}
 
-    C --> D{Is there sufficient evidence<br/>to classify the work?}
-
-    D -- No --> E[INCONCLUSIVE]
-    E --> F[HUMAN_TRIAGE_REQUIRED]
+    D -->|No| E[INCONCLUSIVE]
+    E --> F[HUMAN TRIAGE REQUIRED]
     F --> G[Request Missing Evidence]
     G --> B
 
-    D -- Yes --> H{Does evidence indicate<br/>an application defect?}
-
-    H -- Yes --> I[APPLICATION_DEFECT]
-    I --> J[BUG_RESOLUTION]
+    D -->|Yes| H{Evidence indicates application defect}
+    H -->|Yes| I[APPLICATION DEFECT]
+    I --> J[BUG RESOLUTION]
     J --> K[Agentic Bug Resolution Playbook]
 
-    H -- No --> L{What type of work<br/>does the evidence support?}
-
-    L --> M[Expected Behavior / New Capability]
-    M --> N[FEATURE_GAP_ANALYSIS]
-
+    H -->|No| L{What type of work}
+    L --> M[Expected Behavior or New Capability]
+    M --> N[FEATURE GAP ANALYSIS]
     L --> O[Broader Code Understanding Needed]
-    O --> P[CODEBASE_ASSESSMENT]
-
-    L --> Q[Tooling / Workflow Configuration]
-    Q --> R[AUTOMATION_CONFIGURATION]
-
+    O --> P[CODEBASE ASSESSMENT]
+    L --> Q[Tooling or Workflow Configuration]
+    Q --> R[AUTOMATION CONFIGURATION]
     L --> S[Cannot Confidently Classify]
     S --> F
 
-    K --> T[CoreStory-Assisted Investigation]
-
+    K --> T[CoreStory Assisted Investigation]
     T --> T1[Understand Affected Application Context]
-    T --> T2[Trace Components / Execution Paths]
+    T --> T2[Trace Components and Execution Paths]
     T --> T3[Correlate Runtime Evidence to Source]
-    T --> T4[Develop Root-Cause Hypothesis]
-    T --> T5[Assess Scope / Impact]
+    T --> T4[Develop Root Cause Hypothesis]
+    T --> T5[Assess Scope and Impact]
     T --> T6[Define Smallest Justified Correction]
     T --> T7[Define Validation Plan]
 
-    T --> U{Investigation checkpoint<br/>satisfied?}
-
-    U -- No --> V[Gather More Evidence]
+    T --> U{Investigation checkpoint satisfied}
+    U -->|No| V[Gather More Evidence]
     V --> T
+    U -->|Yes| W[Synopsys SME Validation]
 
-    U -- Yes --> W[Synopsys SME Validation]
+    W --> X{Confirmed ND defect}
+    X -->|No| Y[Record False Positive or Rejected Hypothesis]
+    Y --> Z[Capture Result and Metrics]
+    X -->|Yes| AA[Resolution or Fix]
+    AA --> AB[Runtime Reproduction and Validation]
 
-    W --> X{Confirmed ND defect?}
-
-    X -- No --> Y[Record False Positive /<br/>Rejected Hypothesis]
-    Y --> Z[Capture Result + Metrics]
-
-    X -- Yes --> AA[Resolution / Fix]
-    AA --> AB[Runtime Reproduction & Validation]
-
-    AB --> AC{Deterministic behavior<br/>restored?}
-
-    AC -- No --> T
-    AC -- Yes --> AD[Successful Check-In]
+    AB --> AC{Deterministic behavior restored}
+    AC -->|No| T
+    AC -->|Yes| AD[Successful Check-In]
     AD --> Z
 
     Z --> AE[Measure POV Outcomes]
     AE --> AE1[Known Defect Reproduced]
     AE --> AE2[Net-New Defect]
     AE --> AE3[False-Positive Rate]
-    AE --> AE4[Engineer / SME Effort]
+    AE --> AE4[Engineer and SME Effort]
     AE --> AE5[Cursor Token Usage]
     AE --> AE6[Time to Successful Check-In]
 ```
