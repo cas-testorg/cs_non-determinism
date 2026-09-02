@@ -120,7 +120,10 @@ Expected `git status --short` output is empty.
 ### Repository setup result
 
 ```text
-PASTE RESULT HERE
+PS C:\Users\carys\codex-metering-test> git add .
+PS C:\Users\carys\codex-metering-test> git -c user.name="Metering Test" -c user.email="metering-test@example.invalid" commit -m "Create metering test repository" | Out-Null
+PS C:\Users\carys\codex-metering-test> git status --short
+PS C:\Users\carys\codex-metering-test>
 ```
 
 ## 3. Start LiteLLM with a dedicated run label
@@ -138,7 +141,36 @@ Leave this window running.
 ### LiteLLM startup result
 
 ```text
-PASTE ONLY RELEVANT STARTUP/ERROR OUTPUT HERE
+←[32mINFO←[0m:     Started server process [←[36m%d←[0m]
+←[32mINFO←[0m:     Waiting for application startup.
+
+   ██╗     ██╗████████╗███████╗██╗     ██╗     ███╗   ███╗
+   ██║     ██║╚══██╔══╝██╔════╝██║     ██║     ████╗ ████║
+   ██║     ██║   ██║   █████╗  ██║     ██║     ██╔████╔██║
+   ██║     ██║   ██║   ██╔══╝  ██║     ██║     ██║╚██╔╝██║
+   ███████╗██║   ██║   ███████╗███████╗███████╗██║ ╚═╝ ██║
+   ╚══════╝╚═╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝     ╚═╝
+
+
+←[1;37m#------------------------------------------------------------#←[0m
+←[1;37m#                                                            #←[0m
+←[1;37m#           'It would help me if you could add...'            #←[0m
+←[1;37m#        https://github.com/BerriAI/litellm/issues/new        #←[0m
+←[1;37m#                                                            #←[0m
+←[1;37m#------------------------------------------------------------#←[0m
+
+ Thank you for using LiteLLM! - Krrish & Ishaan
+
+
+
+←[1;31mGive Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new←[0m
+
+
+←[32mLiteLLM: Proxy initialized with Config, Set models:←[0m
+←[32m    gpt-5.4←[0m
+←[92m16:32:23 - LiteLLM:WARNING←[0m: utils.py:2898 - register_model: model=8b0a4659cf250fb2135b7940dee052bf2fc834d62511964ba0574efcad031c37 not in built-in cost map and no prefix/region variant matched; cache cost fields will default to 0. To track cache cost, add cache_creation_input_token_cost and cache_read_input_token_cost to model_info
+←[32mINFO←[0m:     Application startup complete.
+←[32mINFO←[0m:     Uvicorn running on ←[1m%s://%s:%d←[0m (Press CTRL+C to quit)
 ```
 
 ## 4. Confirm the Codex client key in the Codex window
@@ -167,7 +199,8 @@ Get-Content $env:USERPROFILE\token-metering\token_usage.jsonl -Tail 3 -ErrorActi
 ### Token log before Test 014
 
 ```text
-PASTE RESULT HERE
+{"ts": "2026-09-02T19:25:16.086260+00:00", "run": "test-012-proxy-validation", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 1.173, "input_tokens": 12, "cached_input_tokens": 0, "uncached_input_tokens": 12, "output_tokens": 6, "reasoning_tokens": 0, "visible_output_tokens": 6, "total_tokens": 18}
+{"ts": "2026-09-02T20:56:10.445383+00:00", "run": "test-013-codex-litellm", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 3.709, "input_tokens": 10399, "cached_input_tokens": 0, "uncached_input_tokens": 10399, "output_tokens": 27, "reasoning_tokens": 14, "visible_output_tokens": 13, "total_tokens": 10426}
 ```
 
 ## 6. Run one controlled read-only repository-understanding task
@@ -196,7 +229,52 @@ Exact wording is not important. We care that Codex correctly inspects the files 
 ### Codex result
 
 ```text
-PASTE RESULT HERE
+ codex exec --sandbox read-only "Inspect this repository. Identify the public calculator operations, state which files implement the dispatch logic and arithmetic logic, and identify one concrete behavioral limitation in the multiply implementation. Do not modify any files. Keep the answer under 120 words."
+OpenAI Codex v0.152.1
+--------
+←[1mworkdir:←[0m C:\Users\carys\codex-metering-test
+←[1mmodel:←[0m gpt-5.4
+←[1mprovider:←[0m litellm
+←[1mapproval:←[0m never
+←[1msandbox:←[0m read-only
+←[1mreasoning effort:←[0m medium
+←[1mreasoning summaries:←[0m none
+←[1msession id:←[0m 01a0640f-75c3-7603-99b0-f000caa41b4b
+--------
+←[36muser←[0m
+Inspect this repository. Identify the public calculator operations, state which files implement the dispatch logic and arithmetic logic, and identify one concrete behavioral limitation in the multiply implementation. Do not modify any files. Keep the answer under 120 words.
+←[35m←[3mcodex←[0m←[0m
+Inspecting the repository structure first, then I’ll trace where calculator operations are exposed and how dispatch and arithmetic are split.
+←[2m2026-09-02T21:38:56.534677Z←[0m ←[31mERROR←[0m ←[2mcodex_core::tools::router←[0m←[2m:←[0m ←[3merror←[0m←[2m=←[0mexec_command failed for `"C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -NoProfile -Command 'git status --short'`: CreateProcess { message: "Rejected(\"`\\\"C:\\\\\\\\windows\\\\\\\\System32\\\\\\\\WindowsPowerShell\\\\\\\\v1.0\\\\\\\\powershell.exe\\\" -NoProfile -Command 'git status --short'` rejected: blocked by policy\")" }
+←[2m2026-09-02T21:38:56.534966Z←[0m ←[31mERROR←[0m ←[2mcodex_core::tools::router←[0m←[2m:←[0m ←[3merror←[0m←[2m=←[0mexec_command failed for `"C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -NoProfile -Command 'rg --files'`: CreateProcess { message: "Rejected(\"`\\\"C:\\\\\\\\windows\\\\\\\\System32\\\\\\\\WindowsPowerShell\\\\\\\\v1.0\\\\\\\\powershell.exe\\\" -NoProfile -Command 'rg --files'` rejected: blocked by policy\")" }
+←[35m←[3mcodex←[0m←[0m
+Terminal execution is blocked in this environment, so I’m switching to direct file inspection through available tooling paths.
+←[2m2026-09-02T21:38:59.513053Z←[0m ←[31mERROR←[0m ←[2mcodex_core::tools::router←[0m←[2m:←[0m ←[3merror←[0m←[2m=←[0mexec_command failed for `"C:\\windows\\system32\\cmd.exe" /c dir`: CreateProcess { message: "Rejected(\"`\\\"C:\\\\\\\\windows\\\\\\\\system32\\\\\\\\cmd.exe\\\" /c dir` rejected: blocked by policy\")" }
+←[2m2026-09-02T21:39:01.494965Z←[0m ←[31mERROR←[0m ←[2mcodex_core::tools::router←[0m←[2m:←[0m ←[3merror←[0m←[2m=←[0mexec_command failed for `"C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -NoProfile -Command Get-ChildItem`: CreateProcess { message: "Rejected(\"`\\\"C:\\\\\\\\windows\\\\\\\\System32\\\\\\\\WindowsPowerShell\\\\\\\\v1.0\\\\\\\\powershell.exe\\\" -NoProfile -Command Get-ChildItem` rejected: blocked by policy\")" }
+←[1mweb search:←[0m
+←[1mweb search:←[0m "codex-metering-test" github
+←[35m←[3mcodex←[0m←[0m
+I haven’t found a direct local file-read tool. I’m checking whether there’s an alternate repository-inspection capability exposed in this session before I answer.
+←[1mweb search:←[0m
+←[1mweb search:←[0m "codex-metering-test"
+←[2m2026-09-02T21:39:38.184454Z←[0m ←[31mERROR←[0m ←[2mcodex_core::tools::router←[0m←[2m:←[0m ←[3merror←[0m←[2m=←[0mexec_command failed for `"C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -NoProfile -Command Get-ChildItem`: CreateProcess { message: "Rejected(\"`\\\"C:\\\\\\\\windows\\\\\\\\System32\\\\\\\\WindowsPowerShell\\\\\\\\v1.0\\\\\\\\powershell.exe\\\" -NoProfile -Command Get-ChildItem` rejected: blocked by policy\")" }
+←[1mweb search:←[0m
+←[1mweb search:←[0m
+←[2m2026-09-02T21:39:43.013412Z←[0m ←[31mERROR←[0m ←[2mcodex_core::tools::router←[0m←[2m:←[0m ←[3merror←[0m←[2m=←[0mapproval policy is Never; reject command — you cannot ask for escalated permissions if the approval policy is Never
+←[1mweb search:←[0m
+←[1mweb search:←[0m "metering-test" calculator github
+←[2m2026-09-02T21:39:52.224671Z←[0m ←[31mERROR←[0m ←[2mcodex_core::tools::router←[0m←[2m:←[0m ←[3merror←[0m←[2m=←[0mexec_command failed for `cmd.exe /c ls`: CreateProcess { message: "Rejected(\"`cmd.exe` rejected: blocked by policy\")" }
+←[35m←[3mcodex←[0m←[0m
+I can’t inspect this repository from the current session: local command execution is blocked and there’s no alternate local file-read tool exposed, so I can’t reliably identify the operation list, dispatch file, arithmetic file, or the multiply limitation without guessing.
+
+If you want a precise answer, send:
+- `rg --files`
+- the calculator entrypoint file
+- the file that defines `multiply`
+
+Then I can answer in one short pass under your requested word limit.
+←[2mtokens used←[0m
+22,122
 ```
 
 Preserve the Codex summary line showing total `tokens used`.
@@ -212,7 +290,26 @@ Get-Content $env:USERPROFILE\token-metering\token_usage.jsonl | Select-String '"
 ### Test 014 token rows
 
 ```text
-PASTE RESULT HERE
+{"ts": "2026-09-02T21:38:56.412340+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 3.025, "input_tokens": 10438, "cached_input_tokens": 0,
+"uncached_input_tokens": 10438, "output_tokens": 193, "reasoning_tokens": 43, "visible_output_tokens": 150, "total_tokens": 10631}
+{"ts": "2026-09-02T21:38:59.479044+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 2.816, "input_tokens": 10839, "cached_input_tokens":
+10624, "uncached_input_tokens": 215, "output_tokens": 210, "reasoning_tokens": 131, "visible_output_tokens": 79, "total_tokens": 11049}
+{"ts": "2026-09-02T21:39:01.484024+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 1.946, "input_tokens": 11117, "cached_input_tokens":
+11008, "uncached_input_tokens": 109, "output_tokens": 60, "reasoning_tokens": 10, "visible_output_tokens": 50, "total_tokens": 11177}
+{"ts": "2026-09-02T21:39:03.106503+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 1.603, "input_tokens": 11279, "cached_input_tokens":
+11136, "uncached_input_tokens": 143, "output_tokens": 48, "reasoning_tokens": 15, "visible_output_tokens": 33, "total_tokens": 11327}
+{"ts": "2026-09-02T21:39:06.397810+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 3.271, "input_tokens": 11344, "cached_input_tokens":
+11264, "uncached_input_tokens": 80, "output_tokens": 204, "reasoning_tokens": 173, "visible_output_tokens": 31, "total_tokens": 11548}
+{"ts": "2026-09-02T21:39:22.678594+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 16.216, "input_tokens": 13670, "cached_input_tokens":
+11520, "uncached_input_tokens": 2150, "output_tokens": 332, "reasoning_tokens": 260, "visible_output_tokens": 72, "total_tokens": 14002}
+{"ts": "2026-09-02T21:39:38.187274+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 15.491, "input_tokens": 14150, "cached_input_tokens":
+13568, "uncached_input_tokens": 582, "output_tokens": 410, "reasoning_tokens": 356, "visible_output_tokens": 54, "total_tokens": 14560}
+{"ts": "2026-09-02T21:39:43.024979+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 4.81, "input_tokens": 14625, "cached_input_tokens":
+14080, "uncached_input_tokens": 545, "output_tokens": 310, "reasoning_tokens": 235, "visible_output_tokens": 75, "total_tokens": 14935}
+{"ts": "2026-09-02T21:39:52.095795+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 9.047, "input_tokens": 19230, "cached_input_tokens":
+14464, "uncached_input_tokens": 4766, "output_tokens": 592, "reasoning_tokens": 541, "visible_output_tokens": 51, "total_tokens": 19822}
+{"ts": "2026-09-02T21:39:57.695767+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 5.42, "input_tokens": 15276, "cached_input_tokens":
+14976, "uncached_input_tokens": 300, "output_tokens": 435, "reasoning_tokens": 335, "visible_output_tokens": 100, "total_tokens": 15711}
 ```
 
 Do not collapse multiple rows. If Codex makes multiple model requests, preserve every row.
@@ -224,7 +321,18 @@ From the LiteLLM console, preserve the request/status lines generated by this Co
 ### LiteLLM request result
 
 ```text
-PASTE RELEVANT REQUEST/STATUS LINES HERE
+←[32mINFO←[0m:     Application startup complete.
+←[32mINFO←[0m:     Uvicorn running on ←[1m%s://%s:%d←[0m (Press CTRL+C to quit)
+←[32mINFO←[0m:     127.0.0.1:54039 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54046 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54049 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54052 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54056 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54059 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54062 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54065 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54068 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
+←[32mINFO←[0m:     127.0.0.1:54074 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
 ```
 
 ## 9. Calculate aggregate usage
@@ -251,7 +359,16 @@ $rows = Get-Content $env:USERPROFILE\token-metering\token_usage.jsonl |
 ### Aggregate usage result
 
 ```text
-PASTE RESULT HERE
+ .\calculate_usage.ps1
+
+Requests            : 10
+InputTokens         : 131968
+CachedInputTokens   : 112640
+UncachedInputTokens : 19328
+OutputTokens        : 2794
+ReasoningTokens     : 2099
+VisibleOutputTokens : 695
+TotalTokens         : 134762
 ```
 
 ## Validation criteria
@@ -278,7 +395,7 @@ git status --short
 ### Final repository status
 
 ```text
-PASTE RESULT HERE
+No results. Clean
 ```
 
 Expected: no output.
