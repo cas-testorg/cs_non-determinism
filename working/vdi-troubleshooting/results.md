@@ -78,4 +78,20 @@ PS C:\Users\carys> node --version
 v22.23.2
 PS C:\Users\carys> npm --version
 10.9.8
+
+=== Locate portable Node.js ===
+Node directory: C:\Users\carys\tools\nodejs\node-v22.23.2-win-x64
+v22.23.2
+10.9.8
+
+=== Configure user-local npm global directory ===
+npm global prefix: C:\Users\carys\tools\npm-global
+
+=== Install Codex CLI ===
+
+added 2 packages in 11s
+
+=== Verify Codex CLI ===
+Codex path: C:\Users\carys\tools\npm-global\codex.cmd
+codex-cli 0.152.1
 ```
