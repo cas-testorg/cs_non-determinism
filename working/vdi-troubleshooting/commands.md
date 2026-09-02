@@ -4,117 +4,75 @@ Run only the current test unless instructed otherwise. Paste the complete text o
 
 ## Test 001 — Environment Discovery
 
-### Goal
-
-Determine which installation and diagnostic paths are available on the Windows 11 VDI before changing the environment.
-
-### PowerShell
-
-```powershell
-Write-Host "=== OS ==="
-Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsBuildNumber
-
-Write-Host "`n=== Package / Runtime Availability ==="
-$commands = @("winget", "python", "py", "git", "node", "npm", "codex")
-foreach ($cmd in $commands) {
-    $found = Get-Command $cmd -ErrorAction SilentlyContinue
-    if ($found) {
-        Write-Host "$cmd : FOUND -> $($found.Source)"
-    } else {
-        Write-Host "$cmd : NOT FOUND"
-    }
-}
-
-Write-Host "`n=== Versions ==="
-if (Get-Command winget -ErrorAction SilentlyContinue) { winget --version }
-if (Get-Command python -ErrorAction SilentlyContinue) { python --version }
-if (Get-Command py -ErrorAction SilentlyContinue) { py --version }
-if (Get-Command git -ErrorAction SilentlyContinue) { git --version }
-if (Get-Command node -ErrorAction SilentlyContinue) { node --version }
-if (Get-Command npm -ErrorAction SilentlyContinue) { npm --version }
-if (Get-Command codex -ErrorAction SilentlyContinue) { codex --version }
-```
-
-### Expected output
-
-A short inventory showing whether `winget`, Python, Git, Node/npm, and Codex are available, plus versions where present.
-
-### Safety
-
-This test is read-only. It installs nothing and should not display credentials.
+Completed. See `results.md`.
 
 ---
 
 ## Test 002 — Verify Node.js Install Path
 
-### Goal
-
-Confirm that Windows Package Manager can see the official Node.js LTS package before we install anything. Codex CLI is distributed through npm, so Node.js/npm is the only missing prerequisite we need to address first.
-
-### What Test 001 established
-
-- `winget` is available.
-- Git is installed.
-- Node.js and npm are not installed.
-- Codex CLI is not installed.
-- The `python.exe` entry is only the Microsoft Store/App Execution Alias; there is no usable Python runtime at that path.
-
-### PowerShell
-
-```powershell
-Write-Host "=== winget source status ==="
-winget source list
-
-Write-Host "`n=== Node.js LTS package lookup ==="
-winget show --id OpenJS.NodeJS.LTS --exact
-```
-
-### Expected output
-
-The second command should display the Node.js LTS package metadata, including package ID and available version.
-
-### Do not install yet
-
-This test is read-only. If the package lookup succeeds, stop here and paste the complete output into `results.md` under `Test 002`.
-
-### Safety
-
-Do not paste credentials, tokens, Azure endpoint secrets, or customer-sensitive information into GitHub.
+Completed. See `results.md`.
 
 ---
 
 ## Test 003 — Diagnose winget Node.js Discovery
 
+Completed. `winget` itself is present, but both package discovery operations terminated with exit code `-1073741819` rather than returning package metadata.
+
+---
+
+## Test 004 — Check Direct Node.js Download Connectivity
+
 ### Goal
 
-Test 002 showed the winget sources but did not return Node.js LTS package metadata. Determine whether the package is discoverable through the configured `winget` source and capture winget's exit code/error text explicitly.
+Determine whether the VDI can reach the official Node.js distribution site without relying on `winget`. This is read-only and downloads nothing.
+
+If this succeeds, we can consider a user-local Node.js installation path and bypass the failing `winget` client entirely.
 
 ### PowerShell
 
 ```powershell
-Write-Host "=== winget version ==="
-winget --version
+Write-Host "=== Node.js distribution endpoint ==="
+try {
+    $response = Invoke-WebRequest `
+        -Uri "https://nodejs.org/dist/latest-v22.x/" `
+        -Method Head `
+        -UseBasicParsing `
+        -TimeoutSec 20
 
-Write-Host "`n=== Search configured winget source for Node.js ==="
-winget search --source winget nodejs
-Write-Host "search exit code: $LASTEXITCODE"
+    Write-Host "HTTP status: $($response.StatusCode)"
+    Write-Host "Final URI: $($response.BaseResponse.ResponseUri.AbsoluteUri)"
+} catch {
+    Write-Host "REQUEST FAILED"
+    Write-Host "Exception type: $($_.Exception.GetType().FullName)"
+    Write-Host "Message: $($_.Exception.Message)"
 
-Write-Host "`n=== Exact Node.js LTS lookup against winget source ==="
-winget show --source winget --id OpenJS.NodeJS.LTS --exact --accept-source-agreements
-Write-Host "show exit code: $LASTEXITCODE"
+    if ($_.Exception.Response) {
+        try { Write-Host "HTTP status: $([int]$_.Exception.Response.StatusCode)" } catch {}
+    }
+}
+
+Write-Host "`n=== TLS / DNS basics ==="
+try {
+    Resolve-DnsName nodejs.org -ErrorAction Stop |
+        Select-Object -First 4 Name, Type, IPAddress
+} catch {
+    Write-Host "DNS FAILED: $($_.Exception.Message)"
+}
 ```
 
 ### Expected output
 
-We need either:
+Ideally:
 
-- a row/package record for `OpenJS.NodeJS.LTS`, or
-- an explicit winget error/exit code explaining why the package cannot be resolved.
+- an HTTP `200` response from `nodejs.org`, and
+- successful DNS resolution.
+
+A failure is also useful because it will tell us whether outbound access, TLS, DNS, or another VDI restriction is blocking the direct-install path.
 
 ### Do not install yet
 
-This test is read-only. Do not run `winget install` yet.
+This test downloads and installs nothing. Stop after capturing the output.
 
 ### Safety
 
-Do not paste credentials, tokens, Azure endpoint secrets, or customer-sensitive information into GitHub.
+No credentials or customer-sensitive information should appear in this output.
