@@ -28,79 +28,84 @@ Completed. The VDI can resolve `nodejs.org` and reach the Node.js distribution e
 
 ## Test 005 — Install Node.js LTS in User Space
 
+Completed successfully. Node.js `v22.23.2` and npm `10.9.8` are working from a user-local install under `%USERPROFILE%\tools\nodejs`.
+
+---
+
+## Test 006 — Install Codex CLI in User Space
+
 ### Goal
 
-Install Node.js without admin rights and without using the failing `winget` client. This uses the official Node.js Windows x64 ZIP distribution and extracts it under the current user's profile.
+Install the official OpenAI Codex CLI without administrator privileges or machine-wide changes.
 
-This test does **not** modify machine-wide configuration. It only updates `PATH` for the current PowerShell session so we can verify Node.js and npm before deciding whether to persist anything.
+OpenAI's current documented CLI installation remains:
+
+```text
+npm i -g @openai/codex
+```
+
+Because this VDI uses a portable Node.js installation, this test explicitly directs global npm packages to a user-owned directory.
+
+### Important before running
+
+Run this in the **same PowerShell window** used for Test 005 if possible. If that window was closed, the script below will rediscover the portable Node.js directory and add it to the current session automatically.
 
 ### PowerShell
 
 ```powershell
 $ErrorActionPreference = "Stop"
 
-$baseUrl = "https://nodejs.org/dist/latest-v22.x/"
-$installRoot = Join-Path $HOME "tools\nodejs"
-$tempZip = Join-Path $env:TEMP "node-lts-win-x64.zip"
+Write-Host "=== Locate portable Node.js ==="
+$nodeDir = Get-ChildItem (Join-Path $HOME "tools\nodejs") -Directory -Filter "node-v*-win-x64" |
+    Sort-Object Name -Descending |
+    Select-Object -First 1 -ExpandProperty FullName
 
-Write-Host "=== Discover latest Node.js v22 x64 ZIP ==="
-$index = Invoke-WebRequest -Uri $baseUrl -UseBasicParsing -TimeoutSec 30
-$match = [regex]::Match($index.Content, 'node-v[0-9.]+-win-x64\.zip')
-
-if (-not $match.Success) {
-    throw "Could not find the Windows x64 ZIP filename in the Node.js distribution index."
-}
-
-$fileName = $match.Value
-$downloadUrl = $baseUrl + $fileName
-Write-Host "Package: $fileName"
-Write-Host "Source:  $downloadUrl"
-Write-Host "Target:  $installRoot"
-
-Write-Host "`n=== Download ==="
-Invoke-WebRequest -Uri $downloadUrl -OutFile $tempZip -UseBasicParsing -TimeoutSec 120
-Get-Item $tempZip | Select-Object FullName, Length
-
-Write-Host "`n=== Extract ==="
-if (Test-Path $installRoot) {
-    Remove-Item $installRoot -Recurse -Force
-}
-New-Item -ItemType Directory -Path $installRoot -Force | Out-Null
-Expand-Archive -Path $tempZip -DestinationPath $installRoot -Force
-
-$nodeDir = Get-ChildItem $installRoot -Directory | Select-Object -First 1 -ExpandProperty FullName
 if (-not $nodeDir) {
-    throw "Node.js extraction directory was not found."
+    throw "Portable Node.js installation was not found under $HOME\tools\nodejs."
 }
 
-Write-Host "Node directory: $nodeDir"
-
-Write-Host "`n=== Add Node.js to this PowerShell session only ==="
 $env:PATH = "$nodeDir;$env:PATH"
-
-Write-Host "`n=== Verify ==="
-Write-Host "node path: $((Get-Command node).Source)"
-Write-Host "npm path:  $((Get-Command npm).Source)"
+Write-Host "Node directory: $nodeDir"
 node --version
 npm --version
+
+Write-Host "`n=== Configure user-local npm global directory ==="
+$npmGlobal = Join-Path $HOME "tools\npm-global"
+New-Item -ItemType Directory -Path $npmGlobal -Force | Out-Null
+npm config set prefix "$npmGlobal"
+$env:PATH = "$npmGlobal;$nodeDir;$env:PATH"
+Write-Host "npm global prefix: $(npm config get prefix)"
+
+Write-Host "`n=== Install Codex CLI ==="
+npm install -g @openai/codex
+
+Write-Host "`n=== Verify Codex CLI ==="
+$codexCmd = Join-Path $npmGlobal "codex.cmd"
+if (-not (Test-Path $codexCmd)) {
+    throw "Codex command was not found at $codexCmd"
+}
+
+Write-Host "Codex path: $codexCmd"
+& $codexCmd --version
 ```
 
 ### Expected output
 
 We want to see:
 
-- the discovered official `node-v...-win-x64.zip` filename,
-- a successful download and extraction under your user profile,
-- a valid `node --version`, and
-- a valid `npm --version`.
+- Node.js and npm versions again,
+- npm global prefix under `%USERPROFILE%\tools\npm-global`,
+- successful installation of `@openai/codex`, and
+- a valid `codex --version` result.
 
-### Important
+### Stop here
 
-The PATH change is **session-only**. If you close PowerShell after this test, `node` and `npm` will not automatically be available in the next terminal yet. That is intentional; we will persist the user-level PATH only after this succeeds.
+Do **not** sign in to Codex or configure LiteLLM yet. We only want to prove that the CLI itself installs and launches.
+
+Once this succeeds, the next test will make Node/npm/Codex convenient to launch in a fresh PowerShell session and then we can begin the LiteLLM routing test.
 
 ### Safety
 
 - No administrator privileges are required.
-- Nothing is installed machine-wide.
-- The download comes directly from `https://nodejs.org/`.
-- No credentials or customer-sensitive information should appear in the output.
+- No machine-wide configuration is changed.
+- No OpenAI, Azure, LiteLLM, or customer credentials should be entered during this test.
