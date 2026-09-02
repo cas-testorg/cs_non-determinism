@@ -101,7 +101,7 @@ The failed trust-check attempt should not have generated a new LiteLLM token row
 ### Token log before retry
 
 ```text
-PASTE RESULT HERE
+{"ts": "2026-09-02T19:25:16.086260+00:00", "run": "test-012-proxy-validation", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 1.173, "input_tokens": 12, "cached_input_tokens": 0, "uncached_input_tokens": 12, "output_tokens": 6, "reasoning_tokens": 0, "visible_output_tokens": 6, "total_tokens": 18}
 ```
 
 ## 6. Retry the trivial Codex request with only the Git repository check bypassed
@@ -117,7 +117,24 @@ This option only allows `codex exec` to run outside a Git repository. It does no
 ### Codex retry result
 
 ```text
-PASTE RESULT HERE
+PS C:\Users\carys\token-metering> codex exec --skip-git-repo-check "Reply with exactly: CODEX_LITELLM_OK"
+OpenAI Codex v0.152.1
+--------
+←[1mworkdir:←[0m C:\Users\carys\token-metering
+←[1mmodel:←[0m gpt-5.4
+←[1mprovider:←[0m litellm
+←[1mapproval:←[0m never
+←[1msandbox:←[0m read-only
+←[1mreasoning effort:←[0m medium
+←[1mreasoning summaries:←[0m none
+←[1msession id:←[0m 01a063e8-55b8-7ad2-8ce5-ac0c56268fb7
+--------
+←[36muser←[0m
+Reply with exactly: CODEX_LITELLM_OK
+←[35m←[3mcodex←[0m←[0m
+CODEX_LITELLM_OK
+←[2mtokens used←[0m
+10,426
 ```
 
 A successful result should include:
@@ -139,7 +156,8 @@ Get-Content .\token_usage.jsonl -Tail 10
 ### Token log after Codex retry
 
 ```text
-PASTE RESULT HERE
+{"ts": "2026-09-02T19:25:16.086260+00:00", "run": "test-012-proxy-validation", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 1.173, "input_tokens": 12, "cached_input_tokens": 0, "uncached_input_tokens": 12, "output_tokens": 6, "reasoning_tokens": 0, "visible_output_tokens": 6, "total_tokens": 18}
+{"ts": "2026-09-02T20:56:10.445383+00:00", "run": "test-013-codex-litellm", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 3.709, "input_tokens": 10399, "cached_input_tokens": 0, "uncached_input_tokens": 10399, "output_tokens": 27, "reasoning_tokens": 14, "visible_output_tokens": 13, "total_tokens": 10426}
 ```
 
 For a successful Codex path, look for one or more new rows with:
@@ -159,7 +177,9 @@ From the LiteLLM console, copy only the relevant request/status or error lines a
 ### LiteLLM request result
 
 ```text
-PASTE RELEVANT REQUEST/STATUS LINES HERE
+←[32mINFO←[0m:     Application startup complete.
+←[32mINFO←[0m:     Uvicorn running on ←[1m%s://%s:%d←[0m (Press CTRL+C to quit)
+←[32mINFO←[0m:     127.0.0.1:55601 - "←[1mPOST /v1/responses HTTP/1.1←[0m" ←[32m200 OK←[0m
 ```
 
 ## Validation criteria
