@@ -25,4 +25,16 @@ git version 2.47.1.windows.2
 WindowsProductName    WindowsVersion OsBuildNumber
 ------------------    -------------- -------------
 Windows 10 Enterprise 2009           22631
+
+=== winget source status ===
+Name    Argument
+-----------------------------------------------------
+msstore https://storeedgefd.dsx.mp.microsoft.com/v9.0
+winget  https://winget.azureedge.net/cache
+
+=== Node.js LTS package lookup ===
+  |WindowsProductName    WindowsVersion OsBuildNumber
+------------------    -------------- -------------
+Windows 10 Enterprise 2009           22631
+
 ```
