@@ -42,3 +42,41 @@ A short inventory showing whether `winget`, Python, Git, Node/npm, and Codex are
 ### Safety
 
 This test is read-only. It installs nothing and should not display credentials.
+
+---
+
+## Test 002 — Verify Node.js Install Path
+
+### Goal
+
+Confirm that Windows Package Manager can see the official Node.js LTS package before we install anything. Codex CLI is distributed through npm, so Node.js/npm is the only missing prerequisite we need to address first.
+
+### What Test 001 established
+
+- `winget` is available.
+- Git is installed.
+- Node.js and npm are not installed.
+- Codex CLI is not installed.
+- The `python.exe` entry is only the Microsoft Store/App Execution Alias; there is no usable Python runtime at that path.
+
+### PowerShell
+
+```powershell
+Write-Host "=== winget source status ==="
+winget source list
+
+Write-Host "`n=== Node.js LTS package lookup ==="
+winget show --id OpenJS.NodeJS.LTS --exact
+```
+
+### Expected output
+
+The second command should display the Node.js LTS package metadata, including package ID and available version.
+
+### Do not install yet
+
+This test is read-only. If the package lookup succeeds, stop here and paste the complete output into `results.md` under `Test 002`.
+
+### Safety
+
+Do not paste credentials, tokens, Azure endpoint secrets, or customer-sensitive information into GitHub.
