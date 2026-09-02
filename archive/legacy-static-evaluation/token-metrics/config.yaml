@@ -1,0 +1,12 @@
+model_list:
+  - model_name: gpt-5.4
+    litellm_params:
+      model: azure/gpt-5.4
+      api_base: os.environ/AZURE_API_BASE
+      api_key: os.environ/AZURE_API_KEY
+    model_info:
+      base_model: azure/gpt-5.4
+
+litellm_settings:
+  callbacks: usage_logger.proxy_handler_instance
+  drop_params: true
