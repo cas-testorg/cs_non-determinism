@@ -39,4 +39,15 @@ v1.2.10691
 WindowsProductName    WindowsVersion OsBuildNumber
 ------------------    -------------- -------------
 Windows 10 Enterprise 2009           22631
+
+=== Node.js distribution endpoint ===
+HTTP status: 200
+Final URI: https://nodejs.org/dist/latest-v22.x/
+
+=== TLS / DNS basics ===
+
+Name       Type IPAddress
+----       ---- ---------
+nodejs.org    A 104.16.213.131
+nodejs.org    A 104.16.212.131
 ```
