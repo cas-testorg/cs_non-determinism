@@ -162,7 +162,25 @@ Invoke-RestMethod `
 ### Proxy response summary
 
 ```text
-PASTE RESULT HERE
+{
+    "model":  "gpt-5.4",
+    "status":  "completed",
+    "usage":  {
+                  "input_tokens":  12,
+                  "input_tokens_details":  {
+                                               "audio_tokens":  null,
+                                               "cached_tokens":  0,
+                                               "text_tokens":  null,
+                                               "cache_write_tokens":  0
+                                           },
+                  "output_tokens":  6,
+                  "output_tokens_details":  {
+                                                "reasoning_tokens":  0,
+                                                "text_tokens":  null
+                                            },
+                  "total_tokens":  18,
+                  "cost":  null
+              }
 ```
 
 ## 7. Capture the callback diagnostic
@@ -178,7 +196,7 @@ Paste the output below.
 ### Callback diagnostic result
 
 ```text
-PASTE RESULT HERE
+{"ts": "2026-09-02T18:58:08.068238+00:00", "call_type": "aresponses", "response_type": "ResponsesAPIResponse", "response_dict_keys": ["background", "completed_at", "content_filters", "created_at", "error", "frequency_penalty", "id", "incomplete_details", "instructions", "max_output_tokens", "max_tool_calls", "metadata", "model", "moderation", "object", "output", "parallel_tool_calls", "presence_penalty", "previous_response_id", "prompt_cache_key", "prompt_cache_retention", "reasoning", "safety_identifier", "service_tier", "status", "store", "temperature", "text", "tool_choice", "tool_usage", "tools", "top_logprobs", "top_p", "truncation", "usage", "user"], "usage": {"total_tokens": 18}}
 ```
 
 ## 8. Restore the original logger after capturing the result
