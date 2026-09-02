@@ -80,3 +80,41 @@ This test is read-only. If the package lookup succeeds, stop here and paste the 
 ### Safety
 
 Do not paste credentials, tokens, Azure endpoint secrets, or customer-sensitive information into GitHub.
+
+---
+
+## Test 003 — Diagnose winget Node.js Discovery
+
+### Goal
+
+Test 002 showed the winget sources but did not return Node.js LTS package metadata. Determine whether the package is discoverable through the configured `winget` source and capture winget's exit code/error text explicitly.
+
+### PowerShell
+
+```powershell
+Write-Host "=== winget version ==="
+winget --version
+
+Write-Host "`n=== Search configured winget source for Node.js ==="
+winget search --source winget nodejs
+Write-Host "search exit code: $LASTEXITCODE"
+
+Write-Host "`n=== Exact Node.js LTS lookup against winget source ==="
+winget show --source winget --id OpenJS.NodeJS.LTS --exact --accept-source-agreements
+Write-Host "show exit code: $LASTEXITCODE"
+```
+
+### Expected output
+
+We need either:
+
+- a row/package record for `OpenJS.NodeJS.LTS`, or
+- an explicit winget error/exit code explaining why the package cannot be resolved.
+
+### Do not install yet
+
+This test is read-only. Do not run `winget install` yet.
+
+### Safety
+
+Do not paste credentials, tokens, Azure endpoint secrets, or customer-sensitive information into GitHub.
