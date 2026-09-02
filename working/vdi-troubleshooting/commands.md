@@ -12,80 +12,98 @@ Test 006 confirmed the user-local Codex installation and returned `codex-cli 0.1
 
 ## Test 007 — Persist Node.js and Codex on the User PATH
 
+Run Test 007 first if you have not already done so. After opening a fresh PowerShell session, confirm:
+
+```powershell
+node --version
+npm --version
+codex --version
+```
+
+If those work, continue directly to Test 008.
+
+---
+
+## Test 008 — Discover Existing LiteLLM Proxy State
+
 ### Goal
 
-Make the portable Node.js and Codex installations available from a **new PowerShell session** without administrator privileges.
+Before changing any LiteLLM or Codex configuration, determine what is already present on the VDI and whether anything is currently listening on the expected local proxy port (`4000`).
 
-This modifies only the current user's `PATH`, not the machine-wide `PATH`.
+This test is read-only. It does not start, stop, install, or reconfigure LiteLLM.
 
 ### PowerShell
 
 ```powershell
-$ErrorActionPreference = "Stop"
-
-$nodeDir = Get-ChildItem (Join-Path $HOME "tools\nodejs") -Directory -Filter "node-v*-win-x64" |
-    Sort-Object Name -Descending |
-    Select-Object -First 1 -ExpandProperty FullName
-
-$npmGlobal = Join-Path $HOME "tools\npm-global"
-
-if (-not $nodeDir) { throw "Portable Node.js directory was not found." }
-if (-not (Test-Path (Join-Path $npmGlobal "codex.cmd"))) { throw "Codex CLI was not found in $npmGlobal." }
-
-Write-Host "=== Paths to persist ==="
-Write-Host "Node:  $nodeDir"
-Write-Host "Codex: $npmGlobal"
-
-$userPath = [Environment]::GetEnvironmentVariable("Path", "User")
-$parts = @()
-if ($userPath) {
-    $parts = @($userPath -split ';' | Where-Object { $_ -and $_.Trim() })
+Write-Host "=== Port 4000 listener ==="
+try {
+    Get-NetTCPConnection -LocalPort 4000 -State Listen -ErrorAction Stop |
+        Select-Object LocalAddress, LocalPort, State, OwningProcess
+} catch {
+    Write-Host "No listening TCP endpoint found on local port 4000."
 }
 
-foreach ($entry in @($nodeDir, $npmGlobal)) {
-    if ($parts -notcontains $entry) {
-        $parts += $entry
+Write-Host "`n=== Process owning port 4000, if any ==="
+try {
+    $listeners = @(Get-NetTCPConnection -LocalPort 4000 -State Listen -ErrorAction Stop)
+    foreach ($listener in $listeners) {
+        Get-Process -Id $listener.OwningProcess -ErrorAction SilentlyContinue |
+            Select-Object Id, ProcessName, Path
+    }
+} catch {
+    Write-Host "No process to report."
+}
+
+Write-Host "`n=== LiteLLM command discovery ==="
+$litellm = Get-Command litellm -ErrorAction SilentlyContinue
+if ($litellm) {
+    Write-Host "litellm command: $($litellm.Source)"
+    try { litellm --version } catch { Write-Host "litellm --version failed: $($_.Exception.Message)" }
+} else {
+    Write-Host "litellm command: NOT FOUND on PATH"
+}
+
+Write-Host "`n=== Likely LiteLLM files under user profile ==="
+$roots = @(
+    (Join-Path $HOME "litellm"),
+    (Join-Path $HOME ".litellm"),
+    (Join-Path $HOME "tools\litellm")
+)
+foreach ($root in $roots) {
+    if (Test-Path $root) {
+        Write-Host "FOUND: $root"
+        Get-ChildItem $root -Force -ErrorAction SilentlyContinue |
+            Select-Object -First 20 Name, FullName, Mode
     }
 }
 
-$newUserPath = $parts -join ';'
-[Environment]::SetEnvironmentVariable("Path", $newUserPath, "User")
-
-Write-Host "`n=== User PATH updated ==="
-Write-Host "Node path present:  $($parts -contains $nodeDir)"
-Write-Host "Codex path present: $($parts -contains $npmGlobal)"
-
-Write-Host "`n=== Current-session verification ==="
-$env:PATH = "$npmGlobal;$nodeDir;$env:PATH"
-node --version
-npm --version
-codex --version
+Write-Host "`n=== Local proxy HTTP probe ==="
+try {
+    $response = Invoke-WebRequest `
+        -Uri "http://127.0.0.1:4000/health/liveliness" `
+        -UseBasicParsing `
+        -TimeoutSec 5
+    Write-Host "HTTP status: $($response.StatusCode)"
+    Write-Host "Body: $($response.Content)"
+} catch {
+    Write-Host "Proxy probe failed: $($_.Exception.Message)"
+}
 ```
 
 ### Expected output
 
-We want all three version checks to succeed and both `... path present` values to be `True`.
+This should tell us one of three things:
 
-### Final manual check
+1. LiteLLM is already running on port 4000.
+2. LiteLLM/configuration exists but is not running.
+3. There is no usable LiteLLM installation on this VDI yet.
 
-After the script succeeds:
+Any of those outcomes is fine. The next step will be based on the actual state rather than reinstalling or overwriting anything unnecessarily.
 
-1. Close that PowerShell window.
-2. Open a completely new PowerShell window.
-3. Run:
+### Important
 
-```powershell
-node --version
-npm --version
-codex --version
-```
-
-Paste those three results into `results.md` too.
-
-### Stop here
-
-Do not sign in to Codex yet. Once a fresh PowerShell session can launch Codex, the installation layer is complete and the next test will focus on the existing LiteLLM proxy and its Azure route.
+Do **not** print environment variables, API keys, Azure endpoints containing secrets, bearer tokens, or configuration-file contents yet. We only want installation/process/path information.
 
 ### Safety
 
-This changes only the current user's `PATH`. It requires no administrator privileges and does not store or display credentials.
+Read-only. No configuration or credentials are modified.
