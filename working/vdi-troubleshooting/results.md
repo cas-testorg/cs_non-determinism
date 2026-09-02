@@ -50,4 +50,32 @@ Name       Type IPAddress
 ----       ---- ---------
 nodejs.org    A 104.16.213.131
 nodejs.org    A 104.16.212.131
+
+=== Discover latest Node.js v22 x64 ZIP ===
+Package: node-v22.23.2-win-x64.zip
+Source:  https://nodejs.org/dist/latest-v22.x/node-v22.23.2-win-x64.zip
+Target:  C:\Users\carys\tools\nodejs
+
+=== Download ===
+
+
+=== Extract ===
+Node directory: C:\Users\carys\tools\nodejs\node-v22.23.2-win-x64
+
+=== Add Node.js to this PowerShell session only ===
+
+=== Verify ===
+node path: C:\Users\carys\tools\nodejs\node-v22.23.2-win-x64\node.exe
+npm path:  C:\Users\carys\tools\nodejs\node-v22.23.2-win-x64\npm.ps1
+v22.23.2
+10.9.8
+FullName                                         Length
+--------                                         ------
+C:\Users\local_carys\Temp\node-lts-win-x64.zip 35683585
+
+
+PS C:\Users\carys> node --version
+v22.23.2
+PS C:\Users\carys> npm --version
+10.9.8
 ```
