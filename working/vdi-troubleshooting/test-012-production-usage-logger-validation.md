@@ -240,7 +240,37 @@ Leave this PowerShell window running.
 ### Proxy startup result
 
 ```text
-PASTE RELEVANT STARTUP OUTPUT HERE
+(.venv) PS C:\Users\carys\token-metering> litellm --config .\config.yaml --port 4000
+←[32mINFO←[0m:     Started server process [←[36m%d←[0m]
+←[32mINFO←[0m:     Waiting for application startup.
+
+   ██╗     ██╗████████╗███████╗██╗     ██╗     ███╗   ███╗
+   ██║     ██║╚══██╔══╝██╔════╝██║     ██║     ████╗ ████║
+   ██║     ██║   ██║   █████╗  ██║     ██║     ██╔████╔██║
+   ██║     ██║   ██║   ██╔══╝  ██║     ██║     ██║╚██╔╝██║
+   ███████╗██║   ██║   ███████╗███████╗███████╗██║ ╚═╝ ██║
+   ╚══════╝╚═╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝     ╚═╝
+
+
+←[1;37m#------------------------------------------------------------#←[0m
+←[1;37m#                                                            #←[0m
+←[1;37m#           'I get frustrated when the product...'            #←[0m
+←[1;37m#        https://github.com/BerriAI/litellm/issues/new        #←[0m
+←[1;37m#                                                            #←[0m
+←[1;37m#------------------------------------------------------------#←[0m
+
+ Thank you for using LiteLLM! - Krrish & Ishaan
+
+
+
+←[1;31mGive Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new←[0m
+
+
+←[32mLiteLLM: Proxy initialized with Config, Set models:←[0m
+←[32m    gpt-5.4←[0m
+←[92m14:19:58 - LiteLLM:WARNING←[0m: utils.py:2898 - register_model: model=8b0a4659cf250fb2135b7940dee052bf2fc834d62511964ba0574efcad031c37 not in built-in cost map and no prefix/region variant matched; cache cost fields will default to 0. To track cache cost, add cache_creation_input_token_cost and cache_read_input_token_cost to model_info
+←[32mINFO←[0m:     Application startup complete.
+←[32mINFO←[0m:     Uvicorn running on ←[1m%s://%s:%d←[0m (Press CTRL+C to quit)
 ```
 
 ## 7. Send exactly one Responses API request
@@ -268,7 +298,26 @@ Paste the output below.
 ### Proxy response usage
 
 ```text
-PASTE RESULT HERE
+{
+    "model":  "gpt-5.4",
+    "status":  "completed",
+    "usage":  {
+                  "input_tokens":  12,
+                  "input_tokens_details":  {
+                                               "audio_tokens":  null,
+                                               "cached_tokens":  0,
+                                               "text_tokens":  null,
+                                               "cache_write_tokens":  0
+                                           },
+                  "output_tokens":  6,
+                  "output_tokens_details":  {
+                                                "reasoning_tokens":  0,
+                                                "text_tokens":  null
+                                            },
+                  "total_tokens":  18,
+                  "cost":  null
+              }
+}
 ```
 
 ## 8. Capture the production token log
@@ -282,7 +331,7 @@ Paste the output below.
 ### Production token log result
 
 ```text
-PASTE RESULT HERE
+{"ts": "2026-09-02T19:25:16.086260+00:00", "run": "test-012-proxy-validation", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 1.173, "input_tokens": 12, "cached_input_tokens": 0, "uncached_input_tokens": 12, "output_tokens": 6, "reasoning_tokens": 0, "visible_output_tokens": 6, "total_tokens": 18}
 ```
 
 ## 9. Validate the numbers
