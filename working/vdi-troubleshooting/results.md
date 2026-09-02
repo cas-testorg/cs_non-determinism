@@ -94,4 +94,11 @@ added 2 packages in 11s
 === Verify Codex CLI ===
 Codex path: C:\Users\carys\tools\npm-global\codex.cmd
 codex-cli 0.152.1
+
+PS C:\Users\carys> node --version
+v22.23.2
+PS C:\Users\carys> npm --version
+10.9.8
+PS C:\Users\carys> codex --version
+codex-cli 0.152.1
 ```
