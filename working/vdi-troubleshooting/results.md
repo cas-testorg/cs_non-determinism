@@ -22,10 +22,6 @@ codex : NOT FOUND
 === Versions ===
 v1.2.10691Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Manage App Execution Aliases.
 git version 2.47.1.windows.2
-WindowsProductName    WindowsVersion OsBuildNumber
-------------------    -------------- -------------
-Windows 10 Enterprise 2009           22631
-
 === winget source status ===
 Name    Argument
 -----------------------------------------------------
@@ -33,8 +29,14 @@ msstore https://storeedgefd.dsx.mp.microsoft.com/v9.0
 winget  https://winget.azureedge.net/cache
 
 === Node.js LTS package lookup ===
-  |WindowsProductName    WindowsVersion OsBuildNumber
+  \=== winget version ===
+v1.2.10691
+=== Search configured winget source for Node.js ===
+  \search exit code: -1073741819
+
+=== Exact Node.js LTS lookup against winget source ===
+  \show exit code: -1073741819
+WindowsProductName    WindowsVersion OsBuildNumber
 ------------------    -------------- -------------
 Windows 10 Enterprise 2009           22631
-
 ```
