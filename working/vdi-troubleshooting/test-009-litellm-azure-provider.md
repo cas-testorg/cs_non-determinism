@@ -147,7 +147,184 @@ Paste the complete response or error below.
 ### LiteLLM Responses result
 
 ```text
-PASTE RESULT HERE
+ .\test-proxy2.ps1
+{
+    "id":  "resp_bGl0ZWxsbTpjdXN0b21fbGxtX3Byb3ZpZGVyOmF6dXJlO21vZGVsX2lkOjhiMGE0NjU5Y2YyNTBmYjIxMzViNzk0MGRlZTA1MmJmMmZjODM0ZDYyNTExOTY0YmEwNTc0ZWZjYWQwMzFjMzc7cmVzcG9uc2VfaWQ6cmVzcF8wODAwMzc2OTdmZDQ1ZDZjMDA2YTk4NjMzMThiZjQ4MTk0YmM5ZmE4YTE5YjM3OGFkMg==",
+    "created_at":  1788371761,
+    "error":  null,
+    "incomplete_details":  null,
+    "instructions":  null,
+    "metadata":  {
+
+                 },
+    "model":  "gpt-5.4",
+    "object":  "response",
+    "output":  [
+                   {
+                       "id":  "msg_080037697fd45d6c006a986331fa3c81949322d934218b575d",
+                       "content":  [
+                                       {
+                                           "annotations":  [
+
+                                                           ],
+                                           "text":  "Hello!",
+                                           "type":  "output_text",
+                                           "logprobs":  [
+
+                                                        ]
+                                       }
+                                   ],
+                       "role":  "assistant",
+                       "status":  "completed",
+                       "type":  "message",
+                       "phase":  "final_answer"
+                   }
+               ],
+    "parallel_tool_calls":  true,
+    "temperature":  1.0,
+    "tool_choice":  "auto",
+    "tools":  [
+
+              ],
+    "top_p":  0.98,
+    "max_output_tokens":  null,
+    "previous_response_id":  null,
+    "reasoning":  {
+                      "context":  "current_turn",
+                      "effort":  "none",
+                      "mode":  "standard",
+                      "summary":  null
+                  },
+    "status":  "completed",
+    "text":  {
+                 "format":  {
+                                "type":  "text"
+                            },
+                 "verbosity":  "medium"
+             },
+    "truncation":  "disabled",
+    "usage":  {
+                  "input_tokens":  12,
+                  "input_tokens_details":  {
+                                               "audio_tokens":  null,
+                                               "cached_tokens":  0,
+                                               "text_tokens":  null,
+                                               "cache_write_tokens":  0
+                                           },
+                  "output_tokens":  6,
+                  "output_tokens_details":  {
+                                                "reasoning_tokens":  0,
+                                                "text_tokens":  null
+                                            },
+                  "total_tokens":  18,
+                  "cost":  null
+              },
+    "user":  null,
+    "store":  true,
+    "background":  false,
+    "completed_at":  1788371762,
+    "content_filters":  [
+                            {
+                                "blocked":  false,
+                                "source_type":  "prompt",
+                                "content_filter_raw":  [
+
+                                                       ],
+                                "content_filter_results":  {
+                                                               "hate":  {
+                                                                            "filtered":  false,
+                                                                            "severity":  "safe"
+                                                                        },
+                                                               "sexual":  {
+                                                                              "filtered":  false,
+                                                                              "severity":  "safe"
+                                                                          },
+                                                               "violence":  {
+                                                                                "filtered":  false,
+                                                                                "severity":  "safe"
+                                                                            },
+                                                               "self_harm":  {
+                                                                                 "filtered":  false,
+                                                                                 "severity":  "safe"
+                                                                             },
+                                                               "jailbreak":  {
+                                                                                 "detected":  false,
+                                                                                 "filtered":  false
+                                                                             }
+                                                           },
+                                "content_filter_offsets":  {
+                                                               "start_offset":  0,
+                                                               "end_offset":  858,
+                                                               "check_offset":  0
+                                                           }
+                            },
+                            {
+                                "blocked":  false,
+                                "source_type":  "completion",
+                                "content_filter_raw":  [
+
+                                                       ],
+                                "content_filter_results":  {
+                                                               "protected_material_text":  {
+                                                                                               "detected":  false,
+                                                                                               "filtered":  false
+                                                                                           },
+                                                               "protected_material_code":  {
+                                                                                               "detected":  false,
+                                                                                               "filtered":  false
+                                                                                           },
+                                                               "hate":  {
+                                                                            "filtered":  false,
+                                                                            "severity":  "safe"
+                                                                        },
+                                                               "sexual":  {
+                                                                              "filtered":  false,
+                                                                              "severity":  "safe"
+                                                                          },
+                                                               "violence":  {
+                                                                                "filtered":  false,
+                                                                                "severity":  "safe"
+                                                                            },
+                                                               "self_harm":  {
+                                                                                 "filtered":  false,
+                                                                                 "severity":  "safe"
+                                                                             }
+                                                           },
+                                "content_filter_offsets":  {
+                                                               "start_offset":  0,
+                                                               "end_offset":  6,
+                                                               "check_offset":  0
+                                                           }
+                            }
+                        ],
+    "frequency_penalty":  0.0,
+    "max_tool_calls":  null,
+    "moderation":  null,
+    "presence_penalty":  0.0,
+    "prompt_cache_key":  null,
+    "prompt_cache_retention":  "in_memory",
+    "safety_identifier":  null,
+    "service_tier":  "default",
+    "tool_usage":  {
+                       "image_gen":  {
+                                         "input_tokens":  0,
+                                         "input_tokens_details":  {
+                                                                      "image_tokens":  0,
+                                                                      "text_tokens":  0
+                                                                  },
+                                         "output_tokens":  0,
+                                         "output_tokens_details":  {
+                                                                       "image_tokens":  0,
+                                                                       "text_tokens":  0
+                                                                   },
+                                         "total_tokens":  0
+                                     },
+                       "web_search":  {
+                                          "num_requests":  0
+                                      }
+                   },
+    "top_logprobs":  0
+}
 ```
 
 ## 6. Check the token usage log
@@ -163,7 +340,7 @@ Paste the output below.
 ### Token log result
 
 ```text
-PASTE RESULT HERE
+{"ts": "2026-09-02T17:56:02.231450+00:00", "run": "unlabeled", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 1.162, "input_tokens": 0, "cached_input_tokens": 0, "uncached_input_tokens": 0, "output_tokens": 0, "reasoning_tokens": 0, "visible_output_tokens": 0, "total_tokens": 18}
 ```
 
 If the request fails, it is still useful to check whether the file exists, but do not treat a missing usage row as a separate failure: the callback is expected to log completed successful requests.
@@ -181,5 +358,5 @@ If the request fails, it is still useful to check whether the file exists, but d
 After running the test, add a one-line summary here before committing:
 
 ```text
-RESULT: PENDING
+RESULT: WORKING. Ready for next step. 
 ```
