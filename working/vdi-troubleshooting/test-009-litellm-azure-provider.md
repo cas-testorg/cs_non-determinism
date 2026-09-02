@@ -87,7 +87,41 @@ Capture the relevant startup output below. Do not include credentials.
 ### Proxy startup result
 
 ```text
-PASTE RESULT HERE
+ .\set-env-vars.ps1
+AZURE_API_BASE = https://corestory-genai-sa.openai.azure.com/
+AZURE_API_VERSION = 2025-04-01-preview
+AZURE_API_KEY set = True
+(.venv) PS C:\Users\carys\token-metering> litellm --config .\config.yaml --port 4000
+←[32mINFO←[0m:     Started server process [←[36m%d←[0m]
+←[32mINFO←[0m:     Waiting for application startup.
+
+   ██╗     ██╗████████╗███████╗██╗     ██╗     ███╗   ███╗
+   ██║     ██║╚══██╔══╝██╔════╝██║     ██║     ████╗ ████║
+   ██║     ██║   ██║   █████╗  ██║     ██║     ██╔████╔██║
+   ██║     ██║   ██║   ██╔══╝  ██║     ██║     ██║╚██╔╝██║
+   ███████╗██║   ██║   ███████╗███████╗███████╗██║ ╚═╝ ██║
+   ╚══════╝╚═╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝     ╚═╝
+
+
+←[1;37m#------------------------------------------------------------#←[0m
+←[1;37m#                                                            #←[0m
+←[1;37m#       'This feature doesn't meet my needs because...'       #←[0m
+←[1;37m#        https://github.com/BerriAI/litellm/issues/new        #←[0m
+←[1;37m#                                                            #←[0m
+←[1;37m#------------------------------------------------------------#←[0m
+
+ Thank you for using LiteLLM! - Krrish & Ishaan
+
+
+
+←[1;31mGive Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new←[0m
+
+
+←[32mLiteLLM: Proxy initialized with Config, Set models:←[0m
+←[32m    gpt-5.4←[0m
+←[92m12:50:16 - LiteLLM:WARNING←[0m: utils.py:2898 - register_model: model=8b0a4659cf250fb2135b7940dee052bf2fc834d62511964ba0574efcad031c37 not in built-in cost map and no prefix/region variant matched; cache cost fields will default to 0. To track cache cost, add cache_creation_input_token_cost and cache_read_input_token_cost to model_info
+←[32mINFO←[0m:     Application startup complete.
+←[32mINFO←[0m:     Uvicorn running on ←[1m%s://%s:%d←[0m (Press CTRL+C to quit)
 ```
 
 ## 5. Test LiteLLM's Responses API route
