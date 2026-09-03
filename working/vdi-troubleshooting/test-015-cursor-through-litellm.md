@@ -45,7 +45,9 @@ Any visible custom-model/provider options:
 ### Existing Cursor configuration
 
 ```text
-PASTE NON-SECRET CONFIGURATION HERE
+Model Name = corestory-genai-gtp-5.4.  This is a custom model.
+Current OpenAI Base URL = https://corestory-genai-sa.openai.azure.com/openai/v1
+Override is Enabled.
 ```
 
 If possible, take a screenshot for your own records, but do not commit a screenshot if it contains credentials or customer-sensitive information.
