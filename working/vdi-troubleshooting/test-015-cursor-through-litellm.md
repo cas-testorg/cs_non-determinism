@@ -77,7 +77,36 @@ Leave this window visible so the request path can be observed.
 ### LiteLLM startup result
 
 ```text
-PASTE ONLY RELEVANT STARTUP/ERROR OUTPUT HERE
+←[32mINFO←[0m:     Started server process [←[36m%d←[0m]
+←[32mINFO←[0m:     Waiting for application startup.
+
+   ██╗     ██╗████████╗███████╗██╗     ██╗     ███╗   ███╗
+   ██║     ██║╚══██╔══╝██╔════╝██║     ██║     ████╗ ████║
+   ██║     ██║   ██║   █████╗  ██║     ██║     ██╔████╔██║
+   ██║     ██║   ██║   ██╔══╝  ██║     ██║     ██║╚██╔╝██║
+   ███████╗██║   ██║   ███████╗███████╗███████╗██║ ╚═╝ ██║
+   ╚══════╝╚═╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝     ╚═╝
+
+
+←[1;37m#------------------------------------------------------------#←[0m
+←[1;37m#                                                            #←[0m
+←[1;37m#            'The thing I wish you improved is...'            #←[0m
+←[1;37m#        https://github.com/BerriAI/litellm/issues/new        #←[0m
+←[1;37m#                                                            #←[0m
+←[1;37m#------------------------------------------------------------#←[0m
+
+ Thank you for using LiteLLM! - Krrish & Ishaan
+
+
+
+←[1;31mGive Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new←[0m
+
+
+←[32mLiteLLM: Proxy initialized with Config, Set models:←[0m
+←[32m    gpt-5.4←[0m
+←[92m13:39:12 - LiteLLM:WARNING←[0m: utils.py:2898 - register_model: model=8b0a4659cf250fb2135b7940dee052bf2fc834d62511964ba0574efcad031c37 not in built-in cost map and no prefix/region variant matched; cache cost fields will default to 0. To track cache cost, add cache_creation_input_token_cost and cache_read_input_token_cost to model_info
+←[32mINFO←[0m:     Application startup complete.
+←[32mINFO←[0m:     Uvicorn running on ←[1m%s://%s:%d←[0m (Press CTRL+C to quit)
 ```
 
 ### 4. Configure the Cursor custom model to use LiteLLM
@@ -118,7 +147,9 @@ Get-Content $env:USERPROFILE\token-metering\token_usage.jsonl -Tail 3 -ErrorActi
 ### Token log before Cursor
 
 ```text
-PASTE RESULT HERE
+{"ts": "2026-09-02T21:39:43.024979+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 4.81, "input_tokens": 14625, "cached_input_tokens": 14080, "uncached_input_tokens": 545, "output_tokens": 310, "reasoning_tokens": 235, "visible_output_tokens": 75, "total_tokens": 14935}
+{"ts": "2026-09-02T21:39:52.095795+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 9.047, "input_tokens": 19230, "cached_input_tokens": 14464, "uncached_input_tokens": 4766, "output_tokens": 592, "reasoning_tokens": 541, "visible_output_tokens": 51, "total_tokens": 19822}
+{"ts": "2026-09-02T21:39:57.695767+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 5.42, "input_tokens": 15276, "cached_input_tokens": 14976, "uncached_input_tokens": 300, "output_tokens": 435, "reasoning_tokens": 335, "visible_output_tokens": 100, "total_tokens": 15711}
 ```
 
 ### 6. Send a trivial Cursor prompt
