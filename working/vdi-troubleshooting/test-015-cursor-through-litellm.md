@@ -16,55 +16,30 @@ Test 015 moves to Cursor, which is the more relevant client for the customer wor
 
 This test answers two separate questions:
 
-1. Can Cursor route its custom GPT-5.4 model traffic through the validated LiteLLM proxy?
+1. Can Cursor route its GPT-5.4 model traffic through the validated LiteLLM proxy?
 2. If model routing works, can Cursor inspect local repository files despite the endpoint policy that blocked Codex child-process execution?
 
 Do **not** introduce CoreStory MCP yet. The goal is to isolate Cursor first.
 
-Do not change multiple variables at once. If a step fails, preserve the exact evidence and stop before changing unrelated settings.
-
 ---
 
-## Phase A — Cursor model routing only
+## Phase A — Cursor model routing
 
-### 1. Record the existing Cursor custom-model configuration
+### Starting Cursor configuration
 
-Before changing Cursor, record the current non-secret configuration below.
-
-Do **not** paste API keys, bearer tokens, customer credentials, or other secrets.
-
-Record only values such as:
+The pre-test configuration was recorded as:
 
 ```text
-Cursor version:
-Current custom model name:
-Current OpenAI-compatible base URL:
-Any visible custom-model/provider options:
-```
-
-### Existing Cursor configuration
-
-```text
-Model Name = corestory-genai-gtp-5.4.  This is a custom model.
+Model Name = corestory-genai-gtp-5.4 (custom model)
 Current OpenAI Base URL = https://corestory-genai-sa.openai.azure.com/openai/v1
-Override is Enabled.
+Override OpenAI Base URL = enabled
 ```
 
-If possible, take a screenshot for your own records, but do not commit a screenshot if it contains credentials or customer-sensitive information.
+No API keys or customer credentials are recorded in this document.
 
-### 2. Stop the previous LiteLLM process
+### LiteLLM startup
 
-If LiteLLM is still running from Test 014, stop it:
-
-```text
-Ctrl+C
-```
-
-Do not change `config.yaml` or `usage_logger.py`.
-
-### 3. Start LiteLLM for Cursor
-
-From the token-metering PowerShell window:
+LiteLLM was started with:
 
 ```powershell
 Set-Location $env:USERPROFILE\token-metering
@@ -72,188 +47,159 @@ $env:RUN_LABEL="test-015-cursor-litellm"
 litellm --config .\config.yaml --port 4000
 ```
 
-Leave this window visible so the request path can be observed.
-
-### LiteLLM startup result
+Observed startup:
 
 ```text
-←[32mINFO←[0m:     Started server process [←[36m%d←[0m]
-←[32mINFO←[0m:     Waiting for application startup.
-
-   ██╗     ██╗████████╗███████╗██╗     ██╗     ███╗   ███╗
-   ██║     ██║╚══██╔══╝██╔════╝██║     ██║     ████╗ ████║
-   ██║     ██║   ██║   █████╗  ██║     ██║     ██╔████╔██║
-   ██║     ██║   ██║   ██╔══╝  ██║     ██║     ██║╚██╔╝██║
-   ███████╗██║   ██║   ███████╗███████╗███████╗██║ ╚═╝ ██║
-   ╚══════╝╚═╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝     ╚═╝
-
-
-←[1;37m#------------------------------------------------------------#←[0m
-←[1;37m#                                                            #←[0m
-←[1;37m#            'The thing I wish you improved is...'            #←[0m
-←[1;37m#        https://github.com/BerriAI/litellm/issues/new        #←[0m
-←[1;37m#                                                            #←[0m
-←[1;37m#------------------------------------------------------------#←[0m
-
- Thank you for using LiteLLM! - Krrish & Ishaan
-
-
-
-←[1;31mGive Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new←[0m
-
-
-←[32mLiteLLM: Proxy initialized with Config, Set models:←[0m
-←[32m    gpt-5.4←[0m
-←[92m13:39:12 - LiteLLM:WARNING←[0m: utils.py:2898 - register_model: model=8b0a4659cf250fb2135b7940dee052bf2fc834d62511964ba0574efcad031c37 not in built-in cost map and no prefix/region variant matched; cache cost fields will default to 0. To track cache cost, add cache_creation_input_token_cost and cache_read_input_token_cost to model_info
-←[32mINFO←[0m:     Application startup complete.
-←[32mINFO←[0m:     Uvicorn running on ←[1m%s://%s:%d←[0m (Press CTRL+C to quit)
+LiteLLM: Proxy initialized with Config, Set models:
+    gpt-5.4
+Application startup complete.
 ```
 
-### 4. Configure the Cursor custom model to use LiteLLM
+The existing LiteLLM cache-cost-map warning was also present. This warning was already shown not to block request routing or token measurement in earlier tests.
 
-Use Cursor's existing custom OpenAI/OpenAI-compatible model configuration and change only what is necessary to point it at the local proxy.
+### Cursor test configuration
 
-Target values:
+Cursor was changed to the following intended test state:
 
 ```text
-Model:    gpt-5.4
-Base URL: http://localhost:4000/v1
-API key:  sk-local
+Model selected/enabled: GPT-5.4
+OpenAI API key: sk-local
+Use OpenAI API key: enabled
+Override OpenAI Base URL: enabled
+OpenAI Base URL: http://localhost:4000/v1
 ```
 
-`sk-local` is only the throwaway client value used for this local LiteLLM test. Do not commit the actual contents of any customer API-key field.
+The settings were closed and reopened to confirm persistence. Cursor was also restarted and the test repeated without changing the configuration.
 
-Important:
+When `Use OpenAI API key` was enabled, Cursor displayed an orange `1` indicator next to Models. This is recorded only as an observed UI state; no interpretation is assigned to it.
 
-- Keep the model name `gpt-5.4`.
-- Do not change the Azure configuration behind LiteLLM.
-- Do not enable CoreStory MCP for this test if it can be disabled without disturbing the customer's normal setup.
-- Do not change Cursor rules, skills, or other agent configuration merely to make the test pass.
+### Control prompt
 
-### Cursor LiteLLM configuration result
-
-```text
-PASTE NON-SECRET RESULT OR NOTES HERE
-```
-
-### 5. Record the token-log boundary
-
-Before sending anything from Cursor:
-
-```powershell
-Get-Content $env:USERPROFILE\token-metering\token_usage.jsonl -Tail 3 -ErrorAction SilentlyContinue
-```
-
-### Token log before Cursor
-
-```text
-{"ts": "2026-09-02T21:39:43.024979+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 4.81, "input_tokens": 14625, "cached_input_tokens": 14080, "uncached_input_tokens": 545, "output_tokens": 310, "reasoning_tokens": 235, "visible_output_tokens": 75, "total_tokens": 14935}
-{"ts": "2026-09-02T21:39:52.095795+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 9.047, "input_tokens": 19230, "cached_input_tokens": 14464, "uncached_input_tokens": 4766, "output_tokens": 592, "reasoning_tokens": 541, "visible_output_tokens": 51, "total_tokens": 19822}
-{"ts": "2026-09-02T21:39:57.695767+00:00", "run": "test-014-codex-agent-baseline", "model": "gpt-5.4", "call_type": "aresponses", "latency_s": 5.42, "input_tokens": 15276, "cached_input_tokens": 14976, "uncached_input_tokens": 300, "output_tokens": 435, "reasoning_tokens": 335, "visible_output_tokens": 100, "total_tokens": 15711}
-```
-
-### 6. Send a trivial Cursor prompt
-
-Start a **new Cursor chat/session** to minimize contamination from prior context.
-
-Select the custom `gpt-5.4` model that was pointed at LiteLLM.
-
-Send exactly:
+A new Cursor chat was started and the following prompt was sent:
 
 ```text
 Reply with exactly: CURSOR_LITELLM_OK
 ```
 
-Do not ask Cursor to inspect files yet.
-
-### Cursor routing result
+### Cursor result
 
 ```text
-PASTE CURSOR RESPONSE/ERROR HERE
+CURSOR_LITELLM_OK
 ```
 
-### 7. Immediately inspect the LiteLLM console
+Cursor returned the requested response successfully. There were no visible model/provider errors or other notable errors.
 
-This is the most important diagnostic boundary in Phase A.
-
-Record the request path and HTTP status generated by Cursor.
-
-Examples:
+### LiteLLM result
 
 ```text
-POST /v1/responses HTTP/1.1        200 OK
+No request observed in the LiteLLM console.
+No Test 015 row written to token_usage.jsonl.
 ```
 
-or:
+The test was repeated after restarting Cursor, with the same result.
+
+### Negative control
+
+To determine whether Cursor was honoring the configured OpenAI Base URL at all, the Base URL was temporarily changed to a deliberately unused local endpoint:
 
 ```text
-POST /v1/chat/completions HTTP/1.1 ...
+http://127.0.0.1:65534/v1
 ```
 
-### LiteLLM request path result
+A new Cursor chat was started and the following prompt was sent:
 
 ```text
-PASTE RELEVANT REQUEST/STATUS LINES HERE
+Reply with exactly: CURSOR_NEGATIVE_CONTROL_OK
 ```
 
-Do not change LiteLLM if Cursor uses a different endpoint. Preserve the result first.
-
-### 8. Capture Cursor token rows
-
-```powershell
-Get-Content $env:USERPROFILE\token-metering\token_usage.jsonl |
-    Select-String '"run": "test-015-cursor-litellm"'
-```
-
-### Phase A token rows
+Cursor successfully returned:
 
 ```text
-PASTE RESULT HERE
+CURSOR_NEGATIVE_CONTROL_OK
 ```
 
-### Phase A decision
+Because the configured endpoint was deliberately unreachable, a successful response demonstrates that this tested Cursor model path did not depend on the configured OpenAI Base URL.
 
-Continue to Phase B only if Cursor successfully reaches LiteLLM and receives a valid GPT-5.4 response.
+### Phase A evidence summary
 
-If Cursor does **not** reach LiteLLM, stop. The next investigation is Cursor custom-provider routing, not Azure or the logger.
+```text
+Configured LiteLLM Base URL:      http://localhost:4000/v1
+Use OpenAI API key:               enabled
+Override OpenAI Base URL:         enabled
+Cursor response:                  CURSOR_LITELLM_OK
+LiteLLM request observed:         NO
+Test 015 JSONL row observed:      NO
 
-If Cursor reaches LiteLLM but receives an error, preserve the exact LiteLLM request path and error before changing anything.
+Negative-control Base URL:        http://127.0.0.1:65534/v1
+Negative-control Cursor response: CURSOR_NEGATIVE_CONTROL_OK
+```
+
+### Phase A conclusion
+
+**PHASE A: FAIL — selected Cursor model path did not honor the configured OpenAI Base URL.**
+
+This failure occurs before the validated LiteLLM boundary. It does **not** indicate a failure in Azure GPT-5.4, LiteLLM routing, the Responses API path, or the token logger; those components were independently proven in Tests 009–013.
+
+The negative control materially strengthens the conclusion: Cursor continued to answer successfully when configured with an unreachable local Base URL.
+
+A plausible remaining distinction is whether the selected `GPT-5.4` entry is a Cursor-managed model path while the previously configured `corestory-genai-gtp-5.4` entry represents a distinct custom/BYOK path. This is a hypothesis to test, not a conclusion.
+
+---
+
+## Phase A follow-up — custom model routing check
+
+Before moving to repository inspection, restore:
+
+```text
+OpenAI Base URL: http://localhost:4000/v1
+```
+
+Then inspect the model selector in the actual Cursor chat.
+
+If both the built-in/managed GPT-5.4 entry and the previously configured custom model are available, explicitly select the custom model:
+
+```text
+corestory-genai-gtp-5.4
+```
+
+With LiteLLM still running, start a new chat and send:
+
+```text
+Reply with exactly: CURSOR_CUSTOM_MODEL_OK
+```
+
+Record:
+
+```text
+Exact model name shown in chat:
+Cursor response/error:
+LiteLLM request path/status:
+Test 015 JSONL row, if any:
+```
+
+### Custom model routing result
+
+```text
+PENDING
+```
+
+Do not proceed to Phase B until a Cursor interaction is actually observed by LiteLLM.
 
 ---
 
 ## Phase B — Cursor local repository inspection
 
-Run this phase only after Phase A succeeds.
+**NOT RUN.**
 
-### 9. Open the existing neutral repository in Cursor
+Phase B remains blocked on proving Cursor → LiteLLM routing.
 
-Open:
+Once routing is proven, open:
 
 ```text
 C:\Users\carys\codex-metering-test
 ```
 
-This is the tiny repository created for Test 014. It contains:
-
-```text
-README.md
-app.py
-calculator.py
-```
-
-Do not use customer source yet.
-
-### 10. Start a fresh Cursor chat/session
-
-Use the same custom `gpt-5.4` model routed through LiteLLM.
-
-Do not change the LiteLLM process or run label.
-
-Before sending the prompt, note the current number of Test 015 token rows if useful.
-
-### 11. Ask Cursor to inspect one known file
-
-Send:
+and ask:
 
 ```text
 Read calculator.py in the currently open repository. What concrete behavioral limitation exists in the multiply function? Do not modify any files. Answer in two sentences or fewer.
@@ -265,110 +211,20 @@ Expected substance:
 The implementation uses range(b) and repeated addition. A negative value for b produces an empty range, so negative multipliers are not handled correctly.
 ```
 
-Exact wording is not important.
-
-### Cursor repository-inspection result
-
-```text
-PASTE CURSOR RESPONSE/ERROR HERE
-```
-
-If Cursor reports a policy/tool-execution error, preserve it exactly. Do not broaden permissions or bypass endpoint controls.
-
-### 12. Capture the LiteLLM request lines from Phase B
-
-### Phase B LiteLLM request result
-
-```text
-PASTE RELEVANT REQUEST/STATUS LINES HERE
-```
-
-### 13. Capture all Test 015 token rows
-
-```powershell
-Get-Content $env:USERPROFILE\token-metering\token_usage.jsonl |
-    Select-String '"run": "test-015-cursor-litellm"'
-```
-
-### All Test 015 token rows
-
-```text
-PASTE RESULT HERE
-```
-
-Preserve every row. Cursor may make multiple model requests for one user interaction.
-
-### 14. Calculate aggregate Test 015 usage
-
-```powershell
-$rows = Get-Content $env:USERPROFILE\token-metering\token_usage.jsonl |
-    ForEach-Object { $_ | ConvertFrom-Json } |
-    Where-Object { $_.run -eq "test-015-cursor-litellm" }
-
-[pscustomobject]@{
-    Requests            = @($rows).Count
-    InputTokens         = ($rows | Measure-Object input_tokens -Sum).Sum
-    CachedInputTokens   = ($rows | Measure-Object cached_input_tokens -Sum).Sum
-    UncachedInputTokens = ($rows | Measure-Object uncached_input_tokens -Sum).Sum
-    OutputTokens        = ($rows | Measure-Object output_tokens -Sum).Sum
-    ReasoningTokens     = ($rows | Measure-Object reasoning_tokens -Sum).Sum
-    VisibleOutputTokens = ($rows | Measure-Object visible_output_tokens -Sum).Sum
-    TotalTokens         = ($rows | Measure-Object total_tokens -Sum).Sum
-} | Format-List
-```
-
-### Aggregate Test 015 usage
-
-```text
-PASTE RESULT HERE
-```
-
 ---
-
-## Validation criteria
-
-### Phase A passes when
-
-```text
-Cursor custom model is gpt-5.4
-Cursor is configured to use http://localhost:4000/v1
-Cursor returns CURSOR_LITELLM_OK
-LiteLLM records the Cursor request
-Azure GPT-5.4 returns successfully
-The token logger records non-zero usage
-```
-
-### Phase B passes when
-
-```text
-Cursor can inspect calculator.py
-Cursor correctly identifies the multiply limitation
-No repository files are modified
-LiteLLM records the model traffic generated by the interaction
-Token usage is captured for the interaction
-```
-
-## Interpretation matrix
-
-| Phase A | Phase B | Interpretation |
-|---|---|---|
-| Pass | Pass | Cursor is viable for the measured customer workflow. Next step can introduce CoreStory MCP. |
-| Pass | Blocked by policy | Model metering works, but customer endpoint controls also constrain Cursor repository access. Preserve as an environment prerequisite/blocker. |
-| Fail before LiteLLM | Not run | Cursor custom-model/provider routing is the remaining problem. Azure/LiteLLM/logger are already independently proven. |
-| Reaches LiteLLM but fails | Not run | Diagnose the exact Cursor request shape/path against the known-good LiteLLM Responses configuration. |
 
 ## Important methodology note
 
-A successful Test 015 does **not** prove that every Cursor model call traverses the custom endpoint. It proves that the tested Cursor interaction does. During later benchmark runs, LiteLLM request logs and token rows remain the evidence for which calls were actually observed.
+A successful future Cursor test will prove only that the tested Cursor interaction traversed LiteLLM. It should not automatically be interpreted as proof that every internal Cursor model call uses the custom endpoint. During later benchmark runs, LiteLLM request logs and JSONL token rows remain the evidence for which calls were actually observed.
 
-Likewise, do not use Codex Test 014 token totals as a direct Cursor baseline. Codex and Cursor are different agents with different context construction and tool behavior.
+Likewise, Codex token totals should not be used as a direct Cursor baseline. Codex and Cursor are different agents with different context construction and tool behavior.
 
 ## Result summary
 
 ```text
-PHASE A: PENDING
-PHASE B: PENDING
-OVERALL: PENDING
+PHASE A: FAIL — Cursor answered normally but no traffic reached LiteLLM.
+NEGATIVE CONTROL: CONFIRMED — Cursor answered normally with an unreachable Base URL.
+CUSTOM MODEL FOLLOW-UP: PENDING
+PHASE B: NOT RUN
+OVERALL: BLOCKED ON CURSOR ROUTING
 ```
-
-Commit this file with the results before introducing CoreStory MCP or customer source.
