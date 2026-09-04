@@ -39,7 +39,8 @@ Do not modify the customer skill or CoreStory rule merely to make an individual 
 ```text
 TC-001  Race-free floating-point accumulation / reduction      PASS
 TC-002  Worker-state carryover / boundary reset                PASS
-TC-003  Commit-order dependence / first-writer-wins            NOT RUN
+TC-003  Commit-order dependence / first-writer-wins            PASS
+TC-004  Gate-inactive / determinism-control propagation        NOT RUN
 ```
 
 Only broaden the test suite after reviewing the prior test's transcript and evidence.
@@ -54,7 +55,13 @@ TC-001 also showed that substantial local mechanical search may still occur afte
 
 TC-002 validated the worker-state carryover / boundary-reset proof discipline. Cursor used CoreStory first, established real worker reuse and dynamic assignment in `ctsMtMgr`, verified that a concrete `fmaxcgSolverImpl` per-thread gradient near-candidate is neutralized after merge, distinguished stack-local/job-local state from pooled-worker state, and declined to manufacture a Real finding when no stale-state-to-observable-result chain could be proven. The workflow test was classified **PASS**.
 
-TC-002 also confirmed the narrowing concern from TC-001: CoreStory generated useful candidate areas, but Cursor still performed substantial broad local lifecycle/reset/per-thread searches. TC-003 therefore tests whether CoreStory can establish a more complete cross-file relationship path before local discovery.
+TC-002 also confirmed the narrowing concern from TC-001: CoreStory generated useful candidate areas, but Cursor still performed substantial broad local lifecycle/reset/per-thread searches.
+
+### TC-003 result
+
+TC-003 validated commit-order / first-writer-wins reasoning and produced the clearest CoreStory narrowing result so far. CoreStory identified a concrete `ctomtGlsParallelBufPlans` / `driverInfo::_winner` relationship path spanning parallel plan evaluation, selection, and downstream handling. Cursor then used targeted local source inspection to prove that the candidate was neutralized: `_winner` is updated post-join, `selectBestPerDriver` performs deterministic arbitration first, and no completion-order reshuffling was established.
+
+The workflow test was classified **PASS**. Unlike TC-001 and TC-002, no broad product-wide local discovery search was observed; local work was predominantly validation of CoreStory-supplied paths. TC-004 therefore shifts to a configuration/control propagation problem to test whether that narrowing benefit holds when the required causal chain crosses option definition, default behavior, propagation, and the actual parallel execution site.
 
 ## Per-test structure
 
@@ -83,4 +90,4 @@ For each test:
 
 ## Current test
 
-Proceed with `tc-003-commit-order-dependence/`.
+Proceed with `tc-004-gate-inactive/`.
