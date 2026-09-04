@@ -41,10 +41,10 @@ TC-001  Race-free floating-point accumulation / reduction      PASS
 TC-002  Worker-state carryover / boundary reset                PASS
 TC-003  Commit-order dependence / first-writer-wins            PASS
 TC-004  Gate-inactive / determinism-control propagation        PASS
-TC-005  Concurrent container / iteration-order dependence      NOT RUN
+TC-005  Concurrent container / iteration-order dependence      PASS
 ```
 
-Only broaden the test suite after reviewing the prior test's transcript and evidence.
+The five-test set is sufficient to pause automatic expansion and review the pattern with the internal team before defining TC-006.
 
 ### TC-001 result
 
@@ -70,7 +70,17 @@ TC-004 validated gate/control propagation reasoning. CoreStory helped surface an
 
 The workflow test was classified **PASS**. TC-004 reinforces the narrowing improvement from TC-003: CoreStory helped reduce a potentially broad search for flags, locks, and thread gates into targeted validation of a concrete control-to-execution path.
 
-TC-005 now tests a different cross-file/data-flow pattern: whether CoreStory can identify a parallel producer -> shared/merged container -> downstream order-sensitive consumer path, and whether Cursor can prove or dismiss preserved insertion/iteration order without falling back to a product-wide search for container operations.
+### TC-005 result
+
+TC-005 validated concurrent-container / iteration-order reasoning. CoreStory identified several concrete producer/container candidates, including parallel violated-path collection, concurrent-vector insertion, and MT path aggregation. Cursor verified the downstream behavior of the strongest candidates and found deterministic neutralizers: sort/unique, conversion to ordered sets, or stable job-index aggregation before an order-sensitive observable consumer.
+
+The workflow test was classified **PASS**. CoreStory remained the primary discovery mechanism and most local work was targeted validation. After repeated CoreStory refinement could not establish a complete Real path, Cursor did perform a late broader repository search for `tbb::concurrent_vector` / `concurrent_vector` patterns. This is a small narrowing regression compared with TC-003 and TC-004, but it was an explicit fallback rather than a bypass of the CoreStory-first workflow.
+
+## Cross-test observation
+
+Across all five tests, the combined workflow consistently preserved the customer's proof discipline: multi-threaded reachability, mechanism-specific variability, downstream observable impact, and neutralizers were investigated before any Real classification. No test manufactured a Real finding when the evidence was incomplete.
+
+The CoreStory narrowing result improved over the sequence. TC-001 and TC-002 still involved substantial local mechanical search after CoreStory discovery. TC-003 and TC-004 showed the strongest narrowing, with CoreStory supplying concrete cross-file causal/control paths and local work becoming primarily validation. TC-005 retained that pattern for most of the investigation, with one late broad-search fallback after CoreStory could not close an end-to-end order-sensitive path.
 
 ## Per-test structure
 
@@ -97,6 +107,6 @@ For each test:
 8. Classify the test itself as PASS, PARTIAL, FAIL, or INCONCLUSIVE.
 9. Do not interpret a workflow test as proof of customer-wide defect coverage.
 
-## Current test
+## Current status
 
-Proceed with `tc-005-container-order-dependence/`.
+Pause automatic test-suite expansion after TC-005. Review the five-test pattern with the internal team and use feedback, customer priorities, or a clearly identified coverage gap to decide whether TC-006 is warranted before the next customer meeting.
