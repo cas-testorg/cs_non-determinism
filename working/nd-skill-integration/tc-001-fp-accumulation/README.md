@@ -10,14 +10,17 @@ NOT RUN
 
 Evaluate the interaction between:
 
-- the customer's `prove-nd-mt` skill, and
-- the existing CoreStory `code-analysis-v2.mdc` rule
+- the customer's `prove-nd-mt` skill,
+- the existing CoreStory `code-analysis-v2.mdc` rule, and
+- Cursor agent behavior
 
 using one narrowly defined multi-threaded nondeterminism mechanism:
 
 > race-free but order-dependent floating-point accumulation or reduction.
 
 This is an integration/workflow test. It is **not** intended to establish defect coverage for the customer codebase.
+
+Token metering, LiteLLM routing, JSONL analysis, and model-request accounting are explicitly **out of scope** for this test.
 
 ## Why this mechanism
 
@@ -60,6 +63,25 @@ Expected relevant behavior includes:
 - require a causal chain to observable impact;
 - avoid manufacturing findings.
 
+## Clean Cursor test boundary
+
+Before running TC-001:
+
+1. Back up or preserve the existing Cursor chat/session history.
+2. Do not use an existing ND investigation chat for this test.
+3. Start a fresh Cursor agent chat.
+4. Confirm the customer ND skill is available.
+5. Confirm the CoreStory rule is active.
+6. Confirm CoreStory MCP is available.
+7. Run only the exact TC-001 prompt below.
+8. Do not add follow-up steering during the initial run.
+9. Preserve the Cursor transcript and relevant visible tool activity.
+10. Stop after the first complete run and record the results before changing anything.
+
+The purpose of the fresh chat is to minimize carryover from prior agent conversation context and make the Cursor/CoreStory interaction easier to evaluate.
+
+Do not delete prior chats as part of the test; preserve them as historical evidence.
+
 ## Controls
 
 Before running, record the following in `results.md`:
@@ -71,6 +93,9 @@ Agent/client version:
 Model:
 CoreStory project/workspace:
 Repository/revision under investigation:
+Existing Cursor sessions backed up/preserved: YES/NO
+TC-001 started in a fresh Cursor chat: YES/NO
+Prior TC-001 conversation context in new chat: NONE / DESCRIBE
 Customer skill installed/available: YES/NO
 CoreStory rule installed/active: YES/NO
 CoreStory MCP available: YES/NO
@@ -82,8 +107,6 @@ Do not change the skill or rule for this test.
 Do not introduce the Workflow Dispatcher yet.
 
 Do not provide a known defect location to the agent.
-
-Start a fresh agent conversation where practical.
 
 ## Exact test prompt
 
@@ -109,11 +132,12 @@ Return only the strongest supported candidate, or state that the available evide
 
 Do not correct or steer the agent during the initial run.
 
-Capture enough evidence to reconstruct the sequence of investigation, especially:
+Capture enough evidence to reconstruct the Cursor investigation sequence, especially:
 
 ```text
-CoreStory queries/tool calls
-Local repository searches/tool calls
+User prompt sent
+CoreStory queries/tool calls visible in Cursor
+Local repository searches/tool calls visible in Cursor
 Files/symbols inspected
 Candidate identified
 Parallel dispatch evidence
@@ -158,21 +182,20 @@ parallel dispatch
 
 Did it look for a determinism-restoring mechanism before calling the candidate Real?
 
-### D. Efficiency observations
+### D. Cursor interaction observations
 
 Record, where observable:
 
 ```text
-Number of CoreStory interactions
-Number of local repository search operations
-Number of files inspected
-Any broad repo-wide searches
-Any repeated searches for information CoreStory had already supplied
-Wall-clock time (optional)
-Token usage (optional; do not block the test if unavailable)
+CoreStory interactions
+Local repository search/read operations
+Files inspected
+Broad repo-wide searches
+Repeated searches for information CoreStory had already supplied
+Unexpected agent behavior or tool selection
 ```
 
-Token measurement is useful but is not required for TC-001 to be valid.
+The purpose of these observations is to understand how Cursor applies the skill and rule, not to calculate token or model-request efficiency.
 
 ## Test outcome criteria
 
@@ -202,10 +225,10 @@ Examples:
 
 ### INCONCLUSIVE
 
-Use when infrastructure/tooling prevents the workflow from being meaningfully evaluated.
+Use when Cursor, CoreStory MCP, repository access, or another required test dependency prevents the workflow from being meaningfully evaluated.
 
 ## Stop condition
 
-Stop after the first complete run and record the results before changing the prompt, skill, rule, model, or environment.
+Stop after the first complete run and record the results before changing the prompt, skill, rule, model, environment, or Cursor configuration.
 
 Do not proceed immediately to another ND mechanism. Review TC-001 first and use its evidence to decide what TC-002 should test.
