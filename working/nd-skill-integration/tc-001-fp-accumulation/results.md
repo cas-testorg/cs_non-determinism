@@ -15,6 +15,9 @@ Agent/client version:
 Model:
 CoreStory project/workspace:
 Repository/revision:
+Existing Cursor sessions backed up/preserved:
+TC-001 started in a fresh Cursor chat:
+Prior TC-001 conversation context in new chat:
 Customer skill installed/available:
 CoreStory rule installed/active:
 CoreStory MCP available:
@@ -31,15 +34,21 @@ Use the exact prompt from `README.md`. Do not edit the prompt here after the run
 PASTE FINAL RESPONSE HERE
 ```
 
-## Investigation trace
+## Cursor investigation trace
+
+### User prompt sent
+
+```text
+PASTE THE EXACT PROMPT ACTUALLY SENT HERE
+```
 
 ### CoreStory interactions
 
 ```text
-PASTE OR SUMMARIZE COREStory TOOL CALLS/QUERIES HERE
+PASTE OR SUMMARIZE CORESTORY TOOL CALLS/QUERIES VISIBLE IN CURSOR HERE
 ```
 
-Count:
+Count where practical:
 
 ```text
 CoreStory interactions:
@@ -48,15 +57,21 @@ CoreStory interactions:
 ### Local repository operations
 
 ```text
-PASTE OR SUMMARIZE LOCAL SEARCH/READ OPERATIONS HERE
+PASTE OR SUMMARIZE LOCAL SEARCH/READ OPERATIONS VISIBLE IN CURSOR HERE
 ```
 
 Count where practical:
 
 ```text
-Local repository searches:
+Local repository searches/reads:
 Files inspected:
 Broad repo-wide searches:
+```
+
+### Unexpected agent/tool behavior
+
+```text
+RECORD ANY UNEXPECTED TOOL CHOICE, BYPASS, RETRY, FAILURE, OR OTHER OBSERVATION HERE
 ```
 
 ## Candidate and causal evidence
@@ -144,19 +159,18 @@ Notes:
 NOTES HERE
 ```
 
-## Efficiency observations
+## Cursor interaction observations
 
 ```text
 CoreStory interactions:
-Local repository searches:
+Local repository searches/reads:
 Files inspected:
 Broad repo-wide searches:
 Repeated/redundant searches:
-Wall-clock time:
-Token usage:
+Unexpected agent behavior:
 ```
 
-Token usage is optional for this test.
+This section is intentionally limited to observable Cursor behavior. Token metering, LiteLLM routing, JSONL analysis, request counts, and token-efficiency metrics are out of scope for TC-001.
 
 ## Test verdict
 
