@@ -40,7 +40,8 @@ Do not modify the customer skill or CoreStory rule merely to make an individual 
 TC-001  Race-free floating-point accumulation / reduction      PASS
 TC-002  Worker-state carryover / boundary reset                PASS
 TC-003  Commit-order dependence / first-writer-wins            PASS
-TC-004  Gate-inactive / determinism-control propagation        NOT RUN
+TC-004  Gate-inactive / determinism-control propagation        PASS
+TC-005  Concurrent container / iteration-order dependence      NOT RUN
 ```
 
 Only broaden the test suite after reviewing the prior test's transcript and evidence.
@@ -61,7 +62,15 @@ TC-002 also confirmed the narrowing concern from TC-001: CoreStory generated use
 
 TC-003 validated commit-order / first-writer-wins reasoning and produced the clearest CoreStory narrowing result so far. CoreStory identified a concrete `ctomtGlsParallelBufPlans` / `driverInfo::_winner` relationship path spanning parallel plan evaluation, selection, and downstream handling. Cursor then used targeted local source inspection to prove that the candidate was neutralized: `_winner` is updated post-join, `selectBestPerDriver` performs deterministic arbitration first, and no completion-order reshuffling was established.
 
-The workflow test was classified **PASS**. Unlike TC-001 and TC-002, no broad product-wide local discovery search was observed; local work was predominantly validation of CoreStory-supplied paths. TC-004 therefore shifts to a configuration/control propagation problem to test whether that narrowing benefit holds when the required causal chain crosses option definition, default behavior, propagation, and the actual parallel execution site.
+The workflow test was classified **PASS**. Unlike TC-001 and TC-002, no broad product-wide local discovery search was observed; local work was predominantly validation of CoreStory-supplied paths.
+
+### TC-004 result
+
+TC-004 validated gate/control propagation reasoning. CoreStory helped surface and narrow a concrete path around `cts.optimize.delay_insertion_enable_mt`, while Cursor verified that the explicit option defaults false but revision-based enablement makes the MT accessor true under the default enhancement revision. The agent traced that control through the live GRE delay-insertion path into multi-threaded execution, then correctly stopped short of a Real ND classification because variable observable behavior was not established and the post-join commit appeared stable.
+
+The workflow test was classified **PASS**. TC-004 reinforces the narrowing improvement from TC-003: CoreStory helped reduce a potentially broad search for flags, locks, and thread gates into targeted validation of a concrete control-to-execution path.
+
+TC-005 now tests a different cross-file/data-flow pattern: whether CoreStory can identify a parallel producer -> shared/merged container -> downstream order-sensitive consumer path, and whether Cursor can prove or dismiss preserved insertion/iteration order without falling back to a product-wide search for container operations.
 
 ## Per-test structure
 
@@ -90,4 +99,4 @@ For each test:
 
 ## Current test
 
-Proceed with `tc-004-gate-inactive/`.
+Proceed with `tc-005-container-order-dependence/`.
