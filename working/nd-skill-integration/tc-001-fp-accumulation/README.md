@@ -87,19 +87,19 @@ Do not delete prior chats as part of the test; preserve them as historical evide
 Before running, record the following in `results.md`:
 
 ```text
-Date/time:
-Agent/client:
-Agent/client version:
-Model:
-CoreStory project/workspace:
-Repository/revision under investigation:
-Existing Cursor sessions backed up/preserved: YES/NO
-TC-001 started in a fresh Cursor chat: YES/NO
-Prior TC-001 conversation context in new chat: NONE / DESCRIBE
-Customer skill installed/available: YES/NO
-CoreStory rule installed/active: YES/NO
-CoreStory MCP available: YES/NO
-Other relevant rules/skills active:
+Date/time: Friday, September 4, 2026 9:07:50 AM
+Agent/client: Cursor
+Agent/client version: Version: 3.18.25
+Model: gtp-5.4
+CoreStory project/workspace: cts-code https://corestory.synopsys.com/chat/10
+Repository/revision under investigation: NA
+Existing Cursor sessions backed up/preserved: YES
+TC-001 started in a fresh Cursor chat: YES
+Prior TC-001 conversation context in new chat: NONE
+Customer skill installed/available: YES
+CoreStory rule installed/active: YES
+CoreStory MCP available: YES
+Other relevant rules/skills active: rules/code-analysis-v2.mdc
 ```
 
 Do not change the skill or rule for this test.
