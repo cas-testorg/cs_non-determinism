@@ -1,0 +1,211 @@
+# TC-001 — Race-Free Floating-Point Accumulation
+
+## Status
+
+```text
+NOT RUN
+```
+
+## Objective
+
+Evaluate the interaction between:
+
+- the customer's `prove-nd-mt` skill, and
+- the existing CoreStory `code-analysis-v2.mdc` rule
+
+using one narrowly defined multi-threaded nondeterminism mechanism:
+
+> race-free but order-dependent floating-point accumulation or reduction.
+
+This is an integration/workflow test. It is **not** intended to establish defect coverage for the customer codebase.
+
+## Why this mechanism
+
+The customer skill explicitly identifies non-associative floating-point reduction as an observable MT nondeterminism sink when accumulation order can vary. It also requires proving MT reachability and checking for deterministic canonicalization before classifying a candidate as Real.
+
+This mechanism therefore exercises several important behaviors without starting with an unrestricted repository-wide ND investigation.
+
+## Artifacts under test
+
+### Skill
+
+```text
+references/SKILL.md
+```
+
+Expected relevant behavior includes:
+
+- distinguish race-free ordering defects from data races;
+- prove the code actually executes under multi-threading;
+- identify the parallel dispatch site;
+- recognize that a mutex does not make floating-point accumulation deterministic;
+- inspect downstream observable consumers;
+- verify whether a post-join canonicalization pass neutralizes the condition;
+- verify canonicalizer coverage rather than trusting its name;
+- identify missing evidence rather than guessing.
+
+### Rule
+
+```text
+archive/legacy-static-evaluation/test-case-2-corestory/rules/code-analysis-v2.mdc
+```
+
+Expected relevant behavior includes:
+
+- use CoreStory as the primary source of application intelligence;
+- preserve the investigation objective in CoreStory queries;
+- use CoreStory to narrow components/files/functions/call paths/shared state/consumers;
+- inspect targeted local source after application context is established;
+- distinguish observed evidence from inference;
+- require a causal chain to observable impact;
+- avoid manufacturing findings.
+
+## Controls
+
+Before running, record the following in `results.md`:
+
+```text
+Date/time:
+Agent/client:
+Agent/client version:
+Model:
+CoreStory project/workspace:
+Repository/revision under investigation:
+Customer skill installed/available: YES/NO
+CoreStory rule installed/active: YES/NO
+CoreStory MCP available: YES/NO
+Other relevant rules/skills active:
+```
+
+Do not change the skill or rule for this test.
+
+Do not introduce the Workflow Dispatcher yet.
+
+Do not provide a known defect location to the agent.
+
+Start a fresh agent conversation where practical.
+
+## Exact test prompt
+
+Send the following as a single prompt without additional steering:
+
+```text
+Investigate the repository for multi-threaded nondeterminism caused by race-free but order-dependent floating-point accumulation.
+
+Use the prove-nd-mt skill and follow the CoreStory code-analysis rule.
+
+Start by using CoreStory to identify likely parallel execution paths, shared floating-point accumulators or reductions, and their downstream consumers.
+
+For any candidate, do not classify it as Real until you establish:
+1. the code actually executes under multi-threading,
+2. accumulation order can vary,
+3. the value reaches an observable consumer, and
+4. no complete deterministic canonicalization occurs before that consumer.
+
+Return only the strongest supported candidate, or state that the available evidence is insufficient.
+```
+
+## During execution
+
+Do not correct or steer the agent during the initial run.
+
+Capture enough evidence to reconstruct the sequence of investigation, especially:
+
+```text
+CoreStory queries/tool calls
+Local repository searches/tool calls
+Files/symbols inspected
+Candidate identified
+Parallel dispatch evidence
+Shared accumulator/reduction evidence
+Synchronization evidence
+Downstream consumer evidence
+Canonicalization/neutralization investigation
+Final classification
+Missing evidence stated by agent
+```
+
+If the agent encounters a tooling failure, preserve it rather than changing several variables mid-run.
+
+## Evaluation questions
+
+### A. Skill activation and reasoning
+
+- Did the agent actually apply MT-specific reasoning?
+- Did it distinguish a data race from race-free order dependence?
+- Did it require MT reachability rather than infer concurrency from a lock?
+- Did it treat locking as race protection rather than proof of determinism?
+- Did it investigate canonicalization/neutralization?
+
+### B. CoreStory rule behavior
+
+- Was CoreStory used before broad local repository exploration?
+- Were CoreStory queries phrased around the defect mechanism and application relationships rather than generic text search?
+- Did CoreStory narrow the local source investigation?
+- Did the agent use local source to validate rather than replace application-level intelligence?
+
+### C. Evidence quality
+
+For an elevated candidate, did the agent establish:
+
+```text
+parallel dispatch
+    -> shared/order-sensitive floating-point operation
+    -> variable accumulation order
+    -> downstream consumer
+    -> observable result
+```
+
+Did it look for a determinism-restoring mechanism before calling the candidate Real?
+
+### D. Efficiency observations
+
+Record, where observable:
+
+```text
+Number of CoreStory interactions
+Number of local repository search operations
+Number of files inspected
+Any broad repo-wide searches
+Any repeated searches for information CoreStory had already supplied
+Wall-clock time (optional)
+Token usage (optional; do not block the test if unavailable)
+```
+
+Token measurement is useful but is not required for TC-001 to be valid.
+
+## Test outcome criteria
+
+### PASS
+
+The combined workflow:
+
+- uses CoreStory to narrow the investigation;
+- follows the customer's MT-specific proof discipline;
+- validates targeted source evidence;
+- investigates neutralization/canonicalization;
+- and either produces one causally supported candidate or explicitly concludes evidence is insufficient.
+
+### PARTIAL
+
+The workflow reaches a reasonable conclusion but materially skips either the CoreStory-first behavior or an important skill-required proof step.
+
+### FAIL
+
+Examples:
+
+- CoreStory is bypassed despite being available;
+- the agent labels any locked floating-point accumulation deterministic solely because a mutex exists;
+- the agent claims a Real defect without proving MT reachability or observable impact;
+- the agent performs a broad speculative scan and returns unsupported findings;
+- the agent ignores a discovered canonicalization mechanism without evaluating it.
+
+### INCONCLUSIVE
+
+Use when infrastructure/tooling prevents the workflow from being meaningfully evaluated.
+
+## Stop condition
+
+Stop after the first complete run and record the results before changing the prompt, skill, rule, model, or environment.
+
+Do not proceed immediately to another ND mechanism. Review TC-001 first and use its evidence to decide what TC-002 should test.
