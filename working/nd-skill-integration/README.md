@@ -38,8 +38,8 @@ Do not modify the customer skill or CoreStory rule merely to make an individual 
 
 ```text
 TC-001  Race-free floating-point accumulation / reduction      PASS
-TC-002  Worker-state carryover / boundary reset                NOT RUN
-TC-003  TBD after TC-002 review
+TC-002  Worker-state carryover / boundary reset                PASS
+TC-003  Commit-order dependence / first-writer-wins            NOT RUN
 ```
 
 Only broaden the test suite after reviewing the prior test's transcript and evidence.
@@ -48,7 +48,13 @@ Only broaden the test suite after reviewing the prior test's transcript and evid
 
 TC-001 validated the combined workflow on race-free, order-dependent floating-point accumulation. Cursor used CoreStory early, narrowed several candidate surfaces, performed targeted local validation, investigated MT reachability and neutralization, and correctly declined to elevate an unsupported candidate. The workflow test was classified **PASS**.
 
-TC-001 also showed that substantial local mechanical search may still occur after CoreStory discovery. TC-002 therefore adds an explicit narrowing question: can CoreStory establish worker lifecycle, reuse, mutable state, reset boundaries, and downstream relationships well enough to reduce the breadth of subsequent local proof work?
+TC-001 also showed that substantial local mechanical search may still occur after CoreStory discovery.
+
+### TC-002 result
+
+TC-002 validated the worker-state carryover / boundary-reset proof discipline. Cursor used CoreStory first, established real worker reuse and dynamic assignment in `ctsMtMgr`, verified that a concrete `fmaxcgSolverImpl` per-thread gradient near-candidate is neutralized after merge, distinguished stack-local/job-local state from pooled-worker state, and declined to manufacture a Real finding when no stale-state-to-observable-result chain could be proven. The workflow test was classified **PASS**.
+
+TC-002 also confirmed the narrowing concern from TC-001: CoreStory generated useful candidate areas, but Cursor still performed substantial broad local lifecycle/reset/per-thread searches. TC-003 therefore tests whether CoreStory can establish a more complete cross-file relationship path before local discovery.
 
 ## Per-test structure
 
@@ -77,4 +83,4 @@ For each test:
 
 ## Current test
 
-Proceed with `tc-002-worker-state-carryover/`.
+Proceed with `tc-003-commit-order-dependence/`.
