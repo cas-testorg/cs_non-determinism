@@ -37,12 +37,18 @@ Do not modify the customer skill or CoreStory rule merely to make an individual 
 ## Controlled test sequence
 
 ```text
-TC-001  Race-free floating-point accumulation / reduction
-TC-002  TBD after TC-001 review
+TC-001  Race-free floating-point accumulation / reduction      PASS
+TC-002  Worker-state carryover / boundary reset                NOT RUN
 TC-003  TBD after TC-002 review
 ```
 
 Only broaden the test suite after reviewing the prior test's transcript and evidence.
+
+### TC-001 result
+
+TC-001 validated the combined workflow on race-free, order-dependent floating-point accumulation. Cursor used CoreStory early, narrowed several candidate surfaces, performed targeted local validation, investigated MT reachability and neutralization, and correctly declined to elevate an unsupported candidate. The workflow test was classified **PASS**.
+
+TC-001 also showed that substantial local mechanical search may still occur after CoreStory discovery. TC-002 therefore adds an explicit narrowing question: can CoreStory establish worker lifecycle, reuse, mutable state, reset boundaries, and downstream relationships well enough to reduce the breadth of subsequent local proof work?
 
 ## Per-test structure
 
@@ -71,4 +77,4 @@ For each test:
 
 ## Current test
 
-Start with `tc-001-fp-accumulation/`.
+Proceed with `tc-002-worker-state-carryover/`.
