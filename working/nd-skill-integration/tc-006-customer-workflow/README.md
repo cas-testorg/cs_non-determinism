@@ -37,10 +37,10 @@ Record any model/tooling deviation in the results. A deviation does not automati
 Before running TC-006, record whether each input is actually available:
 
 ```text
-CTS source path/revision known:                         YES / NO
-CoreStory project corresponding to CTS source known:   YES / NO
-nd-code-analyzer skill available:                      YES / NO
-prove-nd-mt skill available:                           YES / NO
+CTS source path/revision known:                        YES / Path is known revision is not
+CoreStory project corresponding to CTS source known:   YES 
+nd-code-analyzer skill available:                      YES 
+prove-nd-mt skill available:                           YES
 base prove-nd skill available:                         YES / NO
 /create-cli-agent available:                           YES / NO
 requested discovery model available:                   YES / NO
