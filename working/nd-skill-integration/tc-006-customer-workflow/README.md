@@ -1,92 +1,110 @@
-# TC-006 — Customer CTS ND Discovery + Verification Workflow
+# TC-006 — Customer ND Pattern Catalog + CoreStory Discovery/Verification
 
 ## Purpose
 
-Evaluate the customer-described CTS nondeterminism workflow end to end without requiring an exact reproduction of the customer's Linux orchestration infrastructure.
+Evaluate whether the customer's nondeterminism knowledge can be combined with CoreStory application intelligence to discover and verify multi-threaded ND candidates in CTS, without requiring an exact reproduction of the customer's Linux scanner/orchestration/report-generation infrastructure.
 
-The customer workflow is logically:
+TC-001 through TC-005 started from a preselected ND mechanism and primarily exercised `prove-nd-mt` verification. TC-006 starts from the customer's own ND pattern catalog and asks the agent to discover candidates before verifying them.
 
-```text
-top-level request
-    -> nd-code-analyzer discovery
-    -> candidate/result artifact
-    -> create-cli-agent
-         -> clean verifier context
-         -> prove-nd / prove-nd-mt
-         -> specified verification model
-         -> clean verification result
-    -> final result
-```
-
-TC-001 through TC-005 primarily exercised the verification/proof side using preselected MT mechanisms. TC-006 shifts the test boundary to broad discovery -> isolated verification -> final findings.
-
-This remains workflow validation. It is not yet the Coverity ground-truth benchmark because the customer Coverity findings have not yet been provided.
-
-## Customer-provided workflow
-
-Representative customer prompt:
+The test is therefore:
 
 ```text
-using /u/ranjithp/.claude/skills/nd-code-analyzer/SKILL.md, find out possible non determinism issues from CTS module located here : <path>
-
-Specifically do a scan for finding out ND issues from multi-threaded code.
-
-Verify if the reported issues are real with /prove-nd-mt using a /create-cli-agent with GPT-5.5-xtra-high
+customer ND pattern catalog
+    -> CoreStory-assisted semantic discovery / triage
+    -> candidate artifact
+    -> clean verifier context
+    -> prove-nd + prove-nd-mt + CoreStory
+    -> verified findings
 ```
 
-Customer model guidance:
+This is a **controlled workflow emulation**, not an exact reproduction of the customer's Linux tooling. It is also not yet the Coverity ground-truth benchmark.
 
-- discovery: Opus 4.8 xhigh or Opus 5 high
-- verification: GPT-5.5-xtra-high via `/create-cli-agent`
+## Customer knowledge available
 
-The known customer skills are preserved under:
+The customer-supplied material preserved under `working/nd-skill-integration/skills/` now includes:
 
 ```text
-working/nd-skill-integration/skills/
-├── nd-code-analyzer/
-├── prove-nd/
-└── non-determinism/   # prove-nd-mt
+nd-code-analyzer/SKILL.md
+prove-nd/SKILL.md
+non-determinism/SKILL.md        # prove-nd-mt
+references/nd-patterns.yaml     # scanner source of truth
+references/nd-patterns.md       # narrative/LLM mirror
 ```
 
-## Important orchestration constraint
+`nd-patterns.md` states that the YAML is the source of truth for the scanner and the Markdown mirror is intended for LLM triage to understand pattern intent, severity, and fixes.
 
-`create-cli-agent` is a customer-specific Linux process that depends on `cursor-agent`. It accepts a prompt and model, runs the verification in a clean agent context, and writes a clean result document.
+The catalog distinguishes:
 
-The current test environment may not reproduce that wrapper, `cursor-agent`, or the exact customer model combination.
+- **Tier 1** patterns: regex-detectable, where the match itself is expected to be a relatively high-quality candidate.
+- **Tier 2** patterns: regex is only a seed; surrounding code and application semantics must be analyzed before classifying the candidate.
 
-Therefore TC-006 is defined as a **controlled workflow emulation**, not an infrastructure-equivalence test.
+For this test, the catalog is the customer knowledge basis. We are not attempting to recreate report-generation plumbing or every helper script.
 
-The experimental property that must be preserved is **verification-context isolation**. If `create-cli-agent` cannot be used, emulate it manually by starting a new clean Cursor conversation for the verification phase and passing only the candidate artifact/context that the discovery phase produced.
+## MT-focused catalog scope
 
-Record every orchestration/model substitution. Do not describe the run as an exact reproduction of the customer's production workflow unless the original wrapper and requested models are actually used.
+The customer specifically asked for a scan of multi-threaded code. TC-006 therefore prioritizes the catalog patterns that require MT/concurrency reasoning rather than running an unrestricted test of every general ND category.
 
-## Customer skill behavior that must be preserved
+### Parallel / Tier-2 patterns
 
-### nd-code-analyzer
+The catalog includes:
 
-The discovery skill has its own required workflow, including:
+- **3.1 — Parallel floating-point reduction**
+- **3.2 — Multi-threaded shared container writes**
+- **3.5 — Thread-count dependency in algorithm sizing**
+- **3.6 — Post-collection use without canonical ordering** when the collection source is parallel/unstable
+- **3.7 — Project wrapper containers with order-sensitive use** when insertion/consumption is affected by MT execution
 
-- Stage 1 mechanical scan using its scanner/pattern catalog,
-- Stage 2 LLM triage,
-- Stage 3 Tier-2 deep read,
-- downstream-observability proof,
-- neutralizer detection,
-- real/non-real classification,
-- optional parallel triage when its thresholds are met.
+### Concurrency / MT-ND patterns
 
-**Do not replace or suppress the skill's mandated mechanical scan merely to force a CoreStory-first pattern.**
+The catalog also includes six explicitly MT-oriented Tier-2 classes:
 
-CoreStory should augment the customer's discovery workflow where application intelligence is useful: reachability, cross-file relationships, callers/callees, shared state, downstream consumers, controls, neutralizers, and candidate qualification.
+- **4.1 — Lazy dirty-bit recompute inside a const getter**
+- **4.2 — First-touch materialization / inconsistent lazy-cache lock**
+- **4.3 — Mutable non-atomic counter RMW on a const path**
+- **4.4 — `concurrent_hash_map` accessor check-then-act**
+- **4.5 — Condition-variable lost-wakeup shape**
+- **4.6 — Address-keyed lock striping anti-pattern**
 
-### prove-nd / prove-nd-mt
+These are static source patterns. A pattern match is not automatically a Real ND finding. Reachability, MT execution, downstream observability, controls, and neutralizers must still be established using the customer proof methodology.
 
-The base `prove-nd` skill and the MT extension require proof of downstream observability before a finding is Real. `prove-nd-mt` adds MT reachability, race-vs-ordering reasoning, gate audits, reset/canonicalization checks, and MT-specific neutralizers.
+## Experimental question
 
-The base skill explicitly prohibits sub-agents during verification. The customer's `create-cli-agent` wrapper is treated as the outer orchestration mechanism that launches a clean verifier; the verifier itself should not recursively spawn additional sub-agents.
+The primary question is:
+
+> Given the customer's ND pattern knowledge, can CoreStory application intelligence help the agent move from broad static pattern candidates to application-specific, evidence-backed ND candidates and then support isolated `prove-nd-mt` verification?
+
+We are deliberately separating **customer ND knowledge** from **customer implementation plumbing**.
+
+The test does not require:
+
+- the original `scan_nd.py` implementation,
+- report-generation scripts,
+- the Linux-only `create-cli-agent` wrapper,
+- `cursor-agent`, or
+- exact customer model availability.
+
+Those differences must be recorded as workflow deviations, but they do not prevent evaluation of the CoreStory integration hypothesis.
+
+## CoreStory role
+
+CoreStory does **not** replace the customer pattern catalog.
+
+The catalog supplies the defect hypotheses and triage questions. CoreStory should be used where application intelligence can answer questions such as:
+
+- Where does this construct participate in actual parallel execution?
+- What dispatch/thread-pool/TBB path reaches it?
+- Is the state shared, worker-local, object-local, or effectively thread-confined?
+- What callers and downstream consumers observe the value/order/state?
+- Does a candidate reach QoR, design mutation, output, ranking, selection, or another observable result?
+- Are there stable sorts, canonicalizers, resets, gates, locks, atomics, post-join recomputations, or other neutralizers?
+- Are there sibling implementations that establish the intended locking/canonicalization discipline?
+- Does a configuration/control actually propagate to the execution path?
+
+Local source inspection remains the mechanism-validation step.
 
 ## Required inputs / pre-run gate
 
-Record each item before execution:
+Record before execution:
 
 ```text
 CTS source path known:                                YES / NO
@@ -95,193 +113,210 @@ CoreStory project corresponding to CTS source known:  YES / NO
 nd-code-analyzer skill available:                     YES / NO
 prove-nd skill available:                             YES / NO
 prove-nd-mt skill available:                          YES / NO
-nd-code-analyzer scripts/references available:        YES / NO
-/create-cli-agent available:                          YES / NO
-cursor-agent available:                               YES / NO
-requested discovery model available:                  YES / NO
-GPT-5.5-xtra-high verification model available:       YES / NO
+references/nd-patterns.md available:                  YES / NO
+references/nd-patterns.yaml available:                YES / NO
 CoreStory rule installed/active:                      YES / NO
 CoreStory MCP available:                              YES / NO
+requested discovery model available:                  YES / NO
+requested verification model available:               YES / NO
+create-cli-agent available:                           YES / NO
 ```
 
-### Pre-run decision
+Missing exact models or `create-cli-agent` does not block this test. Missing the customer pattern catalog, proof skills, CTS source, or CoreStory access does.
 
-If the three customer skills or required `nd-code-analyzer` scanner assets are missing, do not run TC-006 as a customer-workflow test.
-
-If `create-cli-agent`, `cursor-agent`, or the requested models are unavailable, TC-006 may proceed as a documented workflow emulation using the two-phase procedure below.
-
-## Two-phase execution model
-
-### TC-006A — Discovery
-
-Goal: reproduce the customer discovery behavior without preselecting a specific ND mechanism.
+## Execution controls
 
 1. Preserve prior Cursor sessions/artifacts.
-2. Start a fresh Cursor chat.
-3. Record Cursor version and discovery model actually used.
-4. Confirm `nd-code-analyzer` and its scanner assets are available.
-5. Confirm the CoreStory rule and MCP are active.
-6. Use the discovery prompt below.
-7. Allow `nd-code-analyzer` to perform its mandated mechanical scan.
-8. Do not provide TC-001 through TC-005 candidate locations/findings.
-9. Do not provide Coverity findings or hidden ground truth.
-10. Preserve the discovery output/candidate artifact exactly as produced.
-11. Do not manually improve, curate, or reorder candidates before verification unless the customer workflow itself requires that behavior.
+2. Do not expose TC-001 through TC-005 candidate locations/findings.
+3. Do not provide Coverity findings or hidden ground truth.
+4. Do not preselect a single candidate or source file.
+5. Use the customer pattern catalog as the discovery basis.
+6. Keep the CoreStory code-analysis rule active.
+7. Preserve all candidate classifications, including dismissed and unresolved candidates.
+8. Do not promote a pattern match to Real without semantic proof.
+9. Record model/tool/orchestration deviations.
+10. Token metering is out of scope.
 
-#### Discovery prompt
+# TC-006A — Pattern-guided discovery
 
-Replace only `<CTS_PATH>`.
+## Goal
+
+Discover plausible MT ND candidates in CTS using the customer's pattern catalog as the defect knowledge base and CoreStory as application intelligence.
+
+This phase intentionally does **not** require the original scanner implementation. The objective is not to compare regex engines. It is to determine whether the same customer-defined ND hypotheses can drive useful CoreStory-assisted semantic discovery.
+
+## Discovery prompt
+
+Replace `<CTS_PATH>` with the actual CTS source path. Adjust only the skill paths if required by the local test environment.
 
 ```text
-Using /u/ranjithp/.claude/skills/nd-code-analyzer/SKILL.md, find possible nondeterminism issues from the CTS module located here: <CTS_PATH>
+Investigate the CTS module located at <CTS_PATH> for possible multi-threaded nondeterminism issues.
 
-Specifically, scan for nondeterminism issues in multi-threaded code.
+Use the customer nd-code-analyzer skill and the customer ND Pattern Catalog in references/nd-patterns.md and references/nd-patterns.yaml as the discovery methodology.
 
-Follow the CoreStory code-analysis rule while performing the customer's nd-code-analyzer workflow.
+Focus on the catalog's multi-threaded and concurrency-relevant Tier-2 patterns, including parallel floating-point reduction, shared-container writes, thread-count-dependent behavior, unstable post-collection ordering, MT-sensitive wrapper-container use, lazy mutable state in const getters, first-touch materialization or inconsistent lazy-cache locking, mutable non-atomic counters on const paths, concurrent-container compound operations, condition-variable lost-wakeup shapes, and address-keyed lock striping.
 
-Produce the candidate/result artifact that should be handed to the verification step. Do not verify the candidates yet.
+Follow the CoreStory code-analysis rule. Use CoreStory application intelligence to identify likely execution paths, parallel dispatch, shared state, callers, downstream consumers, controls, sibling implementations, and possible neutralizers. Use targeted local source inspection to validate the actual code mechanism.
+
+A pattern match is only a candidate. Do not classify candidates as Real during this discovery phase unless the discovery skill itself requires a preliminary classification. Preserve missing evidence and neutralizers.
+
+Produce a concise candidate artifact for a separate clean verification step. For each candidate include:
+- pattern/catalog ID and mechanism,
+- file/function/symbol,
+- why it matched the customer pattern,
+- evidence of possible MT reachability,
+- shared or mutable state involved,
+- known downstream consumer/observable effect, if established,
+- known control/neutralizer, if established,
+- missing evidence,
+- CoreStory relationships that should be validated by the verifier.
+
+Do not perform the final prove-nd-mt verification yet.
 ```
 
-The explicit phase separation is an experimental adaptation needed to emulate `create-cli-agent` cleanly. It does not change the discovery objective.
+## Discovery behavior to observe
 
-### TC-006B — Verification
+Capture:
 
-Goal: emulate the isolated verification that the customer's `create-cli-agent` process provides.
+- which catalog patterns the agent actually considered,
+- which patterns generated concrete candidates,
+- whether CoreStory was used to identify candidate locations or primarily to qualify candidates found locally,
+- CoreStory queries/interactions,
+- broad local pattern searches,
+- targeted local source reads,
+- candidate count before semantic triage when observable,
+- candidate count handed to verification,
+- candidates dismissed during discovery and why,
+- whether the agent uses the catalog's Tier-1/Tier-2 distinction correctly,
+- whether syntax-only candidates are kept separate from semantically supported candidates.
 
-1. Start a **new clean Cursor conversation**.
-2. Record the verification model actually used.
-3. Make `prove-nd` and `prove-nd-mt` available.
-4. Keep the CoreStory rule and MCP active.
-5. Provide only the discovery candidate/result artifact and minimal instruction needed to verify it.
-6. Do not expose the TC-006A conversation history, prior synthetic-test findings, or hidden ground truth.
-7. Do not manually add mechanism-specific hints that were absent from the discovery artifact.
-8. Do not spawn additional verifier sub-agents if the skill prohibits them.
-9. Preserve the complete verification transcript and clean final result.
+## TC-006A success criteria
 
-#### Verification prompt
+TC-006A is successful when:
 
-Attach or paste the unmodified candidate/result artifact from TC-006A, then use:
+- the customer catalog materially drives discovery,
+- multiple relevant MT/concurrency pattern classes are considered rather than a single mechanism being preselected,
+- CoreStory contributes application context to candidate discovery or qualification,
+- local source inspection validates constructs rather than replacing semantic reasoning with grep alone,
+- obvious neutralizers/non-MT paths are recognized,
+- unsupported candidates are not silently elevated, and
+- a concrete candidate artifact suitable for clean verification is produced.
+
+# TC-006B — Clean verification
+
+## Goal
+
+Verify the TC-006A candidate artifact using the customer's proof methodology in a context isolated from the discovery conversation.
+
+The customer's production workflow uses `create-cli-agent` with GPT-5.5-xtra-high. If that infrastructure is unavailable, emulate its most important experimental property: **a clean verifier context**.
+
+## Clean-context handoff
+
+1. Preserve the exact TC-006A candidate artifact.
+2. Start a new clean Cursor conversation.
+3. Provide the verifier only:
+   - the candidate artifact,
+   - access to CTS source,
+   - `prove-nd`,
+   - `prove-nd-mt`,
+   - the CoreStory rule/MCP.
+4. Do not provide the TC-006A conversation transcript.
+5. Do not add prior synthetic-test findings or hidden ground truth.
+6. Record the actual verification model.
+
+## Verification prompt
 
 ```text
 Verify whether the reported multi-threaded nondeterminism candidates in the supplied discovery artifact are real.
 
-Use the base prove-nd skill and the prove-nd-mt extension. Follow the CoreStory code-analysis rule throughout verification.
+Use the customer base prove-nd skill and the prove-nd-mt extension. Follow the CoreStory code-analysis rule throughout verification.
 
-Preserve the customer skills' classification and proof requirements. Do not call a candidate Real without establishing the required MT reachability, variability mechanism, downstream observable consequence, and absence of a complete neutralizer. State missing evidence explicitly.
+For each candidate, establish or explicitly fail to establish:
+1. actual MT reachability and the parallel dispatch/worker path,
+2. the precise race or race-free ordering mechanism,
+3. the shared/mutable state and relevant access path,
+4. how equivalent runs can vary,
+5. the downstream C++ consumer and observable consequence,
+6. applicable gates, locks, resets, canonicalizers, stable ordering, or other neutralizers, and
+7. the final customer classification with missing evidence stated explicitly.
+
+Use CoreStory to resolve application relationships and targeted local source inspection to validate the code mechanism. Do not call a candidate Real from the pattern match alone.
+
+Return the strongest supported findings and preserve dismissed, neutralized, latent, dead/unreachable, false-positive, and unresolved classifications where applicable.
 ```
 
-If GPT-5.5-xtra-high and `create-cli-agent` are available, use the customer's original verification mechanism instead and record that no emulation was required.
+## Verification behavior to observe
 
-## What to capture
+Capture:
 
-### Discovery phase
-
-Record:
-
-- whether `nd-code-analyzer` activated/read successfully,
-- whether its scanner/pattern catalog executed as designed,
-- candidate count before and after triage,
-- pattern/categories searched,
-- CoreStory interactions during triage/deep-read/observability analysis,
-- local mechanical scan/search operations,
-- any parallel triage/subagent behavior required by the discovery skill,
-- candidates and evidence emitted for verification,
-- whether CoreStory contributed application context beyond the mechanical pattern scan.
-
-### Discovery -> verification handoff
-
-For every candidate sent to verification, capture:
-
-```text
-Candidate ID/name:
-Mechanism/category:
-File/symbol/location:
-Evidence passed from discovery:
-Controls/neutralizers already identified:
-Downstream evidence already identified:
-Verifier model/agent actually used:
-Handoff method: create-cli-agent / manual clean-context emulation
-```
-
-Determine whether the verifier can use the discovery artifact directly or must rediscover substantial application context.
-
-### Verification phase
-
-For each candidate, record:
-
-- MT reachability,
-- source of run-to-run variability,
-- race vs race-free ordering distinction where relevant,
-- shared/worker/ordering mechanism,
-- downstream consumer / observable consequence,
-- controls/gates,
-- neutralizers/canonicalization/reset behavior,
-- final classification,
+- MT reachability proof,
+- race vs race-free ordering reasoning,
+- accessor/reset/gate/canonicalizer sweeps required by `prove-nd-mt`,
+- downstream observable sink proof,
+- CoreStory relationships used,
+- targeted local validation,
+- how much discovery context the verifier must rediscover,
+- final classifications,
 - missing evidence,
-- CoreStory interactions,
-- targeted local source validation,
-- duplicated discovery work.
+- unsupported findings avoided.
 
-## Primary evaluation questions
+# Combined evaluation
 
-1. Does `nd-code-analyzer` generate useful MT ND candidates without us preselecting a mechanism?
-2. Can its mandated mechanical scan coexist with the CoreStory rule without either workflow being distorted?
-3. Where does CoreStory add value after mechanical discovery: triage, reachability, relationships, downstream observability, controls, or neutralizer analysis?
-4. Does the discovery artifact contain enough context for an isolated verifier to continue without redoing most discovery work?
-5. Does `prove-nd` / `prove-nd-mt` preserve its proof discipline in the isolated verification phase?
-6. Are Real, Neutralized, Latent-only, Dead/unused, False-positive, and Unresolved classifications supported rather than inferred from syntax alone?
-7. What investigation work is repeated between discovery and verification?
-8. Does any observed difference appear caused by CoreStory integration versus by orchestration/model substitution?
+## Primary questions
 
-## Pass criteria
+1. Can the customer's pattern catalog serve as the ND knowledge layer without requiring us to reproduce the original scanner implementation?
+2. Does CoreStory help transform broad pattern hypotheses into application-specific candidate paths?
+3. Which catalog classes benefit most from application intelligence versus mechanical source search?
+4. Does CoreStory help establish MT reachability, downstream observability, sibling locking patterns, controls, or neutralizers that are difficult to infer from a local pattern match?
+5. Is the TC-006A artifact sufficient for a clean verifier, or does TC-006B repeat substantial discovery?
+6. Does `prove-nd-mt` preserve its proof discipline when candidates originate from broad catalog-guided discovery?
+7. Are any differences likely caused by model/orchestration substitutions rather than CoreStory integration?
 
-Classify TC-006 **PASS** when the workflow can be executed meaningfully and:
+## PASS
 
-- `nd-code-analyzer` performs its intended discovery workflow,
-- its mechanical scan is preserved rather than replaced by CoreStory,
+Classify TC-006 **PASS** when:
+
+- the customer pattern catalog drives meaningful MT/concurrency discovery,
 - CoreStory contributes useful application intelligence during discovery and/or verification,
-- discovery produces a concrete artifact/candidate set for handoff,
-- verification runs in an isolated clean context,
+- discovery produces a concrete clean-handoff artifact,
+- verification is context-isolated,
 - `prove-nd` / `prove-nd-mt` proof discipline is preserved,
 - downstream consequence and neutralizers are investigated before Real classification,
-- unsupported findings are not promoted to Real,
-- duplicated discovery/verification work is observable and recorded,
-- all model/orchestration deviations are documented.
+- unsupported candidates are not promoted to Real, and
+- workflow/model deviations are recorded.
 
-A Real ND finding is **not required** for workflow PASS.
+A Real ND finding is not required for workflow PASS.
 
-## Partial / fail / inconclusive guidance
-
-### PARTIAL
+## PARTIAL
 
 Examples:
 
-- discovery runs correctly but CoreStory contributes little,
-- isolated verification works but requires substantial rediscovery,
-- important `prove-nd-mt` proof steps are skipped,
-- model/tool substitutions materially affect behavior while still allowing useful evaluation,
-- manual emulation requires intervention beyond clean handoff.
+- the catalog drives discovery but CoreStory contributes little,
+- CoreStory is useful but only after substantial broad local discovery,
+- clean verification requires major rediscovery,
+- important proof steps are skipped,
+- model/tool substitutions materially limit interpretation while still producing useful evidence.
 
-### FAIL
+## FAIL
 
 Examples:
 
-- the customer's mechanical discovery workflow is suppressed or replaced,
-- suspicious code patterns are promoted to Real without proof,
-- CoreStory rule is ignored despite being available,
-- verification is not isolated and relies on hidden discovery conversation context,
-- known substitutions are hidden and the run is presented as an exact customer-environment reproduction.
+- the customer pattern catalog is effectively ignored,
+- suspicious syntax is promoted to Real without semantic proof,
+- CoreStory is available but the rule is ignored,
+- verification relies on hidden discovery context rather than the handoff artifact,
+- substitutions are hidden and the run is represented as exact customer-workflow reproduction.
 
-### INCONCLUSIVE
+## INCONCLUSIVE
 
-Use when missing customer skill assets, scanner dependencies, CoreStory connectivity, or other tooling prevent a meaningful discovery/verification workflow.
+Use when missing CTS source, pattern references, proof skills, CoreStory connectivity, or severe tooling limitations prevent meaningful discovery/verification.
 
-## Relationship to the customer benchmarks
+# Relationship to customer benchmark
 
-TC-006 validates workflow compatibility and handoff behavior. It does **not** establish recall or precision against Coverity.
+TC-006 tests workflow compatibility and the usefulness of CoreStory when applying the customer's ND knowledge. It does not establish recall/precision against Coverity.
 
-When Scott provides the Coverity findings for `POINTER_NONDETERMINISM`, `UNINIT`, and `UNINIT_CTOR`, use those as ground truth in a separate benchmark phase rather than contaminating this workflow-validation run.
+When the Coverity findings for `POINTER_NONDETERMINISM`, `UNINIT`, and `UNINIT_CTOR` become available, use them as ground truth in a separate benchmark phase rather than exposing them during TC-006.
 
-## Stop condition
+# Stop condition
 
-Run TC-006A and TC-006B once, preserve the evidence, and review the combined result before defining additional synthetic tests.
+Run TC-006A once. Review and preserve its candidate artifact before starting TC-006B. Run TC-006B once in a clean context. Review the combined evidence before adding further synthetic tests.
