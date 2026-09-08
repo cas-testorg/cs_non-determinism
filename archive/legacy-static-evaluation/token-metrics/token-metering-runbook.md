@@ -2,7 +2,7 @@
 title: Metering coding-agent token usage through LiteLLM
 category: Windows / Linux setup · Internal
 environment: Windows 10/11 or AlmaLinux 8.10 VM · Python 3.12 · LiteLLM proxy · Azure OpenAI · GPT-5.4
-time: ~30 min
+time: ~30–60 min
 ---
 
 # Metering coding-agent token usage through LiteLLM
@@ -16,7 +16,7 @@ The proxy can run either:
 
 For the current customer environment, the preferred topology is the **AlmaLinux 8.10 VM**. The Windows workstation is locked down, while the Linux host gives us a cleaner place to run the proxy and keeps the measurement point inside the customer environment.
 
-> **Current host note:** the AlmaLinux VM reports Python **3.4.3**. Do not use or replace that interpreter for LiteLLM. AlmaLinux 8.10 provides Python 3.12 as a parallel-installable package. Install and invoke `python3.12` explicitly so system tooling that depends on the existing Python installation is left alone.
+> **Validated current host:** AlmaLinux 8.10, login shell `/bin/tcsh`, system `python3` = **3.6.8**, no sudo access. Python **3.12.14** was successfully built from source and installed under `$HOME/.local/python3.12` without modifying the system Python.
 
 ## How the pieces fit
 
@@ -66,6 +66,7 @@ The goal is a per-request log that can be totaled per task. Capture, when return
 | `output_tokens` | Generated output, including reasoning where reported that way. |
 | `reasoning_tokens` | Reasoning usage when exposed by the API. |
 | `visible_output_tokens` | Output minus reasoning. |
+| `total_tokens` | Total input plus output reported by the API. |
 | request count | Number of model calls used to complete the task. |
 
 The meaningful comparison is the **whole task**, not an individual request.
@@ -74,9 +75,15 @@ The meaningful comparison is the **whole task**, not an individual request.
 
 ## 01 · Install LiteLLM
 
-### AlmaLinux 8.10 — current environment
+### AlmaLinux 8.10 — validated no-sudo path
 
-First verify the host and existing interpreters:
+The current login shell is `tcsh`. The commands in this runbook use Bash syntax, so start Bash first:
+
+```bash
+bash
+```
+
+Verify the host and existing interpreter:
 
 ```bash
 cat /etc/almalinux-release
@@ -85,44 +92,65 @@ which python3
 python3.12 --version 2>/dev/null || true
 ```
 
-The currently observed `python3` version is 3.4.3. That is too old for this proxy setup and should be treated as a system/legacy interpreter, not upgraded in place.
-
-AlmaLinux 8.10 includes Python 3.12 packages that can be installed alongside the existing interpreter.
-
-If you have sudo, install Python 3.12 and its matching pip package:
-
-```bash
-sudo dnf install -y python3.12 python3.12-pip
-```
-
-If `dnf` is unavailable but `yum` is present:
-
-```bash
-sudo yum install -y python3.12 python3.12-pip
-```
-
-Verify the new interpreter explicitly:
-
-```bash
-python3.12 --version
-python3.12 -m pip --version
-```
-
-Expected Python version:
+Observed on the current host:
 
 ```text
-Python 3.12.x
+AlmaLinux release 8.10 (Cerulean Leopard)
+Python 3.6.8
+/bin/python3
 ```
 
-> **Important:** do not change `/usr/bin/python`, `/usr/bin/python3`, alternatives, or the existing Python 3.4.3 installation. Use `python3.12` explicitly for the token-proxy environment.
+Do not replace `/bin/python3` or change system alternatives.
 
-Create a dedicated user-owned working directory and virtual environment:
+Python 3.12 packages are visible in the AlmaLinux repositories, but the current user does not have permission to install them with `sudo dnf`. The validated alternative is a user-local source build.
+
+Before compiling, verify the required compiler and development libraries are already installed:
+
+```bash
+gcc --version
+make --version
+openssl version
+rpm -q gcc make openssl-devel zlib-devel libffi-devel bzip2-devel xz-devel readline-devel sqlite-devel
+```
+
+The current host has the required packages, including GCC 8.5, GNU Make 4.2.1, OpenSSL 1.1.1k, and the required development libraries.
+
+Download and build Python 3.12.14 under the user's home directory:
 
 ```bash
 mkdir -p "$HOME/token-metering"
 cd "$HOME/token-metering"
 
-python3.12 -m venv .venv
+curl -O https://www.python.org/ftp/python/3.12.14/Python-3.12.14.tgz
+tar -xzf Python-3.12.14.tgz
+cd Python-3.12.14
+
+./configure --prefix="$HOME/.local/python3.12" --with-ensurepip=install
+make -j2
+make install
+```
+
+`-j2` intentionally limits build parallelism on the shared/customer VM.
+
+Verify the user-local interpreter and pip:
+
+```bash
+$HOME/.local/python3.12/bin/python3.12 --version
+$HOME/.local/python3.12/bin/python3.12 -m pip --version
+```
+
+Validated output:
+
+```text
+Python 3.12.14
+pip 25.0.1 from /u/carys/.local/python3.12/lib/python3.12/site-packages/pip (python 3.12)
+```
+
+Create the LiteLLM virtual environment using that exact interpreter:
+
+```bash
+cd "$HOME/token-metering"
+$HOME/.local/python3.12/bin/python3.12 -m venv .venv
 source .venv/bin/activate
 
 python --version
@@ -131,9 +159,7 @@ python -m pip install "litellm[proxy]"
 litellm --version
 ```
 
-Once the venv is active, `python` and `pip` should resolve inside `.venv` and use Python 3.12.
-
-Confirm:
+Confirm the environment resolves locally:
 
 ```bash
 which python
@@ -147,35 +173,19 @@ They should point under:
 $HOME/token-metering/.venv/
 ```
 
-#### If Python 3.12 packages are not visible
+> **Every new shell:** if the account starts in `tcsh`, run `bash` first, then `source ~/token-metering/.venv/bin/activate`.
 
-Check the enabled repositories and package availability before changing repository configuration:
+### AlmaLinux alternative when sudo is available
 
-```bash
-sudo dnf repolist
-sudo dnf list --available 'python3.12*'
-```
-
-If `python3.12` is not available, stop and confirm which AlmaLinux repositories are approved/enabled for the VM. Do not download an arbitrary Python build or replace the system interpreter simply to make the proxy work.
-
-#### If `python3.12 -m venv` fails
-
-First confirm the Python 3.12 installation:
+AlmaLinux 8.10 exposes Python 3.12 packages. If administrative installation is approved:
 
 ```bash
-rpm -qa | grep '^python3.12'
+sudo dnf install -y python3.12 python3.12-pip
+python3.12 --version
 python3.12 -m pip --version
 ```
 
-Do not fall back to Python 3.4.3. Resolve the Python 3.12 package/venv issue instead.
-
-#### No sudo
-
-If `python3.12` is already installed, no sudo is needed after that point; create the venv under your home directory as shown above.
-
-If only Python 3.4.3 is available and you cannot install an approved newer interpreter, stop here. Do not modify the system Python. An administrator-installed Python 3.12 package or another approved runtime/container is required.
-
-> **Every new shell:** run `source ~/token-metering/.venv/bin/activate` before using `litellm`.
+Then create `.venv` with `python3.12 -m venv .venv`. Do not replace the system Python.
 
 ### Windows / PowerShell alternative
 
@@ -195,14 +205,24 @@ litellm --version
 
 ## 02 · Set the Azure credentials
 
-Use the same Azure endpoint, deployment, and API version that the custom model already uses successfully.
+Use the same Azure endpoint, model/deployment, and API version that the custom model already uses successfully.
 
-### Linux / Bash
+The validated custom-model configuration uses:
+
+```text
+model = gpt-5.4
+provider = azure
+wire API = responses
+reasoning effort = medium
+base URL = https://corestory-genai-sa.openai.azure.com/openai/v1
+```
+
+For LiteLLM, export the Azure values in the shell that launches the proxy:
 
 ```bash
 export AZURE_API_KEY="<azure-openai-key>"
-export AZURE_API_BASE="https://<your-resource>.openai.azure.com/"
-export AZURE_API_VERSION="<the api-version your Azure deployment uses>"
+export AZURE_API_BASE="https://corestory-genai-sa.openai.azure.com/"
+export AZURE_API_VERSION="2025-04-01-preview"
 ```
 
 Confirm the variables without printing the key:
@@ -298,6 +318,8 @@ class TokenUsageLogger(CustomLogger):
 proxy_handler_instance = TokenUsageLogger()
 ```
 
+The logger supports both Chat Completions-style usage names and Responses API usage names, including `input_tokens_details.cached_tokens` and `output_tokens_details.reasoning_tokens`.
+
 ---
 
 ## 04 · Write the proxy config
@@ -308,19 +330,17 @@ Create `~/token-metering/config.yaml`:
 model_list:
   - model_name: gpt-5.4
     litellm_params:
-      model: azure/<AZURE_DEPLOYMENT_NAME>
+      model: azure/gpt-5.4
       api_base: os.environ/AZURE_API_BASE
       api_key: os.environ/AZURE_API_KEY
       api_version: os.environ/AZURE_API_VERSION
-    model_info:
-      base_model: azure/gpt-5.4
 
 litellm_settings:
   callbacks: usage_logger.proxy_handler_instance
   drop_params: true
 ```
 
-`azure/<AZURE_DEPLOYMENT_NAME>` must use the actual Azure deployment name. `model_name: gpt-5.4` is the friendly model name exposed to the client.
+This configuration has been validated against the current Azure GPT-5.4 deployment.
 
 ---
 
@@ -340,10 +360,13 @@ Leave that shell open.
 From a second SSH/Linux shell:
 
 ```bash
+bash
+cd "$HOME/token-metering"
+source .venv/bin/activate
 ss -ltn | grep ':4000'
 ```
 
-Expected shape:
+Validated listener shape:
 
 ```text
 LISTEN ... 127.0.0.1:4000 ...
@@ -351,29 +374,52 @@ LISTEN ... 127.0.0.1:4000 ...
 
 ---
 
-## 06 · Smoke-test before touching Cursor
+## 06 · Smoke-test the Responses API before touching Cursor
 
-From the Linux VM:
+The working custom model uses the OpenAI Responses API, so the primary smoke test should exercise `/v1/responses` and preserve the configured reasoning effort:
 
 ```bash
-curl -sS http://127.0.0.1:4000/v1/chat/completions \
+curl -sS http://127.0.0.1:4000/v1/responses \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer sk-local' \
   -d '{
     "model": "gpt-5.4",
-    "messages": [
-      {"role": "user", "content": "Say hello in one sentence."}
-    ]
+    "input": "Reply with exactly: proxy test successful",
+    "reasoning": {
+      "effort": "medium"
+    }
   }'
 ```
 
-Then confirm a usage row was written:
+A successful response should contain:
 
-```bash
-tail -n 2 "$HOME/token-metering/token_usage.jsonl"
+```text
+proxy test successful
 ```
 
-Do not change Cursor configuration until this succeeds and the log contains non-zero usage.
+and a `usage` object containing non-zero token counts.
+
+Then confirm the custom logger wrote a row:
+
+```bash
+cat "$HOME/token-metering/token_usage.jsonl"
+```
+
+Validated example:
+
+```json
+{"ts":"<timestamp>","run":"unlabeled","model":"gpt-5.4","call_type":"aresponses","latency_s":1.815,"input_tokens":13,"cached_input_tokens":0,"uncached_input_tokens":13,"output_tokens":22,"reasoning_tokens":13,"visible_output_tokens":9,"total_tokens":35}
+```
+
+The exact counts can vary between calls. What matters at this checkpoint is that the proxy succeeds and the logger records the upstream usage breakdown, including reasoning and visible-output tokens.
+
+At this point the following measurement path is proven:
+
+```text
+local curl → LiteLLM :4000 → Azure OpenAI / GPT-5.4 → Responses API → token_usage.jsonl
+```
+
+Do not change Cursor configuration until this succeeds.
 
 ---
 
@@ -524,6 +570,7 @@ Hold these constant:
 - task text,
 - model/deployment,
 - reasoning effort where configurable,
+- cache state or explicitly account for cached input,
 - Cursor version,
 - customer skills,
 - task scope,
@@ -554,17 +601,18 @@ Do not interpret token difference by itself as a quality improvement. Pair usage
 
 | Symptom | Cause / next check |
 |---|---|
-| `python3 --version` shows 3.4.3 | Expected on the current host. Do not use it. Install/use `python3.12` explicitly. |
-| `python3.12: command not found` | Install `python3.12` and `python3.12-pip` from approved AlmaLinux 8.10 repositories. |
-| `dnf` cannot find `python3.12` | Check enabled repositories with `dnf repolist` and package visibility with `dnf list --available 'python3.12*'`; do not replace system Python. |
-| `python3.12 -m venv .venv` fails | Verify the Python 3.12 RPM stack and pip installation; do not fall back to Python 3.4.3. |
-| `litellm: command not found` | Activate the venv: `source ~/token-metering/.venv/bin/activate`. |
+| Bash redirection reports `Ambiguous output redirect` | The account is probably still in `tcsh`. Run `bash` before using the Bash commands in this runbook. |
+| `python3 --version` shows 3.6.8 | Expected on the current host. Do not use or replace it for LiteLLM. Use the user-local Python 3.12 installation. |
+| `python3.12: command not found` and sudo is unavailable | Verify build dependencies with the `rpm -q` command above, then use the validated user-local Python 3.12 source-build path. |
+| Python source build lacks SSL/zlib/etc. | Stop and verify the matching `*-devel` packages before continuing; do not accept a partially functional Python build. |
+| `litellm: command not found` | Start Bash if needed and activate the venv: `source ~/token-metering/.venv/bin/activate`. |
 | Linux `curl 127.0.0.1:4000` fails | Verify LiteLLM startup output and `ss -ltn \| grep ':4000'`. |
+| Responses API request fails while another API works | Confirm the custom model's wire API and test `/v1/responses`; the validated configuration uses Responses API. |
 | SSH forwarding fails | Run `ssh -v -L 4000:127.0.0.1:4000 <user>@<linux-vm>`; check whether TCP forwarding is allowed and whether local port 4000 is already used. |
 | Windows cannot reach Linux directly | Prefer SSH `-L`; otherwise request an approved firewall/network path. |
 | Rows exist but token counts are zero | Verify the upstream API response actually includes usage and, for streaming APIs, that final usage is returned/aggregated. |
 | `reasoning_tokens` is always zero | The deployment/API may not expose reasoning usage separately. Do not infer a value that was not returned. |
-| Azure returns deployment 404 | Use the actual Azure deployment name in `azure/<deployment-name>`. |
+| Azure returns deployment 404 | Confirm the model/deployment mapping. The current validated LiteLLM mapping is `azure/gpt-5.4`. |
 | No `token_usage.jsonl` | Verify `usage_logger.py` is in the working directory and the callback imports successfully at LiteLLM startup. |
 | Cursor prompt succeeds but no row appears | Cursor bypassed the proxy for that request; do not treat the proxy measurement as complete. |
 
@@ -574,7 +622,7 @@ Do not interpret token difference by itself as a quality improvement. Pair usage
 
 Stop rather than altering the customer environment if any of the following are true:
 
-- Python 3.12 cannot be installed through an approved repository and no approved runtime already exists.
+- Required source-build dependencies are absent and cannot be installed through an approved path.
 - SSH forwarding is disabled and direct port access is not approved.
 - Cursor cannot route the relevant custom-model requests through the proxy.
 - The upstream model response does not expose the usage data required for the comparison.
