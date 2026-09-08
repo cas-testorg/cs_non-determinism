@@ -107,19 +107,19 @@ Local source inspection remains the mechanism-validation step.
 Record before execution:
 
 ```text
-CTS source path known:                                YES / NO
-CTS source revision known:                            YES / NO
-CoreStory project corresponding to CTS source known:  YES / NO
-nd-code-analyzer skill available:                     YES / NO
-prove-nd skill available:                             YES / NO
-prove-nd-mt skill available:                          YES / NO
-references/nd-patterns.md available:                  YES / NO
-references/nd-patterns.yaml available:                YES / NO
-CoreStory rule installed/active:                      YES / NO
-CoreStory MCP available:                              YES / NO
-requested discovery model available:                  YES / NO
-requested verification model available:               YES / NO
-create-cli-agent available:                           YES / NO
+CTS source path known:                                YES 
+CTS source revision known:                            NO
+CoreStory project corresponding to CTS source known:  YES
+nd-code-analyzer skill available:                     YES
+prove-nd skill available:                             YES
+prove-nd-mt skill available:                          YES
+references/nd-patterns.md available:                  YES
+references/nd-patterns.yaml available:                YES
+CoreStory rule installed/active:                      YES
+CoreStory MCP available:                              YES
+requested discovery model available:                  NO
+requested verification model available:               NO
+create-cli-agent available:                           NO
 ```
 
 Missing exact models or `create-cli-agent` does not block this test. Missing the customer pattern catalog, proof skills, CTS source, or CoreStory access does.
