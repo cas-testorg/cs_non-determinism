@@ -1,18 +1,16 @@
 # ND Skill + CoreStory Rule Integration Tests
 
-This working area contains small, repeatable tests for evaluating the customer's nondeterminism skill together with the existing CoreStory code-analysis rule.
+This working area contains small, repeatable tests for evaluating the customer's nondeterminism workflow together with the existing CoreStory code-analysis rule.
 
-The immediate goal is **workflow validation**, not broad defect discovery and not yet a customer benchmark.
+The immediate goal is **workflow validation**, not yet the customer ground-truth benchmark.
 
 ## Inputs under test
 
-### Customer skill
+### Customer workflow
 
-`references/SKILL.md`
+The customer has now clarified that CTS analysis starts with a broad `nd-code-analyzer` scan for possible nondeterminism patterns, with emphasis on multi-threaded code, and then verifies reported candidates with `prove-nd-mt` using a secondary CLI agent.
 
-Current skill metadata identifies it as `prove-nd-mt`, a multi-threaded extension of the customer's base `prove-nd` workflow. It adds concurrency-specific reasoning for data races, race-free order dependence, worker-state carryover, commit-order effects, parallel reductions, gate audits, canonicalization, and related mechanisms.
-
-Important dependency: the skill states that it extends a separate base `prove-nd` skill. That base skill is not assumed to be available unless separately provided.
+`references/SKILL.md` contains the `prove-nd-mt` multi-threaded verification skill currently available in this repository. The customer also identified a separate base `prove-nd` skill and an `nd-code-analyzer` discovery skill as dependencies of the production workflow. Their actual contents must be available before TC-006 can be treated as a faithful workflow reproduction.
 
 ### CoreStory rule
 
@@ -22,17 +20,26 @@ The rule is always applied and directs the agent to use CoreStory as the primary
 
 ## Test philosophy
 
-Each test should isolate one nondeterminism mechanism and answer a small number of questions.
+TC-001 through TC-005 isolated individual MT nondeterminism mechanisms. They primarily validated the `prove-nd-mt` verification discipline together with CoreStory-assisted narrowing.
+
+TC-006 changes the test boundary. It evaluates the customer-described end-to-end CTS workflow:
+
+```text
+broad ND pattern discovery
+    -> candidate generation
+    -> prove-nd-mt verification
+    -> final findings
+```
 
 We want to observe whether:
 
-1. The customer skill supplies the intended ND-specific reasoning discipline.
-2. The CoreStory rule causes application intelligence to be used before broad local repository exploration.
-3. CoreStory helps narrow cross-file/cross-component investigation work.
-4. Required source validation from the customer skill is preserved.
+1. The customer's discovery skill supplies broad ND candidate generation without us preselecting a mechanism.
+2. The customer verification skill preserves the intended ND-specific proof discipline.
+3. The CoreStory rule causes application intelligence to contribute during discovery and/or verification.
+4. CoreStory helps narrow cross-file/cross-component investigation and reduce rediscovery between phases.
 5. Findings remain evidence-backed rather than speculative.
 
-Do not modify the customer skill or CoreStory rule merely to make an individual test pass. Preserve failures and unexpected behavior as evidence first.
+Do not modify the customer skills or CoreStory rule merely to make an individual test pass. Preserve failures and unexpected behavior as evidence first.
 
 ## Controlled test sequence
 
@@ -42,9 +49,8 @@ TC-002  Worker-state carryover / boundary reset                PASS
 TC-003  Commit-order dependence / first-writer-wins            PASS
 TC-004  Gate-inactive / determinism-control propagation        PASS
 TC-005  Concurrent container / iteration-order dependence      PASS
+TC-006  Customer CTS discovery + verification workflow         NOT RUN
 ```
-
-The five-test set is sufficient to pause automatic expansion and review the pattern with the internal team before defining TC-006.
 
 ### TC-001 result
 
@@ -78,9 +84,19 @@ The workflow test was classified **PASS**. CoreStory remained the primary discov
 
 ## Cross-test observation
 
-Across all five tests, the combined workflow consistently preserved the customer's proof discipline: multi-threaded reachability, mechanism-specific variability, downstream observable impact, and neutralizers were investigated before any Real classification. No test manufactured a Real finding when the evidence was incomplete.
+Across TC-001 through TC-005, the combined workflow consistently preserved the customer's verification discipline: multi-threaded reachability, mechanism-specific variability, downstream observable impact, and neutralizers were investigated before any Real classification. No test manufactured a Real finding when the evidence was incomplete.
 
 The CoreStory narrowing result improved over the sequence. TC-001 and TC-002 still involved substantial local mechanical search after CoreStory discovery. TC-003 and TC-004 showed the strongest narrowing, with CoreStory supplying concrete cross-file causal/control paths and local work becoming primarily validation. TC-005 retained that pattern for most of the investigation, with one late broad-search fallback after CoreStory could not close an end-to-end order-sensitive path.
+
+The customer has since clarified that these mechanism-specific tests exercise only part of the intended CTS workflow. The next meaningful test is therefore not another synthetic ND mechanism. TC-006 evaluates the actual discovery -> verification orchestration described by the customer.
+
+## Relationship to customer benchmark
+
+TC-006 is still workflow validation. It should not be interpreted as Coverity recall/precision benchmarking.
+
+The planned ground-truth comparison remains dependent on the Coverity findings Scott said he would provide, including the initial categories discussed with the customer: `POINTER_NONDETERMINISM`, `UNINIT`, and `UNINIT_CTOR`.
+
+The customer also clarified that their ND methodology is primarily static code scanning followed by analysis of whether a reported issue represents real ND risk. Runtime reproduction is often difficult and is not required as the basis for every finding.
 
 ## Per-test structure
 
@@ -103,10 +119,10 @@ For each test:
 4. Do not add steering prompts during the run unless the test explicitly calls for them.
 5. Preserve the model response and relevant tool behavior.
 6. Record CoreStory interactions separately from local repository operations when possible.
-7. Record whether the skill's required proof steps were followed.
+7. Record whether the customer workflow's required proof steps were followed.
 8. Classify the test itself as PASS, PARTIAL, FAIL, or INCONCLUSIVE.
 9. Do not interpret a workflow test as proof of customer-wide defect coverage.
 
-## Current status
+## Current test
 
-Pause automatic test-suite expansion after TC-005. Review the five-test pattern with the internal team and use feedback, customer priorities, or a clearly identified coverage gap to decide whether TC-006 is warranted before the next customer meeting.
+Proceed with `tc-006-customer-workflow/` only after checking its pre-run dependency gate. In particular, do not silently substitute for a missing `nd-code-analyzer` skill and then describe the run as reproduction of the customer workflow.
