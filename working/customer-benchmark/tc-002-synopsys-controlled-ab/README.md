@@ -1,4 +1,4 @@
-# TC-002 — Synopsys-Controlled CoreStory A/B Evaluation
+# Synopsys + CoreStory Non-Determinism Evaluation Plan
 
 ## Purpose
 
