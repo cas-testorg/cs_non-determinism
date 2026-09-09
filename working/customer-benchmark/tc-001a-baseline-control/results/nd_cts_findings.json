@@ -1,0 +1,365 @@
+{
+  "module_path": "C:\\Users\\carys\\cts",
+  "module_slug": "cts",
+  "search_backend": "rg",
+  "branch": "local",
+  "patterns_evaluated": 22,
+  "min_severity": "MEDIUM",
+  "candidate_count_raw": 4535,
+  "candidate_files_raw": 817,
+  "findings": [
+    {
+      "pattern_id": "1.2",
+      "pattern_name": "std::set / std::map with pointer key, default comparator",
+      "category": "container",
+      "tier": 1,
+      "severity": "HIGH",
+      "severity_default": "HIGH",
+      "file": "ctscto/ctoFlowClone.cc",
+      "line": 1884,
+      "col": 3,
+      "title": "Address-ordered driver sets drive mutating pre-opt restructuring",
+      "description_md": "`ctoFlow::restructFlow()` collects LP and non-LP driver candidates in `std::set<ndmTerm*>` with default `std::less<ndmTerm*>` (raw addresses). Both sets are iterated to call `cloneBufferInverter()` / `bufShieldBufferInverter()`. Accepted transforms mutate netlist/timing state seen by later drivers. The non-LP loop also early-exits after ~10% of max tree size, so visit order selects which drivers are even attempted.",
+      "snippet_ctx": "  std::set<ndmTerm*> candidates;\n  std::set<ndmTerm*> lpCandidates;\n  ...\n  for (std::set<ndmTerm*>::iterator it = lpCandidates.begin(); it != lpCandidates.end(); ++it) {\n    if (enableCloning && cloneBufferInverter(drvTerm)) { ... }\n    else if (enableShielding && bufShieldBufferInverter(drvTerm)) { ... }\n  }\n  for (std::set<ndmTerm*>::iterator it = candidates.begin(); it != candidates.end(); ++it) {\n    ...\n    if (countCands > (int) (10 * maxClockTree / 100)) break;\n  }",
+      "realness": "real",
+      "downstream_observability_md": "Suspect: pointer-address set order. Caller: `ctoFlow::restructFlow()` pre-opt. Sink: sequential clone/shield mutations + early-break quota. Observable on CTO pre-opt QoR and downstream CTS topology.",
+      "controls_md": "CTO pre-opt restructuring (`restructFlow`); `_preOptRestructMode = true`. Requires LP/non-LP buffer/inverter drivers collected from clock-tree scan.",
+      "app_option_defaults_md": "Not resolved in this local client (`icc2query` / app-option DB unavailable).",
+      "regression_setting_md": "`nwtn/unit` not present in this workspace; no regression setter audit.",
+      "performance_note_md": "Replace with `std::set<ndmTerm*, ndmObjPtrCmpType>` (already used elsewhere in CTO). Same O(N log N) set cost; no hot-loop change.",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\nstd::set<ndmTerm*, ndmObjPtrCmpType> candidates;\nstd::set<ndmTerm*, ndmObjPtrCmpType> lpCandidates;\n```"
+        },
+        {
+          "label": "Version B (Robust)",
+          "code_md": "```cpp\nstd::vector<ndmTerm*> lpCandidates;\n// populate + sort+unique with ndmObjPtrCmpType\nstd::sort(lpCandidates.begin(), lpCandidates.end(), ndmObjPtrCmpType{});\nfor (ndmTerm* drvTerm : lpCandidates) { /* clone/shield */ }\n```"
+        }
+      ],
+      "rationale_md": "Version A matches project convention and removes ASLR/allocator dependence while keeping set semantics.",
+      "false_positive_check_md": "Raw `std::set<ndmTerm*>` without comparator. Loop mutates design state; not membership-only. Early-break makes order QoR-critical. Not a test file.",
+      "ownership_md": "- **Depot:** not resolved — local workspace `C:\\Users\\carys\\cts` with no `p4` client / View mapping on PATH.\n- **Notes:** Perforce annotate/describe skipped (Stage 4b). Source comment author on `restructFlow`: Moez Cherif (2015)."
+    },
+    {
+      "pattern_id": "1.1",
+      "pattern_name": "Pointer-based std::sort / std::stable_sort",
+      "category": "sorting",
+      "tier": 1,
+      "severity": "MEDIUM",
+      "severity_default": "HIGH",
+      "file": "mscts/mstap/msTapSubtreeSyn.cc",
+      "line": 285,
+      "col": 3,
+      "title": "Distance-only node sort ties pick arbitrary load for 1/4 repeater anchor",
+      "description_md": "`termDistances` holds `node` wrappers around `ndmTerm*`. `std::sort` uses distance-only `node::operator<`. Equal-distance loads get unspecified relative order. Odd-fanout path picks the first sorted load as `load1` for `instantiateRepeater` at 1/4 distance.",
+      "snippet_ctx": "  for (...) { node n(load, dist, loc); termDistances.push_back(n); }\n  std::sort(termDistances.begin(), termDistances.end());\n  ...\n  // first = true walk picks load1\n  status = instantiateRepeater(driver, load1, ...);",
+      "realness": "real",
+      "downstream_observability_md": "Sorted order selects which sink anchors the first repeater and its placement coordinate → MSCTS tap subtree topology / latency / skew.",
+      "controls_md": "MSCTS multisource tap subtree synthesis when a driver fanout group has odd load count and ≥2 loads share equal driver distance.",
+      "app_option_defaults_md": "Not resolved in this local client.",
+      "regression_setting_md": "Not audited (`nwtn/unit` absent).",
+      "performance_note_md": "Add O(1) term-id (or `ndmObjPtrCmpType`) tie-break in comparator; no extra sort/copy.",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\nstd::sort(termDistances.begin(), termDistances.end(),\n  [](const node& a, const node& b) {\n    if (a.getDist() != b.getDist()) return a.getDist() > b.getDist();\n    return a.getObj()->getId() < b.getObj()->getId();\n  });\n```"
+        },
+        {
+          "label": "Version B (Robust)",
+          "code_md": "```cpp\n// Extend node::operator< with ndmObjPtrCmpType tie-break\nbool operator<(const node& n) const {\n  if (_dist != n._dist) return _dist > n._dist;\n  return ndmObjPtrCmpType{}(_obj, n._obj);\n}\n```"
+        }
+      ],
+      "rationale_md": "Equal-distance loads are common on grids; tie order currently decides the first repeater anchor.",
+      "false_positive_check_md": "Not a raw `T*` default sort, but incomplete key without identity tie-break; sink is mutating placement. Not neutralized.",
+      "ownership_md": "- **Depot:** not resolved (no local p4 mapping).\n- **Notes:** File author tag Tong Liu (May 2020) on `do2To1Clustering`."
+    },
+    {
+      "pattern_id": "1.1",
+      "pattern_name": "Pointer-based std::sort / std::stable_sort",
+      "category": "sorting",
+      "tier": 1,
+      "severity": "MEDIUM",
+      "severity_default": "HIGH",
+      "file": "mscts/mstap/msTapSubtreeSyn.cc",
+      "line": 805,
+      "col": 5,
+      "title": "Distance-only node sort ties split loads across recursive clusters",
+      "description_md": "In `doClustering`, loads are sorted by X or Y coordinate via distance-only `node::operator<`. First `size1` entries go to `loadTerms1`, remainder to `loadTerms2`, then recursive `doClustering`.",
+      "snippet_ctx": "      node n(load, dis, loc);\n      termDis.push_back(n);\n    }\n    std::sort(termDis.begin(), termDis.end());\n    unsigned int size1 = baseCount*(q/2+q_r);\n    ...\n    doClustering(driver, loadTerms1, ...);\n    doClustering(driver, loadTerms2, ...);",
+      "realness": "real",
+      "downstream_observability_md": "Partition membership among tied coordinates changes recursive tap-tree topology and wirelength/latency QoR.",
+      "controls_md": "MSCTS tap subtree synthesis when fanout exceeds `baseCount` (2 or 4); most visible when many loads share the same coordinate on the split axis.",
+      "app_option_defaults_md": "Not resolved in this local client.",
+      "regression_setting_md": "Not audited.",
+      "performance_note_md": "Same single-comparator tie-break as line 285; no additional allocations.",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\nstd::sort(termDis.begin(), termDis.end(),\n  [](const node& a, const node& b) {\n    if (a.getDist() != b.getDist()) return a.getDist() > b.getDist();\n    return a.getObj()->getId() < b.getObj()->getId();\n  });\n```"
+        }
+      ],
+      "rationale_md": "Cluster membership is order-sensitive under equal-key ties.",
+      "false_positive_check_md": "Same incomplete comparator as the 1/4-repeater site; recursive clustering sink confirmed.",
+      "ownership_md": "- **Depot:** not resolved (no local p4 mapping)."
+    },
+    {
+      "pattern_id": "1.9",
+      "pattern_name": "std::min_element / max_element on pointer vector with pointer tiebreak",
+      "category": "sorting",
+      "tier": 1,
+      "severity": "MEDIUM",
+      "severity_default": "MEDIUM",
+      "file": "ctscto/ctosc/ctoscLoadPartition.cc",
+      "line": 136,
+      "col": 3,
+      "title": "SP sink min_element lacks term-ID tie-break on equal delays",
+      "description_md": "`std::min_element` on `_sinks` (`ndmTerm*`) compares early/late delays but returns false on full ties, so the first equal-delay sink in `_sinks` wins. That index (`_spSinkPos`) gates binary partition inclusion.",
+      "snippet_ctx": "  auto spSinkIt = std::min_element(_sinks.begin(), _sinks.end(),\n    [&](ndmTerm* sink1, ndmTerm* sink2){ ... return l1<l2; });\n  _spSinkPos = std::distance(_sinks.begin(), spSinkIt);",
+      "realness": "real",
+      "downstream_observability_md": "`_spSinkPos` feeds `appendBinaryPartitions` / include-SP paths → buffered-load partitions and MTCTO GLS buffering QoR.",
+      "controls_md": "MTCTO load partitioning when ≥2 sinks share identical early/late delays at the representative sclk/corner.",
+      "app_option_defaults_md": "Not resolved in this local client.",
+      "regression_setting_md": "Not audited.",
+      "performance_note_md": "Add final `ndmObjPtrCmpType{}(sink1, sink2)` in the lambda; O(1) per comparison.",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\nauto spSinkIt = std::min_element(_sinks.begin(), _sinks.end(),\n  [&](ndmTerm* s1, ndmTerm* s2) {\n    // ... existing early/late checks ...\n    if (l1 != l2) return l1 < l2;\n    return ndmObjPtrCmpType{}(s1, s2);\n  });\n```"
+        }
+      ],
+      "rationale_md": "Partition feasibility special-cases the SP sink; ties must be canonical.",
+      "false_positive_check_md": "Custom comparator present but incomplete at full ties; pointer elements; mutating partition sink.",
+      "ownership_md": "- **Depot:** not resolved (no local p4 mapping)."
+    },
+    {
+      "pattern_id": "1.9",
+      "pattern_name": "std::min_element / max_element on pointer vector with pointer tiebreak",
+      "category": "sorting",
+      "tier": 1,
+      "severity": "MEDIUM",
+      "severity_default": "MEDIUM",
+      "file": "ctscto/ctosc/ctomt/ctomtReloc.cc",
+      "line": 868,
+      "col": 3,
+      "title": "Max path-delay element picks first tied load for relocation vector",
+      "description_md": "`std::max_element` on `pathDelayVec` (float) with default compare; tied maxima pick the first index mapped to `groupedLoads[maxIdx]` for the critical max-direction relocation candidate.",
+      "snippet_ctx": "  size_t maxIdx = std::distance(pathDelayVec.begin(),\n    std::max_element(pathDelayVec.begin(), pathDelayVec.end()));\n  ndmTerm *maxTerm = groupedLoads[maxIdx];\n  candidates.push_back(criticalMaxDirLoc);",
+      "realness": "real",
+      "downstream_observability_md": "`addCriticalPathCandidates` → `generateCandidateLocations` → `newDrvTermLocVec` / Gskew relocation QoR.",
+      "controls_md": "MTCTO Gskew relocation when multiple grouped loads share the same maximum average path delay.",
+      "app_option_defaults_md": "Not resolved in this local client.",
+      "regression_setting_md": "Not audited.",
+      "performance_note_md": "Single linear scan with `(delay, termId)` lex compare; no sorting.",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\nsize_t maxIdx = 0;\nfor (size_t i = 1; i < pathDelayVec.size(); ++i) {\n  if (pathDelayVec[i] > pathDelayVec[maxIdx] ||\n      (pathDelayVec[i] == pathDelayVec[maxIdx] &&\n       groupedLoads[i]->getId() < groupedLoads[maxIdx]->getId()))\n    maxIdx = i;\n}\n```"
+        }
+      ],
+      "rationale_md": "Critical-path direction should not depend on arc iteration order under delay ties.",
+      "false_positive_check_md": "Float vector + parallel pointer vector; sink is relocation candidates.",
+      "ownership_md": "- **Depot:** not resolved (no local p4 mapping)."
+    },
+    {
+      "pattern_id": "1.9",
+      "pattern_name": "std::min_element / max_element on pointer vector with pointer tiebreak",
+      "category": "sorting",
+      "tier": 1,
+      "severity": "MEDIUM",
+      "severity_default": "MEDIUM",
+      "file": "ctscto/ctosc/ctomt/ctomtReloc.cc",
+      "line": 882,
+      "col": 3,
+      "title": "Min path-delay element picks first tied load for relocation vector",
+      "description_md": "Symmetric to the max-delay site: `std::min_element` selects the first minimum mapped to `groupedLoads[minIdx]` for the min-direction relocation candidate.",
+      "snippet_ctx": "  size_t minIdx = std::distance(pathDelayVec.begin(),\n    std::min_element(pathDelayVec.begin(), pathDelayVec.end()));\n  ndmTerm *minTerm = groupedLoads[minIdx];\n  candidates.push_back(criticalMinDirLoc);",
+      "realness": "real",
+      "downstream_observability_md": "Same relocation pipeline as line 868; min-direction candidate feeds driver move evaluation.",
+      "controls_md": "MTCTO Gskew relocation when ≥2 loads share identical minimum average path delay.",
+      "app_option_defaults_md": "Not resolved in this local client.",
+      "regression_setting_md": "Not audited.",
+      "performance_note_md": "Merge with max scan in one loop using term-id tie-break.",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\nsize_t minIdx = 0;\nfor (size_t i = 1; i < pathDelayVec.size(); ++i) {\n  if (pathDelayVec[i] < pathDelayVec[minIdx] ||\n      (pathDelayVec[i] == pathDelayVec[minIdx] &&\n       groupedLoads[i]->getId() < groupedLoads[minIdx]->getId()))\n    minIdx = i;\n}\n```"
+        }
+      ],
+      "rationale_md": "Min and max critical-path anchors should both be canonical under delay ties.",
+      "false_positive_check_md": "Default float comparison; pointer identity via `groupedLoads` index.",
+      "ownership_md": "- **Depot:** not resolved (no local p4 mapping)."
+    },
+    {
+      "pattern_id": "1.9",
+      "pattern_name": "std::min_element / max_element on pointer vector with pointer tiebreak",
+      "category": "sorting",
+      "tier": 1,
+      "severity": "MEDIUM",
+      "severity_default": "MEDIUM",
+      "file": "ctscto/ctoUtil.cc",
+      "line": 4384,
+      "col": 3,
+      "title": "Min path-delay index gates SP filter candidate gain acceptance",
+      "description_md": "`calculateNewDrvTermLocationForSpFilter` uses two-arg `std::min_element` on `loadPathDelayVec`. Tied minima pick the first load index used to gate candidate gain (`bboxVec[minDelayIndx]`).",
+      "snippet_ctx": "  auto it = std::min_element(std::begin(loadPathDelayVec), std::end(loadPathDelayVec));\n  int minDelayIndx = std::distance(std::begin(loadPathDelayVec), it);\n  if (bboxVec[minDelayIndx].getDistanceToPoint(loc) <= origDistVec[minDelayIndx]) {\n    gainVec[i]=0; continue;\n  }",
+      "realness": "real",
+      "downstream_observability_md": "`minDelayIndx` filters which relocation candidates survive gain scoring → `newDrvTermLocVec` / SP-filter skew relocation.",
+      "controls_md": "CTO SP-filter relocation when multiple loads share the minimum path delay.",
+      "app_option_defaults_md": "Not resolved in this local client.",
+      "regression_setting_md": "Not audited.",
+      "performance_note_md": "Single-pass min index with term-id/geometry tie-break; avoid sort.",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\nint minDelayIndx = 0;\nfor (int i = 1; i < cntLoad; ++i) {\n  if (loadPathDelayVec[i] < loadPathDelayVec[minDelayIndx] ||\n      (loadPathDelayVec[i] == loadPathDelayVec[minDelayIndx] &&\n       /* prefer term id from parallel load vector */ true))\n    minDelayIndx = i;\n}\n```"
+        }
+      ],
+      "rationale_md": "Reference load for gain filtering must not depend on input vector order when delays tie.",
+      "false_positive_check_md": "Float vector indexes parallel loads with distinct geometry; QoR sink confirmed.",
+      "ownership_md": "- **Depot:** not resolved (no local p4 mapping)."
+    }
+  ],
+  "dismissed_buckets": [
+    {
+      "pattern_id": "1.1",
+      "bucket_label": "Value-type / pair-key sorts (int, float, enum, pair)",
+      "count": 178,
+      "rationale_md": "Production hits on int indices, float slacks/medians, grNodeId tuples, percentile vectors — deterministic keys."
+    },
+    {
+      "pattern_id": "1.1",
+      "bucket_label": "Existing deterministic ID/name comparators",
+      "count": 24,
+      "rationale_md": "Already uses `ndmObjPtrCmpType`, `modCompare`, `CompareTracks`, `ConstraintComparatorNew`, etc."
+    },
+    {
+      "pattern_id": "1.1",
+      "bucket_label": "Unit tests / debug-only / pair second-member stable ties",
+      "count": 30,
+      "rationale_md": "unittest/*, verbose cout diagnostics, pair<size_t,int> lex sorts with stable second member."
+    },
+    {
+      "pattern_id": "1.2",
+      "bucket_label": "Membership-only / visited / dedup pointer std::set",
+      "count": 58,
+      "rationale_md": "find/insert/size only; no order-sensitive consumer (e.g. soMacroBank 'order is not important', BFS visited)."
+    },
+    {
+      "pattern_id": "1.2",
+      "bucket_label": "Pointer container with explicit stable comparator",
+      "count": 42,
+      "rationale_md": "`ndmObjPtrCmpType`, `compareObjPtr`, typed project sets/maps — safe adopters."
+    },
+    {
+      "pattern_id": "1.2",
+      "bucket_label": "Stage-1 overmatch narrowed away (no iteration / custom cmp)",
+      "count": 2555,
+      "rationale_md": "Raw scanner emitted 2955 hits; narrowing kept ~400 with iteration heuristic; remaining Stage-1 noise was declarations without order-sensitive use or with third template arg."
+    },
+    {
+      "pattern_id": "1.3",
+      "bucket_label": "Pointer-keyed unordered_* membership / index lookup only",
+      "count": 72,
+      "rationale_md": "find/at/size or debug-only iteration; no mutating order sink."
+    },
+    {
+      "pattern_id": "1.3",
+      "bucket_label": "Integer-/string-keyed unordered_*",
+      "count": 18,
+      "rationale_md": "Not pointer-key ND."
+    },
+    {
+      "pattern_id": "1.4",
+      "bucket_label": "Pointer hash lookup-only / thread-local caches",
+      "count": 16,
+      "rationale_md": "soLogicCone ETS caches, ctoscFilter/Global lookup maps — no order-sensitive iteration."
+    },
+    {
+      "pattern_id": "1.5",
+      "bucket_label": "rand() in test/dead code or fixed seed",
+      "count": 34,
+      "rationale_md": "Test mains / RandomTest harnesses; ccdcgSolver uses srand(100)."
+    },
+    {
+      "pattern_id": "1.6",
+      "bucket_label": "srand(time(NULL)) only in DisjointSet test mains",
+      "count": 2,
+      "rationale_md": "skewgrp/ctsSkewgroup.cc and ctsDStest.cc fillMap test helpers only."
+    },
+    {
+      "pattern_id": "1.7",
+      "bucket_label": "getFullName/getPathName keys — lookup-only",
+      "count": 75,
+      "rationale_md": "Signature/latency maps used via find/assign; debug printf only in places."
+    },
+    {
+      "pattern_id": "1.9",
+      "bucket_label": "Value-type extrema / debug printf / deterministic custom cmp",
+      "count": 11,
+      "rationale_md": "int scenario counts, size_t boundaries, float median, debug prints."
+    },
+    {
+      "pattern_id": "1.11",
+      "bucket_label": "std::unique after deterministic sort / value types / no-op unique",
+      "count": 17,
+      "rationale_md": "Preceded by stable sort, or int keys, or result discarded (ctoFlow/ctoArea)."
+    },
+    {
+      "pattern_id": "1.12",
+      "bucket_label": "Filesystem iteration env-gated debug replay or unit test",
+      "count": 8,
+      "rationale_md": "fmax LP file-flow env gates; ctsTest readdir harness."
+    },
+    {
+      "pattern_id": "3.1",
+      "bucket_label": "parallel_reduce boolean early-exit — latent (prior C4)",
+      "count": 2,
+      "rationale_md": "ctomtGlsProblemGenerator runSccIteration AND/OR associative; log order only."
+    },
+    {
+      "pattern_id": "3.2",
+      "bucket_label": "MT concurrent containers — idempotent / canonicalized / accessor-serialized",
+      "count": 80,
+      "rationale_md": "Prior MT C2/C3/C7/C9 patterns; no divergent QoR under equivalent-run."
+    },
+    {
+      "pattern_id": "3.5",
+      "bucket_label": "hardware_concurrency sets TBB grain only (prior C5 FP)",
+      "count": 3,
+      "rationale_md": "Index-disjoint writes; schedule-only."
+    },
+    {
+      "pattern_id": "3.7",
+      "bucket_label": "Project wrappers used as deterministic fix / membership-only",
+      "count": 120,
+      "rationale_md": "ndmPtrMap/Set, dosSet, hyHash lookup/membership; nwcInsOrdMap find/update."
+    },
+    {
+      "pattern_id": "4.1",
+      "bucket_label": "Lazy mutable _termValidSclkCache — MT-unreachable (prior C1)",
+      "count": 2,
+      "rationale_md": "Unsynchronized dosMap but callers on sequential GLS/CTO paths, not shared worker bodies."
+    },
+    {
+      "pattern_id": "4.2",
+      "bucket_label": "ST lazy first-touch size()==0 — not MT race shapes",
+      "count": 38,
+      "rationale_md": "Sequential lazy populate; no proved concurrent first-touch divergence."
+    },
+    {
+      "pattern_id": "4.4",
+      "bucket_label": "concurrent_hash_map check-then-act — serialized or latent",
+      "count": 36,
+      "rationale_md": "Accessor-serialized or idempotent values (prior C2/C3/C9)."
+    },
+    {
+      "pattern_id": "semantic",
+      "bucket_label": "CL-mined checklist families considered without promotion",
+      "count": 9,
+      "rationale_md": "Post-collection (3.6) seed not exhaustively promoted; graph/traversal, stale cache, delay-sharing, lock discipline, NdFix options, checksum — sampled via prior MT report + container/MT packs; no additional REAL HIGH/MEDIUM beyond listed findings."
+    }
+  ],
+  "module_specific_summary_md": "CTS (local `C:\\\\Users\\\\carys\\\\cts`, ~2391 C++ files) is largely ND-aware: many sites already use `ndmObjPtrCmpType` / project wrappers, and prior MT prove-nd work classified the main concurrent hotspots as latent, neutralized, or unreachable. The confirmed defect surface for HIGH/MEDIUM is concentrated in CTO pre-opt restructuring (address-ordered mutating driver sets) and MSCTS/MTCTO tie-break gaps on equal-distance or equal-delay selections. Random/time seeds, filesystem iteration, and most unordered_*/hash hits did not survive downstream-observability proof under production controls.",
+  "fix_recipes_excerpt_md": "Prefer `ndmObjPtrCmpType` / `ndmObjectHandleNS::compareObjPtr` for pointer sets/maps and sort tie-breaks; keep unordered containers for membership and canonicalize only at the order-sensitive consumer; do not replace hot-path hash maps with `std::map` blindly."
+}
