@@ -133,6 +133,108 @@ Requirements:
 
 `code-analysis-v2.mdc` is retained in this test case for reproducibility and optional follow-on comparison, but **v3 is the recommended rule for the primary CoreStory arm**.
 
+### Phase 2A — CoreStory integration smoke test
+
+Before the measured CoreStory run, perform a small smoke test whose only purpose is to confirm that:
+
+1. The selected CLI can see and call CoreStory MCP.
+2. The v3 governing rule is active in the session.
+
+This is not a nondeterminism benchmark and should not perform a repository-wide ND scan.
+
+The exact commands will depend on the CLI selected by Synopsys. The following examples are intended as starting points and should be adjusted once the execution environment is confirmed.
+
+#### Cursor CLI example
+
+For Cursor CLI, configure CoreStory MCP through the normal Cursor MCP configuration and install the v3 rule in the project rule location used by the CLI, for example `.cursor/rules/` when applicable.
+
+Example validation flow:
+
+```bash
+# Confirm configured MCP servers
+agent mcp list
+
+# Confirm CoreStory tools are visible
+agent mcp list-tools <corestory-server-name>
+
+# Start from the test workspace
+cd tc-002-synopsys-controlled-ab
+
+# Run a lightweight validation prompt
+agent --mode=ask "
+Use CoreStory to identify the current project/workspace and return one
+application-level relationship, such as a component, dependency, or call path.
+
+Also state which project rules are governing this analysis and summarize
+the CoreStory qualification criteria you are expected to apply.
+
+Do not perform a nondeterminism scan.
+"
+```
+
+#### Claude Code example
+
+For Claude Code, configure the CoreStory MCP server using the CLI's MCP configuration mechanism. The v3 governing instructions should be installed using the project-instruction mechanism supported by Claude Code, such as a project-level `CLAUDE.md`, rather than assuming the `.mdc` file is consumed natively.
+
+Example validation flow:
+
+```bash
+# Confirm MCP configuration
+claude mcp
+
+# Start from the test workspace
+cd tc-002-synopsys-controlled-ab
+
+# Run a lightweight validation prompt
+claude -p "
+Use CoreStory to identify the current project/workspace and return one
+application-level relationship, such as a component, dependency, or call path.
+
+Also summarize the CoreStory qualification criteria governing this analysis.
+
+Do not perform a nondeterminism scan.
+"
+```
+
+#### Behavioral rule probe
+
+In addition to confirming that CoreStory tools are callable, use a small behavioral prompt to verify that the v3 rule is influencing qualification behavior:
+
+```text
+A file contains a pointer-ordered container.
+Is that sufficient to classify it as a real nondeterminism defect?
+Explain what additional evidence is required before promotion.
+```
+
+A v3-aligned response should not promote the pattern by itself. It should require evidence such as:
+
+- Build inclusion
+- Production reachability
+- Applicable runtime/configuration controls
+- The actual defect mechanism
+- Propagation to downstream state or behavior
+- Absence of a deterministic neutralizer
+- Observable consequence
+
+#### Smoke-test pass criteria
+
+Record the smoke test as PASS only when both conditions are satisfied:
+
+```text
+MCP_CONNECTIVITY=PASS
+- CoreStory server is visible
+- CoreStory tools are visible
+- At least one CoreStory tool call succeeds
+- The returned result corresponds to the intended CTS project/workspace
+
+RULE_ACTIVATION=PASS
+- The agent demonstrates the expected v3 qualification behavior
+- The response reflects build/reachability/neutralizer/observability criteria
+- The full nondeterminism scan was not performed during the smoke test
+```
+
+If either condition fails, resolve the integration issue before beginning Arm B.
+
 ### Phase 3 — CoreStory comparison run
 
 Run Arm B using the same source, prompt, model, skills, and measurement approach used for Arm A.
