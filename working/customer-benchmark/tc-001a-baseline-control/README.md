@@ -74,7 +74,7 @@ The final Synopsys-owned benchmark should validate the intended customer skill p
 
 ```text
 START_TIME_UTC=Wednesday, September 9, 2026 1:52:23 PM
-END_TIME_UTC=
+END_TIME_UTC=Wednesday, September 9, 2026 2:07:39 PM
 WALL_CLOCK_RUNTIME=
 REQUEST_TRACE_LOG_LEVEL=Trace
 ```
