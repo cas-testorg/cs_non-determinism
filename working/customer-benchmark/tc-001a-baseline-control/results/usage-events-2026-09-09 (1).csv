@@ -1,0 +1,10 @@
+Date,Cloud Agent ID,Automation ID,Kind,Model,Max Mode,Input (w/ Cache Write),Input (w/o Cache Write),Cache Read,Output Tokens,Total Tokens,Cost
+"2026-09-09T18:58:58.581Z","","","Included","composer-2.5-fast","No","0","64210","1142784","10427","1217421","Included"
+"2026-09-09T18:58:58.053Z","","","Included","composer-2.5-fast","No","0","121059","2727584","12456","2861099","Included"
+"2026-09-09T18:58:54.349Z","","","Included","composer-2.5-fast","No","0","98566","3060448","20896","3179910","Included"
+"2026-09-09T18:53:30.281Z","","","Included","auto","No","0","225146","734336","24569","984051","Included"
+"2026-09-09T16:11:12.539Z","","","Included","auto","No","0","116764","588288","5348","710400","Included"
+"2026-09-09T16:02:32.721Z","","","Included","auto","No","0","119356","2844160","20282","2983798","Included"
+"2026-09-09T14:09:40.088Z","","","Included","auto","No","0","8906","9216","36","18158","Included"
+"2026-09-09T14:07:21.177Z","","","Included","auto","No","0","8906","9216","35","18157","Included"
+"2026-09-09T14:02:39.499Z","","","Included","auto","No","0","20326","37248","507","58081","Included"
