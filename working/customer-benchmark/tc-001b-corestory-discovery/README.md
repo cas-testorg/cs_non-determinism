@@ -94,7 +94,7 @@ The final Synopsys-owned benchmark should validate the intended skill package an
 
 ```text
 START_TIME_LOCAL=Wednesday, September 9, 2026 2:42:49 PM
-END_TIME_LOCAL=
+END_TIME_LOCAL=Wednesday, September 9, 2026 3:01:55 PM
 WALL_CLOCK_RUNTIME=
 REQUEST_TRACE_LOG_LEVEL=Trace
 ```
