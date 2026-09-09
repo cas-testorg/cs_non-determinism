@@ -1,0 +1,232 @@
+[
+    {
+        "line":  154,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "skewgrp/ctsSkewgroup.cc",
+        "match_text":  "int s = rand() % cntV ;",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  155,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "skewgrp/ctsSkewgroup.cc",
+        "match_text":  "int e = rand() % cntV ;",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  152,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "skewgrp/ctsDStest.cc",
+        "match_text":  "int s = rand() % cntV ;",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  153,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "skewgrp/ctsDStest.cc",
+        "match_text":  "int e = rand() % cntV ;",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  202,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiscRandomTest.cc",
+        "match_text":  "int leqid = ::rand() % (int) leqSet.size();",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  472,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiscRandomTest.cc",
+        "match_text":  "int leqid = ::rand() % (int) buf.size();",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  527,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiscRandomTest.cc",
+        "match_text":  "int pattern = ::rand() % 3;",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  179,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "int index = std::rand() % drvTerms.size();",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  515,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "int leqid = std::rand() % (int) refModules.size();",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  648,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "newX = origLoc.getX() - (range / 2.0) + (std::rand() % 500000);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  649,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "newY = origLoc.getY() - (range / 2.0) + (std::rand() % 500000);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  685,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "if (std::rand() % 2 == 0)",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  505,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ccd/ctsccd/cgbased/ccdcgSolver.cc",
+        "match_text":  "int r = rand();",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  152,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "skewgrp/ctsSkewgroup.cc",
+        "match_text":  "srand ( time(NULL) );",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  150,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "skewgrp/ctsDStest.cc",
+        "match_text":  "srand ( time(NULL) );",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  501,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ccd/ctsccd/cgbased/ccdcgSolver.cc",
+        "match_text":  "srand( 100 );",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  195,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiscRandomTest.cc",
+        "match_text":  "::srand( getCkt()-\u003egetSeedTerms()[0]-\u003egetId() );",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  431,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiscRandomTest.cc",
+        "match_text":  "::srand( getCkt()-\u003egetSeedTerms()[0]-\u003egetId() );",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  140,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "srand(0);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  368,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "srand(drvTerm-\u003egetIdLong());",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  373,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "srand(drvTerm-\u003egetIdLong());",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  378,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "ctsui/ctsuiCtoRandomTest.cc",
+        "match_text":  "srand(drvTerm-\u003egetIdLong());",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  284,
+        "pattern_name":  "Random ops without deterministic seed",
+        "tier":  1,
+        "category":  "random",
+        "pattern_id":  "1.5",
+        "file":  "mscts/mstap/msClustering.h",
+        "match_text":  "boost::random::mt19937    _rand;",
+        "severity_default":  "HIGH"
+    }
+]

@@ -1,0 +1,602 @@
+[
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  223,
+        "match_text":  "//typedef std::map \u003cndmTerm *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmTermType2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  228,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Node *, cnmNetwork::Node::comparePtr\u003e cnmNetworkNodeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  229,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmInst2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  230,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkNodeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2NodeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  330,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Edge *, cnmNetwork::Edge::comparePtr\u003e cnmNetworkEdgeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  331,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkEdgeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2EdgeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  468,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Node *, cnmNetwork::Node::comparePtr\u003e cnmNetworkNodeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  469,
+        "match_text":  "//typedef std::map \u003cndmTerm *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmTermType2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  471,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmInst2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  472,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkNodeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2NodeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  476,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Edge *, cnmNetwork::Edge::comparePtr\u003e cnmNetworkEdgeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/include/cnmNetwork.h",
+        "line":  477,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkEdgeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2EdgeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  223,
+        "match_text":  "//typedef std::map \u003cndmTerm *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmTermType2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  228,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Node *, cnmNetwork::Node::comparePtr\u003e cnmNetworkNodeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  229,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmInst2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  230,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkNodeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2NodeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  330,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Edge *, cnmNetwork::Edge::comparePtr\u003e cnmNetworkEdgeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  331,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkEdgeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2EdgeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  468,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Node *, cnmNetwork::Node::comparePtr\u003e cnmNetworkNodeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  469,
+        "match_text":  "//typedef std::map \u003cndmTerm *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmTermType2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  471,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmInst2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  472,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkNodeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2NodeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  476,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Edge *, cnmNetwork::Edge::comparePtr\u003e cnmNetworkEdgeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/include/cnmNetwork.h",
+        "line":  477,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkEdgeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2EdgeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  223,
+        "match_text":  "//typedef std::map \u003cndmTerm *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmTermType2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  228,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Node *, cnmNetwork::Node::comparePtr\u003e cnmNetworkNodeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  229,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmInst2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  230,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkNodeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2NodeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  330,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Edge *, cnmNetwork::Edge::comparePtr\u003e cnmNetworkEdgeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  331,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkEdgeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2EdgeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  468,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Node *, cnmNetwork::Node::comparePtr\u003e cnmNetworkNodeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  469,
+        "match_text":  "//typedef std::map \u003cndmTerm *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmTermType2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  471,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmInst2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  472,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkNodeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2NodeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  476,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Edge *, cnmNetwork::Edge::comparePtr\u003e cnmNetworkEdgeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/util/cnm/cnmNetwork.h",
+        "line":  477,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkEdgeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2EdgeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitState.h",
+        "line":  29,
+        "match_text":  "typedef std::map\u003cndmModPort*, ctsTreeNode*, ndmObjPtrCmpType\u003e"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitState.h",
+        "line":  32,
+        "match_text":  "typedef std::map\u003cndmModPort*, const sclkValSetType, ndmObjPtrCmpType\u003e"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitState.h",
+        "line":  36,
+        "match_text":  "typedef std::map\u003cndmTerm*, const sclkValSetType, ndmObjPtrCmpType\u003e"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitState.h",
+        "line":  39,
+        "match_text":  "typedef std::map\u003cndmTerm*, ctsClockGroupVec*, ndmObjPtrCmpType\u003e"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitState.h",
+        "line":  47,
+        "match_text":  "typedef std::map\u003cctsTreeNode*, ctsStateNodeTermVecType, ctsTreeNodeCompare\u003e"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  223,
+        "match_text":  "//typedef std::map \u003cndmTerm *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmTermType2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  228,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Node *, cnmNetwork::Node::comparePtr\u003e cnmNetworkNodeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  229,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmInst2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  230,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkNodeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2NodeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  330,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Edge *, cnmNetwork::Edge::comparePtr\u003e cnmNetworkEdgeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  331,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkEdgeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2EdgeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  468,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Node *, cnmNetwork::Node::comparePtr\u003e cnmNetworkNodeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  469,
+        "match_text":  "//typedef std::map \u003cndmTerm *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmTermType2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  471,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetwork::Node *, ndmObjectHandleNS::compareObjPtr\u003e cnmNdmInst2NodeMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  472,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkNodeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2NodeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  476,
+        "match_text":  "typedef std::set \u003ccnmNetwork::Edge *, cnmNetwork::Edge::comparePtr\u003e cnmNetworkEdgeSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "rlx/core/include/cnmNetwork.h",
+        "line":  477,
+        "match_text":  "typedef std::map \u003cndmInst *, cnmNetworkEdgeSet *, ndmObjectHandleNS::compareObjPtr\u003e cnmInst2EdgeSetMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitState.cc",
+        "line":  422,
+        "match_text":  "std::set\u003cctsTreeNode*\u003e splitStateDrivers;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitMgr.h",
+        "line":  131,
+        "match_text":  "typedef std::map\u003cndmInst*, std::vector\u003cndmInst*\u003e, ndmObjPtrCmpType\u003e instToInstVecMapType;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitMgr.h",
+        "line":  132,
+        "match_text":  "typedef std::map\u003cndmInst*, ndmInst*, ndmObjPtrCmpType\u003e instToInstMapType;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitMgr.h",
+        "line":  144,
+        "match_text":  "typedef std::map\u003cndmTerm*, ndmNet*, ndmObjPtrCmpType\u003e termToNetMapType;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssplit/ctsSplitMethod.h",
+        "line":  27,
+        "match_text":  "typedef std::map\u003cndmTerm*, ctsStateNodeTermPair, ndmObjPtrCmpType\u003e termToNodeTermPairMapType;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/routestraps/msRcsMain.cc",
+        "line":  266,
+        "match_text":  "std::set\u003cndmVia *, ndmObjPtrCmpType\u003e tobeDeletedVias;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/routestraps/msRcsMain.cc",
+        "line":  267,
+        "match_text":  "std::set\u003cndmVia *, ndmObjPtrCmpType\u003e nottobeDeletedVias;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/routestraps/msRcsMain.cc",
+        "line":  268,
+        "match_text":  "std::set\u003cndmVia *, ndmObjPtrCmpType\u003e mustDeletedVias;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/routestraps/msRcsMain.cc",
+        "line":  362,
+        "match_text":  "for (std::set\u003cndmVia *, ndmObjPtrCmpType\u003e::const_iterator viaIter = tobeDeletedVias.begin();"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/routestraps/msRcsMain.cc",
+        "line":  396,
+        "match_text":  "for (std::set\u003cndmVia *, ndmObjPtrCmpType\u003e::const_iterator itr = mustDeletedVias.begin(); itr != mustDeletedVias.end(); ++itr) {"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/preroutes/msPreroutes.cc",
+        "line":  2421,
+        "match_text":  "msPreroutes::ndmObjectVec\u0026 component, std::set\u003cndmObject*\u003e\u0026 assigned)"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/preroutes/msPreroutes.cc",
+        "line":  2504,
+        "match_text":  "std::set\u003cndmObject*\u003e assigned;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/preroutes/msPreroutes.cc",
+        "line":  2729,
+        "match_text":  "std::set\u003cndmObject*, ndmObjPtrCmpType\u003e survived(createdObjects.begin(), createdObjects.end());"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.h",
+        "line":  190,
+        "match_text":  "typedef std::map\u003cndmTerm*, timingInfo*, ndmObjPtrCmpType\u003e"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.h",
+        "line":  192,
+        "match_text":  "typedef std::set\u003ctimingInfo*, compareTimInfo\u003e timingInfoSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.h",
+        "line":  263,
+        "match_text":  "std::set\u003cndmTerm*, ndmObjectHandleNS::compareObjPtr\u003e::iterator pitr ="
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.h",
+        "line":  286,
+        "match_text":  "std::map\u003cndmTerm*, std::vector\u003cstd::pair\u003ccstrMode, float\u003e \u003e, ndmObjPtrCmpType\u003e* storeHouse() { return \u0026_storeHouse; }"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.h",
+        "line":  308,
+        "match_text":  "std::map\u003cndmTerm*, std::vector\u003cstd::pair\u003ccstrMode, float\u003e \u003e, ndmObjPtrCmpType\u003e"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  78,
+        "match_text":  "std::set\u003ctimingInfo*\u003e::iterator itr = _sinkPinTimingInfoSet.begin();"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  223,
+        "match_text":  "std::map\u003cndmTerm*, std::vector\u003cstd::pair\u003ccstrMode, float\u003e \u003e,"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  288,
+        "match_text":  "std::map\u003cndmTerm*, std::vector\u003cstd::pair\u003ccstrMode, float\u003e \u003e,"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  392,
+        "match_text":  "std::map\u003cndmTerm*, timingInfo*, ndmObjPtrCmpType\u003e::iterator mitr ="
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  628,
+        "match_text":  "std::set\u003ctimingInfo*\u003e::iterator itr = _sinkPinTimingInfoSet.begin();"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  650,
+        "match_text":  "std::map\u003cndmTerm*, std::vector\u003cstd::pair\u003ccstrMode, float\u003e \u003e,"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  727,
+        "match_text":  "std::map\u003cndmTerm*, std::vector\u003cstd::pair\u003ccstrMode, float\u003e \u003e, ndmObjPtrCmpType\u003e::iterator itr = _storeHouse.begin();"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  833,
+        "match_text":  "std::set\u003ctimingInfo*\u003e::iterator itr = _sinkPinTimingInfoSet.begin();"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.h",
+        "line":  36,
+        "match_text":  "typedef std::set \u003cndmModule *, ndmObjectHandleNS::compareObjPtr\u003e nplZbufNdmModuleSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.h",
+        "line":  430,
+        "match_text":  "typedef std::map\u003cndmTerm*, ctsClockGroup*, ndmObjPtrCmpType\u003e termClockGroupMapType;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.h",
+        "line":  624,
+        "match_text":  "typedef std::set\u003cctsTask*, ctsTaskPriorityCompare\u003e  taskPriorityQueue;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.h",
+        "line":  647,
+        "match_text":  "typedef std::map\u003cstd::set\u003cndmModule*, ndmObjectHandleNS::compareObjPtr\u003e,  std::set\u003cndmModule*, ndmObjectHandleNS::compareObjPtr\u003e* \u003e ctsClockReferenceMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.h",
+        "line":  654,
+        "match_text":  "void markCriticialEchelons(cnmEchelon* theEchelon, float criticality, std::set\u003ccnmEchelon*\u003e\u0026 criticalEchelonSet);"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.cc",
+        "line":  1111,
+        "match_text":  "std::map\u003cndmTerm*, ctsSclk\u003e termSclkMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.cc",
+        "line":  2468,
+        "match_text":  "ctsTaskManager::markCriticialEchelons(cnmEchelon* theEchelon, float criticality, std::set\u003ccnmEchelon*\u003e\u0026 criticalEchelonSet)"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.cc",
+        "line":  2661,
+        "match_text":  "std::set\u003ccnmEchelon*\u003e criticalEchelonSet;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.cc",
+        "line":  2704,
+        "match_text":  "std::set\u003cndmNonDefaultRule*, ndmObjectHandleNS::compareObjPtr\u003e rules;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.cc",
+        "line":  3034,
+        "match_text":  "std::map\u003cndmTerm*, int, ndmObjPtrCmpType\u003e loadGroupIdMap;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.cc",
+        "line":  3266,
+        "match_text":  "std::set\u003cndmModule*,ndmObjectHandleNS::compareObjPtr\u003e* clockLeafReferenceSubset = NULL;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "ctssch/ctsTask.cc",
+        "line":  3267,
+        "match_text":  "std::set\u003cndmModule*,ndmObjectHandleNS::compareObjPtr\u003e* clockReferenceSubset = NULL;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.h",
+        "line":  90,
+        "match_text":  "typedef std::set\u003cndmModule*\u003e                                    moduleSetType;// missing in ctsTypes.h"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.h",
+        "line":  91,
+        "match_text":  "typedef std::set\u003cndmPort*, ndmObjPtrCmpType\u003e                    portSetType;  // missing in ctsTypes."
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.h",
+        "line":  92,
+        "match_text":  "typedef std::set\u003cndmHier*, ndmObjPtrCmpType\u003e                    hierSetType;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.h",
+        "line":  106,
+        "match_text":  "typedef std::map\u003cndmBlkNet*, ndmBlkStatus, ndmObjPtrCmpType\u003e    NetStatusMapType;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.h",
+        "line":  118,
+        "match_text":  "typedef std::map\u003cndmNet*, int, ndmObjPtrCmpType\u003e                netToIntMapType;"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.h",
+        "line":  364,
+        "match_text":  "void setRoutingStatus(ndmNet* net, ndmBlkStatus newStatus, std::map\u003cndmBlkNet*, ndmBlkStatus, ndmObjPtrCmpType\u003e\u0026 origNetStatus, bool verbose);"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.h",
+        "line":  437,
+        "match_text":  "std::map\u003cndmBlock*, std::vector\u003cndmInst*\u003e\u003e\u0026 refBlkToInst,"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.cc",
+        "line":  957,
+        "match_text":  "std::map\u003cndmBlock*, std::vector\u003cndmInst*\u003e\u003e\u0026 refBlkToInst,"
+    },
+    {
+        "pattern_id":  "1.2",
+        "file":  "mscts/msutil/msUtil.cc",
+        "line":  1593,
+        "match_text":  "void setRoutingStatus(ndmNet* net, ndmBlkStatus newStatus, std::map\u003cndmBlkNet*, ndmBlkStatus, ndmObjPtrCmpType\u003e\u0026 origNetStatus, bool verbose)"
+    }
+]

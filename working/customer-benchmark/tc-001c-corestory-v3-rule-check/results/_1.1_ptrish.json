@@ -1,0 +1,332 @@
+[
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  272,
+        "chunk":  "std::sort(selectedToInfos.begin(), selectedToInfos.end());"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  331,
+        "chunk":  "std::sort(selectedToInfos.begin(), selectedToInfos.end());"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverResolution.cc",
+        "line":  1133,
+        "chunk":  "std::stable_sort(sortedClusters.begin(), sortedClusters.end());"
+    },
+    {
+        "file":  "ccd/skewopt/soMacroDelay.cc",
+        "line":  101,
+        "chunk":  "std::sort(values.begin(), values.end());"
+    },
+    {
+        "file":  "ccd/skewopt/soDesign.cc",
+        "line":  9122,
+        "chunk":  "std::sort(masterClocks.begin(), masterClocks.end());"
+    },
+    {
+        "file":  "mscts/mstap/msTapSubtreeSyn.cc",
+        "line":  285,
+        "chunk":  "std::sort(termDistances.begin(), termDistances.end());"
+    },
+    {
+        "file":  "mscts/mstap/msTapSubtreeSyn.cc",
+        "line":  805,
+        "chunk":  "std::sort(termDis.begin(), termDis.end());"
+    },
+    {
+        "file":  "mscts/mstap/msClustering.cc",
+        "line":  671,
+        "chunk":  "std::sort(coords.begin(), coords.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverIncremental.cc",
+        "line":  1272,
+        "chunk":  "//std::sort(pathsWithRelativeViolations.begin(),pathsWithRelativeViolations.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverIncremental.cc",
+        "line":  1566,
+        "chunk":  "//std::sort(pathsWithRelativeViolations.begin(),pathsWithRelativeViolations.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverIncremental.cc",
+        "line":  2064,
+        "chunk":  "//std::sort(pathsWithRelativeViolations.begin(),pathsWithRelativeViolations.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2305,
+        "chunk":  "std::sort(hitsWithVariables.begin(), hitsWithVariables.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2470,
+        "chunk":  "std::sort(contributionsWithVariables.begin(), contributionsWithVariables.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2473,
+        "chunk":  "std::sort(potentialContributionsWithVariables.begin(), potentialContributionsWithVariables.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2568,
+        "chunk":  "std::sort(coordsWithVariables.begin(), coordsWithVariables.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2589,
+        "chunk":  "std::sort(coordsWithVariables.begin(), coordsWithVariables.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  3581,
+        "chunk":  "std::sort(extractedPairs.begin(), extractedPairs.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  3853,
+        "chunk":  "std::sort(occurenceVector.begin(), occurenceVector.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  4011,
+        "chunk":  "std::sort(positiveCoefficients.begin(),positiveCoefficients.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  4012,
+        "chunk":  "std::sort(negativeCoefficients.begin(),negativeCoefficients.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  4055,
+        "chunk":  "std::sort(positiveCoefficients.begin(),positiveCoefficients.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  4056,
+        "chunk":  "std::sort(negativeCoefficients.begin(),negativeCoefficients.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  5168,
+        "chunk":  "std::sort(variablesSortedByCount.begin(), variablesSortedByCount.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxEndpointCompression.cc",
+        "line":  153,
+        "chunk":  "std::sort(occurenceVector.begin(), occurenceVector.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxEndpointCompression.cc",
+        "line":  192,
+        "chunk":  "std::sort(orderingVector.begin(), orderingVector.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxEndpointCompression.cc",
+        "line":  223,
+        "chunk":  "std::sort(orderingVector.begin(), orderingVector.end());"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxCgSolver.cc",
+        "line":  517,
+        "chunk":  "std::sort(pathVec.begin(), pathVec.end());"
+    },
+    {
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  8359,
+        "chunk":  "std::stable_sort(violatingTransValues.begin(), violatingTransValues.end()) ;"
+    },
+    {
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  8381,
+        "chunk":  "std::stable_sort(violatingCapValues.begin(), violatingCapValues.end()) ;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsGrid.cc",
+        "line":  517,
+        "chunk":  "std::sort(l_locs.begin(), l_locs.end());"
+    },
+    {
+        "file":  "mscts/msgts/msgtsGrid.cc",
+        "line":  546,
+        "chunk":  "std::sort(l_values.begin(), l_values.end());"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  1170,
+        "chunk":  "std::sort(l_distVec.begin(),l_distVec.end());"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  1324,
+        "chunk":  "std::sort(l_distVec.begin(),l_distVec.end());"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  5802,
+        "chunk":  "std::sort(_icgEnNodes.begin(), _icgEnNodes.end());"
+    },
+    {
+        "file":  "mscts/drivers/msAutoTapFlow.cc",
+        "line":  7521,
+        "chunk":  "std::sort(gridY.begin(), gridY.end());"
+    },
+    {
+        "file":  "icg/ctsICGReclusterHelper.cc",
+        "line":  702,
+        "chunk":  "std::sort(events.begin(), events.end());"
+    },
+    {
+        "file":  "ctsutil/placer/lpTreePlacerImpl.cc",
+        "line":  2592,
+        "chunk":  "std::sort(variableDistributionSorted.begin(), variableDistributionSorted.end());"
+    },
+    {
+        "file":  "ctsutil/placer/lpTreePlacerImpl.cc",
+        "line":  2595,
+        "chunk":  "std::sort(nonZeroDistributionSorted.begin(), nonZeroDistributionSorted.end());"
+    },
+    {
+        "file":  "ctsutil/dly/dlyDeltaDelayInserter.cc",
+        "line":  518,
+        "chunk":  "std::stable_sort(msgVec.begin(), msgVec.end());"
+    },
+    {
+        "file":  "ctsutil/ctsSession.cc",
+        "line":  2802,
+        "chunk":  "std::sort(netWireLengths.begin(), netWireLengths.end());"
+    },
+    {
+        "file":  "ctsutil/ctsSession.cc",
+        "line":  3101,
+        "chunk":  "std::sort(cornerNetCaps[corner].begin(), cornerNetCaps[corner].end());"
+    },
+    {
+        "file":  "ctsutil/ctsScnMgr.cc",
+        "line":  731,
+        "chunk":  "std::sort(_corners.begin(), _corners.end());"
+    },
+    {
+        "file":  "ctsutil/ctsScnMgr.cc",
+        "line":  896,
+        "chunk":  "std::sort(gateVec.begin(), gateVec.end());"
+    },
+    {
+        "file":  "ctsutil/ctsScnMgr.cc",
+        "line":  993,
+        "chunk":  "std::sort(_modes.begin(), _modes.end());"
+    },
+    {
+        "file":  "ctsutil/ctsNdrMgr.cc",
+        "line":  1270,
+        "chunk":  "std::sort(clockPeriodMap.begin(), clockPeriodMap.end());"
+    },
+    {
+        "file":  "ctsutil/ctsNdrMgr.cc",
+        "line":  1605,
+        "chunk":  "std::sort(clockPeriodMap.begin(), clockPeriodMap.end());"
+    },
+    {
+        "file":  "ctsutil/ctsNdrMgr.cc",
+        "line":  2134,
+        "chunk":  "std::sort(clockPeriodMap.begin(), clockPeriodMap.end());"
+    },
+    {
+        "file":  "ctssch/ctsClockTree.cc",
+        "line":  3980,
+        "chunk":  "std::sort(idVec.begin(), idVec.end());"
+    },
+    {
+        "file":  "ctssch/ctsSchCts.cc",
+        "line":  1515,
+        "chunk":  "std::sort(_treeNodes.begin(), _treeNodes.end());"
+    },
+    {
+        "file":  "ctssch/ctsSchCts.cc",
+        "line":  3700,
+        "chunk":  "std::sort(clockPeriodMap.begin(), clockPeriodMap.end());"
+    },
+    {
+        "file":  "ctssch/ctsSchCto.cc",
+        "line":  292,
+        "chunk":  "std::sort(sclkVec.begin(), sclkVec.end());"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  3352,
+        "chunk":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  3549,
+        "chunk":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  3628,
+        "chunk":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  4679,
+        "chunk":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  4737,
+        "chunk":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  4903,
+        "chunk":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  5123,
+        "chunk":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "file":  "ctssc/lazytns/ctsLazyCostGroup.cc",
+        "line":  932,
+        "chunk":  "std::sort(allDsVec.begin(), allDsVec.end()); // sort to get deterministic order"
+    },
+    {
+        "file":  "ctssc/lazytns/ctsLazyCostGroup.cc",
+        "line":  950,
+        "chunk":  "std::sort(qVec.begin(), qVec.end());"
+    },
+    {
+        "file":  "ctscto/ctoFlow.cc",
+        "line":  211,
+        "chunk":  "std::sort(lates.begin(), lates.end());"
+    },
+    {
+        "file":  "ctscto/ctoUtil.cc",
+        "line":  2056,
+        "chunk":  "std::sort(X.begin(),X.end());"
+    },
+    {
+        "file":  "ctscto/ctoUtil.cc",
+        "line":  2057,
+        "chunk":  "std::sort(Y.begin(),Y.end());"
+    },
+    {
+        "file":  "ctscto/ctoLog.cc",
+        "line":  1252,
+        "chunk":  "std::sort(cornerLatencies[corner].begin(), cornerLatencies[corner].end());"
+    },
+    {
+        "file":  "mscts/mstap/msFlexibleTapPartition.cc",
+        "line":  365,
+        "chunk":  "std::sort(vect.rbegin(), vect.rend());"
+    },
+    {
+        "file":  "mscts/mstap/msFlexibleTapPartition.cc",
+        "line":  880,
+        "chunk":  "std::sort(vect.rbegin(), vect.rend());"
+    }
+]

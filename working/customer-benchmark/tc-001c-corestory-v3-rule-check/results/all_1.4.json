@@ -1,0 +1,162 @@
+[
+    {
+        "line":  375,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ccd/skewopt/soLogicCone.h",
+        "match_text":  "std::size_t h1 = std::hash\u003cconst void*\u003e{}(key.first);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  400,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ccd/skewopt/soLogicCone.h",
+        "match_text":  "std::size_t h1 = std::hash\u003cconst void*\u003e{}(key.driver);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  401,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ccd/skewopt/soLogicCone.h",
+        "match_text":  "std::size_t h2 = std::hash\u003cconst void*\u003e{}(key.inst);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  402,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ccd/skewopt/soLogicCone.h",
+        "match_text":  "std::size_t h3 = std::hash\u003cconst void*\u003e{}(key.libCell);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  375,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ccd/include/soLogicCone.h",
+        "match_text":  "std::size_t h1 = std::hash\u003cconst void*\u003e{}(key.first);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  400,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ccd/include/soLogicCone.h",
+        "match_text":  "std::size_t h1 = std::hash\u003cconst void*\u003e{}(key.driver);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  401,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ccd/include/soLogicCone.h",
+        "match_text":  "std::size_t h2 = std::hash\u003cconst void*\u003e{}(key.inst);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  402,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ccd/include/soLogicCone.h",
+        "match_text":  "std::size_t h3 = std::hash\u003cconst void*\u003e{}(key.libCell);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  92,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "include/ctscstrDesign.h",
+        "match_text":  "return std::hash\u003cconst ndmDesign*\u003e()(key);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  274,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "include/ctoscGlobal.h",
+        "match_text":  "return std::hash\u003cctoSclkBag*\u003e()(pair.bag) ^",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  334,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "include/ctoscFilter.h",
+        "match_text":  "std::hash\u003cconst ndmInst*\u003e()(pair.inst) ^",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  335,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "include/ctoscFilter.h",
+        "match_text":  "std::hash\u003cconst ndmModule*\u003e()(pair.module);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  92,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ctscstr/ctscstrDesign.h",
+        "match_text":  "return std::hash\u003cconst ndmDesign*\u003e()(key);",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  274,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ctscto/ctosc/ctoscGlobal.h",
+        "match_text":  "return std::hash\u003cctoSclkBag*\u003e()(pair.bag) ^",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  334,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ctscto/ctosc/ctoscFilter.h",
+        "match_text":  "std::hash\u003cconst ndmInst*\u003e()(pair.inst) ^",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  335,
+        "pattern_name":  "Pointer-based hash functors (std::hash\u003cT*\u003e, hash_combine with pointer)",
+        "tier":  1,
+        "category":  "hash",
+        "pattern_id":  "1.4",
+        "file":  "ctscto/ctosc/ctoscFilter.h",
+        "match_text":  "std::hash\u003cconst ndmModule*\u003e()(pair.module);",
+        "severity_default":  "HIGH"
+    }
+]

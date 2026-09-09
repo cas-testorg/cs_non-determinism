@@ -1,0 +1,1727 @@
+[
+    {
+        "file":  "ctsmisc/ctsCheck.h",
+        "line":  116,
+        "text":  "void findHierTermAndReason(ndmTerm*\u0026 drvTerm, nbmUtil\u0026 theNbmUtil, std::unordered_set\u003cndmTerm*\u003e\u0026 terms);"
+    },
+    {
+        "file":  "ctsmisc/ctsCheck.cc",
+        "line":  3874,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e terms;"
+    },
+    {
+        "file":  "ctsmisc/ctsCheck.cc",
+        "line":  3904,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 terms) {"
+    },
+    {
+        "file":  "mscts/msutil/msTapCellMgr.h",
+        "line":  284,
+        "text":  "std::unordered_set\u003cndmInst*\u003e \u0026deletedInsts, unsigned \u0026actualTapCnt);"
+    },
+    {
+        "file":  "mscts/msutil/msTapCellMgr.h",
+        "line":  368,
+        "text":  "std::unordered_set\u003cndmNet*\u003e _shieldComponentNets;  // Nets that have shield shapes collected"
+    },
+    {
+        "file":  "mscts/msutil/msTapCellMgr.cc",
+        "line":  731,
+        "text":  "std::unordered_set\u003cndmShape*\u003e l_sshapes;"
+    },
+    {
+        "file":  "mscts/msutil/msTapCellMgr.cc",
+        "line":  3028,
+        "text":  "std::unordered_set\u003cndmInst*\u003e deletedInsts;"
+    },
+    {
+        "file":  "mscts/msutil/msTapCellMgr.cc",
+        "line":  3124,
+        "text":  "std::unordered_map\u003cndmInst*, ndmInst*\u003e refreshedInstMap;"
+    },
+    {
+        "file":  "mscts/msutil/msTapCellMgr.cc",
+        "line":  6753,
+        "text":  "std::unordered_set\u003cndmInst*\u003e \u0026deletedInsts, unsigned \u0026actualTapCnt)"
+    },
+    {
+        "file":  "mscts/msutil/msInfra.cc",
+        "line":  2511,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e termSet1(termVec1.begin(), termVec1.end());"
+    },
+    {
+        "file":  "mscts/msutil/msInfra.cc",
+        "line":  2512,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e termSet2(termVec2.begin(), termVec2.end());"
+    },
+    {
+        "file":  "mscts/msutil/msInfra.cc",
+        "line":  2666,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e loadsSet(loadsVec.begin(), loadsVec.end());"
+    },
+    {
+        "file":  "mscts/msutil/msInfra.cc",
+        "line":  2667,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e sinksSet(_sinkTerms.begin(), _sinkTerms.end());"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.h",
+        "line":  1081,
+        "text":  "void fetchPinsToGroupMap(std::unordered_map\u003cndmTerm*, msCstrDesign::TapGroup*\u003e \u0026pinsToGroup);"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.cc",
+        "line":  6862,
+        "text":  "std::unordered_map\u003cndmTerm*, msCstrDesign::TapGroup*\u003e \u0026pinsToGroup"
+    },
+    {
+        "file":  "ctscto/totalskew/ctoAbsTree.h",
+        "line":  816,
+        "text":  "std::unordered_map\u003cndmTerm*, sccElrfValUmapType\u003e;"
+    },
+    {
+        "file":  "ctscto/totalskew/ctoAbsTree.h",
+        "line":  1546,
+        "text":  "std::unordered_set\u003ccnmNetwork::Edge*\u003e\u0026 visitedEdges,"
+    },
+    {
+        "file":  "ctscto/totalskew/ctoAbsTree.cc",
+        "line":  3063,
+        "text":  "std::unordered_set\u003ccnmNetwork::Edge*\u003e visitedEdges;"
+    },
+    {
+        "file":  "ctscto/totalskew/ctoAbsTree.cc",
+        "line":  3093,
+        "text":  "std::unordered_set\u003ccnmNetwork::Edge*\u003e\u0026 visitedEdges,"
+    },
+    {
+        "file":  "ctscto/dcd/ctoDcdFix.h",
+        "line":  56,
+        "text":  "typedef std::unordered_set\u003cndmTerm*\u003e termUset;"
+    },
+    {
+        "file":  "ctscto/dcd/ctoDcdFix.h",
+        "line":  57,
+        "text":  "typedef std::unordered_set\u003cndmInst*\u003e instUset;"
+    },
+    {
+        "file":  "ctscto/dcd/ctoDcdFix.h",
+        "line":  236,
+        "text":  "std::unordered_map\u003cctsSclk, std::unordered_set\u003cndmTerm*\u003e\u003e _doneClock2Terms;"
+    },
+    {
+        "file":  "ctscto/dcd/ctoDcdFix.cc",
+        "line":  470,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e terms;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscLevelFlow.h",
+        "line":  100,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscLevelFlow.h",
+        "line":  149,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscLevelFlow.h",
+        "line":  179,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscLevelFlow.cc",
+        "line":  281,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e mapSeedToOutputTerms;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscLevelFlow.cc",
+        "line":  310,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscLevelFlow.cc",
+        "line":  345,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscLevelFlow.cc",
+        "line":  389,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscLevelFlow.cc",
+        "line":  395,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e seedMap;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscGlobal.h",
+        "line":  460,
+        "text":  "std::unordered_set\u003cctoSclkBag*\u003e\u0026 sclkbags) const;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscGlobal.cc",
+        "line":  3420,
+        "text":  "std::unordered_set\u003cctoSclkBag*\u003e\u0026 setSclkbags) const"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscGlobal.cc",
+        "line":  4615,
+        "text":  "std::unordered_set\u003cctoSclkBag*\u003e setSclkbags;"
+    },
+    {
+        "file":  "mscts/msui/msuiTapGroup.cc",
+        "line":  89,
+        "text":  "std::unordered_map\u003cndmTerm*, msCstrDesign::TapGroup*\u003e pinsToGroup;"
+    },
+    {
+        "file":  "mscts/msui/msuiReportPowerTaps.cc",
+        "line":  698,
+        "text":  "std::unordered_set\u003cndmBlkInst*\u003e seen(taplist.begin(), taplist.end());"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsResultIntegrator.cc",
+        "line":  886,
+        "text":  "std::unordered_set\u003cctoSclkBag*\u003e setSclkbags;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsProblemGenerator.h",
+        "line":  493,
+        "text":  "std::unordered_map\u003cndmTerm*, std::unordered_set\u003cndmTerm*\u003e\u003e _driver2EpMap;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsProblemGenerator.h",
+        "line":  494,
+        "text":  "std::unordered_set\u003cndmFlatNet*\u003e _markedNets;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsProblemGenerator.h",
+        "line":  503,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _roots;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsProblemGenerator.cc",
+        "line":  2079,
+        "text":  "std::unordered_set\u003cndmFlatNet*\u003e visited_drv_nets;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsProblemGenerator.cc",
+        "line":  3465,
+        "text":  "std::unordered_set\u003cctoSclkBag*\u003e setSclkbags;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsParallelBufPlans.cc",
+        "line":  66,
+        "text":  "using driverInfoMap = std::unordered_map\u003cndmTerm*, driverInfo\u003e;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsParallelBufPlans.cc",
+        "line":  67,
+        "text":  "using planGenIndex  = std::unordered_map\u003cndmTerm*, ctomtXformProblem*\u003e;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.h",
+        "line":  87,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.h",
+        "line":  98,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 seedMapHigh,"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.h",
+        "line":  103,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 seedMapHigh,"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc",
+        "line":  1462,
+        "text":  "std::unordered_map\u003cndmTerm*, termVecPtr\u003e termIndex;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc",
+        "line":  1638,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e mapSeedToOutputTerms;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc",
+        "line":  1695,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc",
+        "line":  1719,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 seedMapHigh,"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc",
+        "line":  1756,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 seedMapHigh,"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc",
+        "line":  1808,
+        "text":  "std::unordered_map\u003cctsXformProblem*,"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc",
+        "line":  1815,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e seedMapLow;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc",
+        "line":  1816,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e seedMapHigh;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtEndpointTypes.h",
+        "line":  47,
+        "text":  "const std::unordered_map\u003cndmTerm*, std::unordered_set\u003cndmTerm*\u003e\u003e\u0026 getDriverToEndpointSetMap() const { return _driverToEn"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/gls/ctomtEndpointTypes.h",
+        "line":  56,
+        "text":  "std::unordered_map\u003cndmTerm*, std::unordered_set\u003cndmTerm*\u003e\u003e _driverToEndpointSetMap;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/drc/ctomtDrcProblemGenerator.cc",
+        "line":  149,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e mapAllDrivers;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/drc/ctomtDrcProblemGenerator.cc",
+        "line":  237,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e setCandidates;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/drc/ctomtDrcLevelFlow.cc",
+        "line":  83,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e _maxTranSeedMap;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtProblemGenerator.h",
+        "line":  73,
+        "text":  "std::unordered_set\u003cndmFlatNet*\u003e _marked_up_nets;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtProblemGenerator.h",
+        "line":  74,
+        "text":  "std::unordered_set\u003cndmInst*\u003e _marked_up_insts;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtClone.cc",
+        "line":  1711,
+        "text":  "std::unordered_set\u003cndmModule*\u003e compatibleSet(leqVecFromInst.begin(), leqVecFromInst.end());"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtBufferAddDelay.cc",
+        "line":  640,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e originalLoadSet(loadsToAddDelay.begin(), loadsToAddDelay.end());"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaLevelFlow.h",
+        "line":  50,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms) override;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaLevelFlow.cc",
+        "line":  180,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaLevelFlow.cc",
+        "line":  186,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e seedMap;"
+    },
+    {
+        "file":  "mscts/msmesh/msInterfSplit.cc",
+        "line":  421,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e ignoredTerms;"
+    },
+    {
+        "file":  "mscts/msmesh/msActivityRelocator.h",
+        "line":  124,
+        "text":  "std::unordered_map\u003cmsTreeNode*, ndmInst*\u003e _hashTblDrivers;"
+    },
+    {
+        "file":  "ctscto/budget/bgtProblemGenerator.cc",
+        "line":  3845,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e lauSet;"
+    },
+    {
+        "file":  "ctscto/budget/bgtProblemGenerator.cc",
+        "line":  3904,
+        "text":  "bgtProblemGenerator::findCapturePathBottomUp(ctsPathTracer::fullPath* path,  std::unordered_set\u003cndmTerm*\u003e\u0026 lauSet, std::"
+    },
+    {
+        "file":  "mscts/msgts/msgtsSectionTopology.cc",
+        "line":  64,
+        "text":  "std::unordered_map\u003cmsgtsGCRHSNode*, msgtsGCRHSNode*\u003e nodeTable;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsSectionTopology.cc",
+        "line":  78,
+        "text":  "std::unordered_map\u003cmsgtsGCRHSEdge*, msgtsGCRHSEdge*\u003e edgeTable;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsSectionTopology.cc",
+        "line":  124,
+        "text":  "std::unordered_set\u003cmsgtsGCRHSNode*\u003e deletedNodeTable;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsSectionTopology.cc",
+        "line":  133,
+        "text":  "std::unordered_set\u003cmsgtsGCRHSEdge*\u003e deletedEdgeTable;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsGCRCntl.h",
+        "line":  885,
+        "text":  ", const std::unordered_map\u003cmsgtsGCRHSEdge*, gcrFTPair\u003e \u0026edgeIndexMap"
+    },
+    {
+        "file":  "mscts/msgts/msgtsGCRCntl.cc",
+        "line":  8692,
+        "text":  "std::unordered_map\u003cmsgtsGCRHSEdge*, gcrFTPair\u003e edgeIndexMap;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsGCRCntl.cc",
+        "line":  8885,
+        "text":  "const std::unordered_map\u003cmsgtsGCRHSEdge*, gcrFTPair\u003e \u0026edgeIndexMap"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.h",
+        "line":  257,
+        "text":  "const std::unordered_set\u003cndmTerm*\u003e \u0026tapSet"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.h",
+        "line":  263,
+        "text":  "std::unordered_map\u003cndmTerm*, int\u003e \u0026levelTable"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.h",
+        "line":  490,
+        "text":  "std::unordered_map\u003cnbmNode*, ndmCoord\u003e _splitCellForNonCentreLoad;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.h",
+        "line":  491,
+        "text":  "const std::unordered_map\u003cndmTerm*, ndmCoord\u003e *_sink2CentreLocMap;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  4106,
+        "text":  "std::unordered_map\u003cndmTerm*, nbmNode*\u003e ndmTerm2nbmNodeMap;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  4733,
+        "text":  "const std::unordered_set\u003cndmTerm*\u003e \u0026tapSet"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  4784,
+        "text":  "std::unordered_map\u003cndmTerm*, int\u003e \u0026levelTable"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  4845,
+        "text":  "std::unordered_map\u003cndmTerm*, int\u003e sinkLevelTable;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  5392,
+        "text":  "const std::unordered_map\u003cndmTerm*, std::string\u003e \u0026_term2SectionName;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  5393,
+        "text":  "const std::unordered_map\u003cnbmNode*, ndmCoord\u003e    \u0026_existingSC;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  5435,
+        "text":  "std::unordered_map\u003cnbmNode*, msgtsGCRHSNode*\u003e savedNodeTable;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  5879,
+        "text":  "std::unordered_map\u003cndmTerm*, ndmCoord\u003e sinkToCentreLocMap;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  5880,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e normalSinks;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  5881,
+        "text":  "std::unordered_map\u003cndmTerm*, std::string\u003e term2SectionName;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  5882,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visitedrivers;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  5994,
+        "text":  "const std::unordered_map\u003cndmTerm*, std::string\u003e \u0026sinkSectionNameTable)"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  6039,
+        "text":  "const std::unordered_map\u003cndmTerm*, std::string\u003e \u0026sinkSectionNameTable)"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.cc",
+        "line":  6503,
+        "text":  "std::unordered_set\u003cndmModule*\u003e l_htreeLibCells;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  8132,
+        "text":  "std::unordered_set\u003cndmHier*\u003e uncommittedHierSet;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  13454,
+        "text":  "std::unordered_map\u003cmsgtsCluster*, nbmNode*\u003e cluster2nbmNodeMap;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsBuffering.cc",
+        "line":  356,
+        "text":  "std::unordered_set\u003cndmInst*\u003e visitedInsts;"
+    },
+    {
+        "file":  "cts/ctsManager.h",
+        "line":  275,
+        "text":  "void storeSinksLevelTable(const std::unordered_map \u003cndmTerm*, int\u003e \u0026table) { _sinksLevelTable = table; }"
+    },
+    {
+        "file":  "cts/ctsManager.h",
+        "line":  307,
+        "text":  "bool isPinCloseToOtherPinOfSameNet(ndmTerm *term, ndmDistance limit, std::unordered_set\u003cndmInst*\u003e \u0026newCellSet, bool \u0026clo"
+    },
+    {
+        "file":  "cts/ctsManager.h",
+        "line":  308,
+        "text":  "bool isRepeaterCloseToDriverOrLoad(ndmInst *repeater, ndmDistance limit, std::unordered_set\u003cndmInst*\u003e \u0026newCellSet, bool "
+    },
+    {
+        "file":  "cts/ctsManager.h",
+        "line":  359,
+        "text":  "std::unordered_map \u003cndmTerm*, int\u003e _sinksLevelTable; // To store level info of sinks from globalTree"
+    },
+    {
+        "file":  "cts/ctsManager.h",
+        "line":  443,
+        "text":  "void storeSinksLevelTable(const std::unordered_map \u003cndmTerm*, int\u003e \u0026table) { _sinksLevelTable = table; }"
+    },
+    {
+        "file":  "cts/ctsManager.h",
+        "line":  464,
+        "text":  "std::unordered_map \u003cndmTerm*, int\u003e _sinksLevelTable;"
+    },
+    {
+        "file":  "cts/ctsManager.cc",
+        "line":  2857,
+        "text":  "ctsManager::isPinCloseToOtherPinOfSameNet(ndmTerm *term, ndmDistance limit, std::unordered_set\u003cndmInst*\u003e \u0026newCellSet, bo"
+    },
+    {
+        "file":  "cts/ctsManager.cc",
+        "line":  2884,
+        "text":  "ctsManager::isRepeaterCloseToDriverOrLoad(ndmInst *repeater, ndmDistance limit, std::unordered_set\u003cndmInst*\u003e \u0026newCellSet"
+    },
+    {
+        "file":  "cts/ctsManager.cc",
+        "line":  2925,
+        "text":  "std::unordered_set\u003cndmInst*\u003e newCellSet(newInsts.begin(), newInsts.end());"
+    },
+    {
+        "file":  "mscts/mscore/msInterfApi.h",
+        "line":  40,
+        "text":  "bool deriveOffsetLimits(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms);"
+    },
+    {
+        "file":  "mscts/mscore/msInterfApi.cc",
+        "line":  698,
+        "text":  "bool msCtsNS::deriveOffsetLimits(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms)"
+    },
+    {
+        "file":  "mscts/mscore/msDataModel.h",
+        "line":  536,
+        "text":  "void backPropagateCUSLimit(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms);"
+    },
+    {
+        "file":  "mscts/mscore/msDataModel.cc",
+        "line":  11471,
+        "text":  "void msDataModel::backPropagateCUSLimit(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms)"
+    },
+    {
+        "file":  "ccd/util/ccdUtil.cc",
+        "line":  416,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ccd/util/ccdSRMgr.h",
+        "line":  48,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e _restrMap;"
+    },
+    {
+        "file":  "ccd/util/ccdDPAMgr.h",
+        "line":  65,
+        "text":  "bool collectDlyPotentialPerEndpoint(std::unordered_map\u003cndmTerm*, float\u003e\u0026);"
+    },
+    {
+        "file":  "ccd/util/ccdDPAMgr.h",
+        "line":  66,
+        "text":  "bool collectDlyPotentialPerEndpointTimBased(std::map\u003ccstrScenario, std::unordered_map\u003cndmTerm*, float\u003e\u003e \u0026);"
+    },
+    {
+        "file":  "ccd/util/ccdDPAMgr.cc",
+        "line":  111,
+        "text":  "std::map\u003ccstrScenario, std::unordered_map\u003cndmTerm*, float\u003e\u003e epDlyPotential4TimBased;"
+    },
+    {
+        "file":  "ccd/util/ccdDPAMgr.cc",
+        "line":  112,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e epDlyPotential;"
+    },
+    {
+        "file":  "ccd/util/ccdDPAMgr.cc",
+        "line":  237,
+        "text":  "ccdDPAMgr::collectDlyPotentialPerEndpoint(std::unordered_map\u003cndmTerm*, float\u003e\u0026 dlyPotentialMap) {"
+    },
+    {
+        "file":  "ccd/util/ccdDPAMgr.cc",
+        "line":  303,
+        "text":  "ccdDPAMgr::collectDlyPotentialPerEndpointTimBased(std::map\u003ccstrScenario, std::unordered_map\u003cndmTerm*, float\u003e\u003e \u0026 dlyPoten"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.h",
+        "line":  486,
+        "text":  "void setFixedVars(soCgSolver* solver, std::unordered_set\u003cndmTerm*\u003e \u0026fixedTerms);"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  2659,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e fixedTerms;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3232,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visitedDrivers;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3279,
+        "text":  "std::unordered_map\u003cndmTerm*, unsigned int\u003e driverClockSourceIndexMap;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3280,
+        "text":  "std::unordered_map\u003cndmTerm*, unsigned int\u003e termIndexMap;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3282,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e driverToggleRateMap;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3283,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e driverCapacitanceMap;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3292,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e leafNetDrivers;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3295,
+        "text":  "std::unordered_map\u003cndmTerm*, unsigned int\u003e leafNetCount;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3323,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e drivers;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  3915,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e fixedTerms;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  4055,
+        "text":  "soCgSolverUpdater::setFixedVars(soCgSolver* solver, std::unordered_set\u003cndmTerm*\u003e \u0026fixedTerms)"
+    },
+    {
+        "file":  "mscts/include/msTapCellMgr.h",
+        "line":  284,
+        "text":  "std::unordered_set\u003cndmInst*\u003e \u0026deletedInsts, unsigned \u0026actualTapCnt);"
+    },
+    {
+        "file":  "mscts/include/msTapCellMgr.h",
+        "line":  368,
+        "text":  "std::unordered_set\u003cndmNet*\u003e _shieldComponentNets;  // Nets that have shield shapes collected"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverAnalyzer.cc",
+        "line":  1358,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e seenEps;"
+    },
+    {
+        "file":  "ccd/skewopt/soSolverAnalyzer.cc",
+        "line":  1690,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e eps;"
+    },
+    {
+        "file":  "ccd/skewopt/soSink.h",
+        "line":  51,
+        "text":  "using termToGateMapType = std::unordered_map\u003cndmTerm*, soClockGate*\u003e;;"
+    },
+    {
+        "file":  "ccd/skewopt/soSink.h",
+        "line":  52,
+        "text":  "using termToSinkMapType = std::unordered_map\u003cndmTerm*, std::shared_ptr\u003csoSink\u003e\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soSink.h",
+        "line":  54,
+        "text":  "using termToPortMapType = std::unordered_map\u003cndmTerm*, soPort*\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soSink.h",
+        "line":  115,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e termToLatMaxPre;"
+    },
+    {
+        "file":  "ccd/skewopt/soPredictiveCcd.h",
+        "line":  91,
+        "text":  "std::map\u003ccstrScenario, std::unordered_map\u003cndmTerm*, float\u003e\u003e getEndpointDelayPotential() { return _endpointDelayPotential"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.h",
+        "line":  104,
+        "text":  "std::unordered_map\u003cndmModule*, float\u003e _libCellToAreaOrdering;"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.h",
+        "line":  171,
+        "text":  "std::unordered_map\u003cndmModule*, powerUtilTypesNS::powerData\u003e _libCellToPowerData;"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.h",
+        "line":  331,
+        "text":  "std::vector\u003cconst std::unordered_map\u003cndmModule*, powerUtilTypesNS::powerData\u003e*\u003e\u0026 lcPwrMap) const;"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.cc",
+        "line":  618,
+        "text":  "std::unordered_set\u003cndmInst*\u003e allCells;"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.cc",
+        "line":  1216,
+        "text":  "const std::unordered_map\u003cndmModule*, powerUtilTypesNS::powerData\u003e* lcPwrMap = nullptr;"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.cc",
+        "line":  1660,
+        "text":  "std::vector\u003cconst std::unordered_map\u003cndmModule*, powerUtilTypesNS::powerData\u003e*\u003e\u0026 lcPwrMapVec) const {"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.cc",
+        "line":  2235,
+        "text":  "std::unordered_set\u003cndmModule*\u003e libCellsSet;"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.cc",
+        "line":  3195,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visitedFromTerms;"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.cc",
+        "line":  3599,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visitedFromTerms;"
+    },
+    {
+        "file":  "ccd/skewopt/soLogicCone.cc",
+        "line":  3771,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visitedFromTerms;"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.h",
+        "line":  73,
+        "text":  "static inline std::unordered_map\u003cndmTerm*, soIcdSink*\u003e s_termToIcdSinkMap;"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.h",
+        "line":  152,
+        "text":  "const std::unordered_set\u003csoIcdSink*\u003e\u0026 skipTargets,"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.h",
+        "line":  155,
+        "text":  "const std::unordered_set\u003csoIcdSink*\u003e\u0026 skipTargets,"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.cc",
+        "line":  370,
+        "text":  "std::unordered_set\u003csoIcdSink*\u003e failedSinceLastImprovement;"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.cc",
+        "line":  371,
+        "text":  "std::unordered_set\u003csoIcdSink*\u003e improvedTargets; // track those as targets can be optimized multiple times"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.cc",
+        "line":  524,
+        "text":  "std::unordered_set\u003csoIcdSink*\u003e improvedTargets; // track those as targets can be optimized multiple times"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.cc",
+        "line":  568,
+        "text":  "std::unordered_set\u003csoIcdSink*\u003e currentIterImprovedTargets;"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.cc",
+        "line":  569,
+        "text":  "std::unordered_set\u003csoIcdSink*\u003e failedSinceLastImprovement;"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.cc",
+        "line":  983,
+        "text":  "const std::unordered_set\u003csoIcdSink*\u003e\u0026 skipTargets) const"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.cc",
+        "line":  1005,
+        "text":  "const std::unordered_set\u003csoIcdSink*\u003e\u0026 skipTargets,"
+    },
+    {
+        "file":  "ccd/skewopt/soIcdOptimizer.cc",
+        "line":  1102,
+        "text":  "const std::unordered_set\u003csoIcdSink*\u003e\u0026 skipTargets,"
+    },
+    {
+        "file":  "mscts/include/msInterfApi.h",
+        "line":  40,
+        "text":  "bool deriveOffsetLimits(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms);"
+    },
+    {
+        "file":  "ccd/skewopt/soDesign.h",
+        "line":  70,
+        "text":  "using termToSinkMapType = std::unordered_map\u003cndmTerm*, std::shared_ptr\u003csoSink\u003e\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soDesign.h",
+        "line":  71,
+        "text":  "using termToGateMapType = std::unordered_map\u003cndmTerm*, soClockGate*\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soDesign.h",
+        "line":  72,
+        "text":  "using termToPortMapType = std::unordered_map\u003cndmTerm*, soPort*\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soDesign.h",
+        "line":  73,
+        "text":  "using termToOffsetType = std::unordered_map\u003cndmTerm*, float\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soDesign.h",
+        "line":  74,
+        "text":  "using sinkToSinkVecUmapType = std::unordered_map\u003csoSink*, std::vector\u003csoSink*\u003e\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soDataPowerOptimizer.h",
+        "line":  99,
+        "text":  "std::unordered_map\u003csoSink*, SinkPotential\u003e _potentials;"
+    },
+    {
+        "file":  "ccd/skewopt/soCusServer.cc",
+        "line":  174,
+        "text":  "std::unordered_set\u003cndmInst*\u003e visited;"
+    },
+    {
+        "file":  "ccd/skewopt/soCusServer.cc",
+        "line":  307,
+        "text":  "std::unordered_set\u003cndmInst*\u003e visited;"
+    },
+    {
+        "file":  "ccd/skewopt/soCusServer.cc",
+        "line":  322,
+        "text":  "std::unordered_set\u003cndmInst*\u003e visited;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGraph.h",
+        "line":  272,
+        "text":  "std::unordered_map\u003cndmTerm*, std::vector\u003cndmTerm*\u003e\u003e _childToParentMap;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGraph.cc",
+        "line":  472,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e processedTerms;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGraph.cc",
+        "line":  473,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e pendingToReconstruct;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGraph.cc",
+        "line":  1812,
+        "text":  "std::unordered_map\u003cndmTerm*, unsigned\u003e visited;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.h",
+        "line":  32,
+        "text":  "using termToSinkMapType = std::unordered_map\u003cndmTerm*, std::shared_ptr\u003csoSink\u003e\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.h",
+        "line":  33,
+        "text":  "using termToGateMapType = std::unordered_map\u003cndmTerm*, soClockGate*\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.h",
+        "line":  34,
+        "text":  "using termToPortMapType = std::unordered_map\u003cndmTerm*, soPort*\u003e;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.h",
+        "line":  94,
+        "text":  "std::unordered_map\u003cndmTerm*,float\u003e icgLatencyControlMaxPrepones() const;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.h",
+        "line":  135,
+        "text":  "std::unordered_set\u003csoSink*, soSinkHash\u003e icgTFOSinks(soClockGate *icg) const;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  238,
+        "text":  "std::unordered_set\u003csoSink*, soSinkHash\u003e"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  240,
+        "text":  "std::unordered_set\u003csoSink*, soSinkHash\u003e sinks;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  241,
+        "text":  "std::unordered_set\u003csoClockGate*\u003e visited;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  278,
+        "text":  "std::unordered_map\u003cndmTerm*,float\u003e"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  282,
+        "text":  "std::unordered_map\u003cndmTerm*,float\u003e ctrlToLat;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  566,
+        "text":  "const std::unordered_set\u003csoSink*, soSinkHash\u003e \u0026 fOSinks = icgTFOSinks(icg);"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  943,
+        "text":  "const std::unordered_set\u003csoSink*, soSinkHash\u003e \u0026 fOSinks = _soCGO.icgTFOSinks(icg);"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  1034,
+        "text":  "const std::unordered_set\u003csoSink*, soSinkHash\u003e \u0026 fOSinks = _soCGO.icgTFOSinks(icg);"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  1067,
+        "text":  "std::unordered_map\u003cndmTerm*, unsigned int\u003e cntPerEpt;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGateOpt.cc",
+        "line":  1190,
+        "text":  "std::unordered_map\u003cndmTerm*, std::vector\u003cndmTerm*\u003e\u003e fromToMap;"
+    },
+    {
+        "file":  "mscts/include/msgtsFlow.h",
+        "line":  257,
+        "text":  "const std::unordered_set\u003cndmTerm*\u003e \u0026tapSet"
+    },
+    {
+        "file":  "mscts/include/msgtsFlow.h",
+        "line":  263,
+        "text":  "std::unordered_map\u003cndmTerm*, int\u003e \u0026levelTable"
+    },
+    {
+        "file":  "mscts/include/msgtsFlow.h",
+        "line":  490,
+        "text":  "std::unordered_map\u003cnbmNode*, ndmCoord\u003e _splitCellForNonCentreLoad;"
+    },
+    {
+        "file":  "mscts/include/msgtsFlow.h",
+        "line":  491,
+        "text":  "const std::unordered_map\u003cndmTerm*, ndmCoord\u003e *_sink2CentreLocMap;"
+    },
+    {
+        "file":  "ccd/skewopt/skewopt.h",
+        "line":  282,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _targetEndPointsIterative;"
+    },
+    {
+        "file":  "mscts/include/msDataModel.h",
+        "line":  536,
+        "text":  "void backPropagateCUSLimit(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms);"
+    },
+    {
+        "file":  "mscts/include/msCstrDesign.h",
+        "line":  1081,
+        "text":  "void fetchPinsToGroupMap(std::unordered_map\u003cndmTerm*, msCstrDesign::TapGroup*\u003e \u0026pinsToGroup);"
+    },
+    {
+        "file":  "mscts/include/msActivityRelocator.h",
+        "line":  124,
+        "text":  "std::unordered_map\u003cmsTreeNode*, ndmInst*\u003e _hashTblDrivers;"
+    },
+    {
+        "file":  "ccd/include/soPredictiveCcd.h",
+        "line":  91,
+        "text":  "std::map\u003ccstrScenario, std::unordered_map\u003cndmTerm*, float\u003e\u003e getEndpointDelayPotential() { return _endpointDelayPotential"
+    },
+    {
+        "file":  "ccd/include/soLogicCone.h",
+        "line":  104,
+        "text":  "std::unordered_map\u003cndmModule*, float\u003e _libCellToAreaOrdering;"
+    },
+    {
+        "file":  "ccd/include/soLogicCone.h",
+        "line":  171,
+        "text":  "std::unordered_map\u003cndmModule*, powerUtilTypesNS::powerData\u003e _libCellToPowerData;"
+    },
+    {
+        "file":  "ccd/include/soLogicCone.h",
+        "line":  331,
+        "text":  "std::vector\u003cconst std::unordered_map\u003cndmModule*, powerUtilTypesNS::powerData\u003e*\u003e\u0026 lcPwrMap) const;"
+    },
+    {
+        "file":  "ccd/include/ccdSRMgr.h",
+        "line":  48,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e _restrMap;"
+    },
+    {
+        "file":  "ccd/include/ccdDPAMgr.h",
+        "line":  65,
+        "text":  "bool collectDlyPotentialPerEndpoint(std::unordered_map\u003cndmTerm*, float\u003e\u0026);"
+    },
+    {
+        "file":  "ccd/include/ccdDPAMgr.h",
+        "line":  66,
+        "text":  "bool collectDlyPotentialPerEndpointTimBased(std::map\u003ccstrScenario, std::unordered_map\u003cndmTerm*, float\u003e\u003e \u0026);"
+    },
+    {
+        "file":  "mscts/export/msInterfApi.h",
+        "line":  40,
+        "text":  "bool deriveOffsetLimits(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms);"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  11503,
+        "text":  "std::unordered_set\u003cndmInst*\u003e visited_insts;"
+    },
+    {
+        "file":  "mscts/drivers/msAutoTapFlow.cc",
+        "line":  4185,
+        "text":  "std::unordered_map\u003cndmHier*, msLoadsSinksSections\u003e hierInfo;"
+    },
+    {
+        "file":  "ccd/ctsccd/voltagedrop/ccdvdProblemGenerator.h",
+        "line":  354,
+        "text":  "std::unordered_map\u003cndmTerm*, std::vector\u003cndmModule*\u003e \u003e _leqMap;"
+    },
+    {
+        "file":  "ccd/ctsccd/voltagedrop/ccdvdProblemGenerator.cc",
+        "line":  163,
+        "text":  "std::unordered_map\u003cndmTerm*, std::vector\u003cndmModule*\u003e \u003e::iterator lit = _leqMap.find(seed-\u003egetTerm());"
+    },
+    {
+        "file":  "ccd/ctsccd/voltagedrop/ccdvdProblemGenerator.cc",
+        "line":  1754,
+        "text":  "std::unordered_map\u003cndmTerm*, std::vector\u003cndmModule*\u003e \u003e::iterator lit = _leqMap.find(load);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/include/fmaxProblemGenerator.h",
+        "line":  105,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e termSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/include/fmaxProblemGenerator.h",
+        "line":  281,
+        "text":  "void getParaSinksDFS(delay::U2 idx, xPara\u0026 para, std::unordered_set\u003cndmTerm*\u003e\u0026 visited);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxSolver.cc",
+        "line":  889,
+        "text":  "std::unordered_set\u003cfmaxProblemSeed*\u003e seedSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxSize.cc",
+        "line":  88,
+        "text":  "std::unordered_set\u003cndmModule*\u003e allLeqs;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemSeed.h",
+        "line":  316,
+        "text":  "bool cleanedUpUnusedVariables(std::unordered_set\u003cfmaxVariable*\u003e\u0026 criticalVariables);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemSeed.cc",
+        "line":  2603,
+        "text":  "bool fmaxProblemSeed::cleanedUpUnusedVariables(std::unordered_set\u003cfmaxVariable*\u003e\u0026 criticalVariables)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemSeed.cc",
+        "line":  2611,
+        "text":  "std::unordered_set\u003cfmaxVariable*\u003e::iterator vt = criticalVariables.find(v);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorWns.cc",
+        "line":  105,
+        "text":  "std::unordered_map\u003clazyTns::costGroup*, float\u003e wnsMap;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorWns.cc",
+        "line":  132,
+        "text":  "std::unordered_map\u003clazyTns::costGroup*, float\u003e::iterator kt = wnsMap.find(cgp);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorWns.cc",
+        "line":  1029,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorWns.cc",
+        "line":  1049,
+        "text":  "fmaxProblemGenerator::getParaSinksDFS(delay::U2 idx, xPara\u0026 para, std::unordered_set\u003cndmTerm*\u003e\u0026 visited)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGenerator.h",
+        "line":  105,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e termSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGenerator.h",
+        "line":  281,
+        "text":  "void getParaSinksDFS(delay::U2 idx, xPara\u0026 para, std::unordered_set\u003cndmTerm*\u003e\u0026 visited);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxMooCreator.cc",
+        "line":  1591,
+        "text":  "std::unordered_map\u003cfmaxVariable*, float\u003e originalSolution;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxMooCreator.cc",
+        "line":  3029,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 batch2Drivers = _budgetModel-\u003egetBatch2Drivers();"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxMooCreator.cc",
+        "line":  3261,
+        "text":  "std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e termToSeedMap;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxMasterXformLowEffort.cc",
+        "line":  843,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxMasterXform.cc",
+        "line":  1141,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxFlow.h",
+        "line":  150,
+        "text":  "std::unordered_set\u003cndmInst*\u003e _debankInsts;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxFlow.cc",
+        "line":  1137,
+        "text":  "std::unordered_set\u003cndmInst*\u003e originalSet = _debankInsts;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxDotExporter.cc",
+        "line":  74,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e seedDrivers;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxCusDesign.cc",
+        "line":  316,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e zeroBudgetTerms;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxCusBudgetImplementer.cc",
+        "line":  857,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e globallyVisited;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxCusBudgetImplementer.cc",
+        "line":  971,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e upstreamOffsets;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.h",
+        "line":  119,
+        "text":  "termSetType\u0026 visited, termSetType visitLoop, std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e\u0026 seedMap);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.h",
+        "line":  120,
+        "text":  "bool addSeedToTermInfo(fmaxTermInfo* info, std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e\u0026 seedMap);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.h",
+        "line":  121,
+        "text":  "bool shouldAddToGraph(ndmTerm* term, std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e\u0026 seedMap);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.h",
+        "line":  123,
+        "text":  "unsigned int assignLevelsRecursive(fmaxTermInfo* info, std::unordered_set\u003cndmTerm*\u003e\u0026 visited);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.h",
+        "line":  124,
+        "text":  "void assignColorsRecursive(fmaxTermInfo* info, std::unordered_set\u003cndmTerm*\u003e\u0026 visited);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  97,
+        "text":  "std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e seedMap;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  150,
+        "text":  "termSetType\u0026 visited, termSetType visitLoop, std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e\u0026 seedMap)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  192,
+        "text":  "bool fmaxClockGraph::addSeedToTermInfo(fmaxTermInfo* info, std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e\u0026 seedMap)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  195,
+        "text":  "std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e::iterator it = seedMap.find(term);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  209,
+        "text":  "bool fmaxClockGraph::shouldAddToGraph(ndmTerm* term, std::unordered_map\u003cndmTerm*, fmaxProblemSeed*\u003e\u0026 seedMap)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  272,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  294,
+        "text":  "unsigned int fmaxClockGraph::assignLevelsRecursive(fmaxTermInfo* info, std::unordered_set\u003cndmTerm*\u003e\u0026 visited)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  323,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxClockGraph.cc",
+        "line":  350,
+        "text":  "void fmaxClockGraph::assignColorsRecursive(fmaxTermInfo* info, std::unordered_set\u003cndmTerm*\u003e\u0026 visited)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBuffer.h",
+        "line":  109,
+        "text":  "std::shared_ptr\u003catomicMove\u003e findNextMove(std::vector\u003cstd::shared_ptr\u003catomicMove\u003e \u003e\u0026 moveSequence, pseudoState*\u0026 nextPseu"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBuffer.h",
+        "line":  119,
+        "text":  "void collectFocusCPs(fmaxProblemSeed* pSeed, std::unordered_set\u003cndmInst*\u003e\u0026 futureCPs);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBuffer.h",
+        "line":  120,
+        "text":  "void collectFutureCPs(std::shared_ptr\u003catomicMove\u003e\u0026 currentMove, std::shared_ptr\u003catomicMove\u003e\u0026 futureMove, std::unordered_"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBuffer.h",
+        "line":  132,
+        "text":  "std::unordered_map\u003cndmTerm*, ctsBufPlanNode*\u003e _driverToPlanNode;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBuffer.cc",
+        "line":  178,
+        "text":  "std::unordered_set\u003cndmInst*\u003e futureCPs;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBuffer.cc",
+        "line":  220,
+        "text":  "std::shared_ptr\u003catomicMove\u003e fmaxBuffer:: findNextMove(std::vector\u003cstd::shared_ptr\u003catomicMove\u003e \u003e\u0026 moveSequence, pseudoSta"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBuffer.cc",
+        "line":  562,
+        "text":  "void fmaxBuffer::collectFutureCPs(std::shared_ptr\u003catomicMove\u003e\u0026 currentMove, std::shared_ptr\u003catomicMove\u003e\u0026 futureMove, std"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBuffer.cc",
+        "line":  584,
+        "text":  "void fmaxBuffer::collectFocusCPs(fmaxProblemSeed* pSeed, std::unordered_set\u003cndmInst*\u003e\u0026 futureCPs)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModelPrivate.cc",
+        "line":  253,
+        "text":  "fmaxBudgetModel::dumpDotSplitCommit(fmaxProblemSeed* pSeed, std::unordered_set\u003cndmTerm*\u003e\u0026 batch1Drivers, bool isCommit)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModelPrivate.cc",
+        "line":  262,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e seedDrivers;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModelPrivate.cc",
+        "line":  307,
+        "text":  "fmaxBudgetModel::dumpDotObjs(std::ofstream\u0026 outfile, std::map\u003cndmObject*, std::set\u003cgrNodeId\u003e, ndmObjPtrCmpType\u003e\u0026 obj2nod"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModelPrivate.cc",
+        "line":  327,
+        "text":  "fmaxBudgetModel::dumpDotNode(std::ofstream\u0026 outfile, grNodeId nid,std::unordered_set\u003cndmTerm*\u003e\u0026 seedDrivers, std::unorde"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModelPrivate.cc",
+        "line":  353,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e batch1Drivers;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.h",
+        "line":  224,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 getBatch2Drivers() {  return _batch2Drivers; }"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.h",
+        "line":  262,
+        "text":  "void dumpDotSplitCommit(fmaxProblemSeed* pSeed, std::unordered_set\u003cndmTerm*\u003e\u0026 batch1Drivers, bool isCommit);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.h",
+        "line":  263,
+        "text":  "void dumpDotObjs(std::ofstream\u0026 outfile, std::map\u003cndmObject*, std::set\u003cgrNodeId\u003e, ndmObjPtrCmpType\u003e\u0026 obj2nodesMap, std::"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.h",
+        "line":  264,
+        "text":  "void dumpDotNode(std::ofstream\u0026 outfile, grNodeId nid,std::unordered_set\u003cndmTerm*\u003e\u0026 seedDrivers, std::unordered_set\u003cndmT"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.h",
+        "line":  309,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _batch2Drivers;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.cc",
+        "line":  1501,
+        "text":  "std::unordered_set\u003cfmaxProblemSeed*\u003e validSeeds;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.cc",
+        "line":  1658,
+        "text":  "std::unordered_set\u003cfmaxVariable*\u003e criticalVariables;"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  947,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _transQSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.cc",
+        "line":  3443,
+        "text":  "std::unordered_set\u003cndmModule*\u003e allLeqs;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdpgProblemGenerator.h",
+        "line":  303,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _transQSet;"
+    },
+    {
+        "file":  "include/soSink.h",
+        "line":  51,
+        "text":  "using termToGateMapType = std::unordered_map\u003cndmTerm*, soClockGate*\u003e;;"
+    },
+    {
+        "file":  "include/soSink.h",
+        "line":  52,
+        "text":  "using termToSinkMapType = std::unordered_map\u003cndmTerm*, std::shared_ptr\u003csoSink\u003e\u003e;"
+    },
+    {
+        "file":  "include/soSink.h",
+        "line":  54,
+        "text":  "using termToPortMapType = std::unordered_map\u003cndmTerm*, soPort*\u003e;"
+    },
+    {
+        "file":  "include/soSink.h",
+        "line":  115,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e termToLatMaxPre;"
+    },
+    {
+        "file":  "include/soDesign.h",
+        "line":  70,
+        "text":  "using termToSinkMapType = std::unordered_map\u003cndmTerm*, std::shared_ptr\u003csoSink\u003e\u003e;"
+    },
+    {
+        "file":  "include/soDesign.h",
+        "line":  71,
+        "text":  "using termToGateMapType = std::unordered_map\u003cndmTerm*, soClockGate*\u003e;"
+    },
+    {
+        "file":  "include/soDesign.h",
+        "line":  72,
+        "text":  "using termToPortMapType = std::unordered_map\u003cndmTerm*, soPort*\u003e;"
+    },
+    {
+        "file":  "include/soDesign.h",
+        "line":  73,
+        "text":  "using termToOffsetType = std::unordered_map\u003cndmTerm*, float\u003e;"
+    },
+    {
+        "file":  "include/soDesign.h",
+        "line":  74,
+        "text":  "using sinkToSinkVecUmapType = std::unordered_map\u003csoSink*, std::vector\u003csoSink*\u003e\u003e;"
+    },
+    {
+        "file":  "include/skewopt.h",
+        "line":  282,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _targetEndPointsIterative;"
+    },
+    {
+        "file":  "include/msInterfApi.h",
+        "line":  40,
+        "text":  "bool deriveOffsetLimits(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms);"
+    },
+    {
+        "file":  "include/msCstrDesign.h",
+        "line":  1081,
+        "text":  "void fetchPinsToGroupMap(std::unordered_map\u003cndmTerm*, msCstrDesign::TapGroup*\u003e \u0026pinsToGroup);"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiSkewOpt.cc",
+        "line":  1080,
+        "text":  "std::map\u003ccstrScenario, std::unordered_map\u003cndmTerm*, float\u003e\u003e endpointDelayPotential;"
+    },
+    {
+        "file":  "include/ctsscGlobal.h",
+        "line":  782,
+        "text":  "void collectTransparentQ(std::unordered_set\u003cndmTerm*\u003e\u0026 lauSet, std::vector\u003cctsPathTracer::fullPath*\u003e\u0026 pathVec);"
+    },
+    {
+        "file":  "include/ctsscGlobal.h",
+        "line":  1032,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _setNetTerms;"
+    },
+    {
+        "file":  "include/ctsManager.h",
+        "line":  275,
+        "text":  "void storeSinksLevelTable(const std::unordered_map \u003cndmTerm*, int\u003e \u0026table) { _sinksLevelTable = table; }"
+    },
+    {
+        "file":  "include/ctsManager.h",
+        "line":  307,
+        "text":  "bool isPinCloseToOtherPinOfSameNet(ndmTerm *term, ndmDistance limit, std::unordered_set\u003cndmInst*\u003e \u0026newCellSet, bool \u0026clo"
+    },
+    {
+        "file":  "include/ctsManager.h",
+        "line":  308,
+        "text":  "bool isRepeaterCloseToDriverOrLoad(ndmInst *repeater, ndmDistance limit, std::unordered_set\u003cndmInst*\u003e \u0026newCellSet, bool "
+    },
+    {
+        "file":  "include/ctsManager.h",
+        "line":  359,
+        "text":  "std::unordered_map \u003cndmTerm*, int\u003e _sinksLevelTable; // To store level info of sinks from globalTree"
+    },
+    {
+        "file":  "include/ctsManager.h",
+        "line":  443,
+        "text":  "void storeSinksLevelTable(const std::unordered_map \u003cndmTerm*, int\u003e \u0026table) { _sinksLevelTable = table; }"
+    },
+    {
+        "file":  "include/ctsManager.h",
+        "line":  464,
+        "text":  "std::unordered_map \u003cndmTerm*, int\u003e _sinksLevelTable;"
+    },
+    {
+        "file":  "icg/ctsICGReclusterHelper.h",
+        "line":  85,
+        "text":  "std::unordered_map\u003cndmTerm*, ndmTerm*\u003e _icgOutToInMap;"
+    },
+    {
+        "file":  "include/ctsICGEstimators.h",
+        "line":  520,
+        "text":  "std::unordered_set\u003cctsTreeNode*\u003e _touchedNodes;"
+    },
+    {
+        "file":  "icg/ctsICGEstimators.h",
+        "line":  520,
+        "text":  "std::unordered_set\u003cctsTreeNode*\u003e _touchedNodes;"
+    },
+    {
+        "file":  "icg/ctsBanalDelayEstimatorBase.h",
+        "line":  92,
+        "text":  "std::unordered_set\u003cndmTerm *\u003e _ndmTermHasPdSet;"
+    },
+    {
+        "file":  "include/ctsClockTreeStats.h",
+        "line":  143,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _visited;"
+    },
+    {
+        "file":  "include/ctsCheck.h",
+        "line":  116,
+        "text":  "void findHierTermAndReason(ndmTerm*\u0026 drvTerm, nbmUtil\u0026 theNbmUtil, std::unordered_set\u003cndmTerm*\u003e\u0026 terms);"
+    },
+    {
+        "file":  "export/msInterfApi.h",
+        "line":  40,
+        "text":  "bool deriveOffsetLimits(const std::unordered_set\u003cndmTerm*\u003e ignoredTerms);"
+    },
+    {
+        "file":  "export/ctsBanalDelayEstimatorBase.h",
+        "line":  92,
+        "text":  "std::unordered_set\u003cndmTerm *\u003e _ndmTermHasPdSet;"
+    },
+    {
+        "file":  "include/ctoscLevelFlow.h",
+        "line":  100,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms);"
+    },
+    {
+        "file":  "include/ctoscLevelFlow.h",
+        "line":  149,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms);"
+    },
+    {
+        "file":  "include/ctoscLevelFlow.h",
+        "line":  179,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms);"
+    },
+    {
+        "file":  "include/ctoscGlobal.h",
+        "line":  460,
+        "text":  "std::unordered_set\u003cctoSclkBag*\u003e\u0026 sclkbags) const;"
+    },
+    {
+        "file":  "include/ctomtProblemGenerator.h",
+        "line":  73,
+        "text":  "std::unordered_set\u003cndmFlatNet*\u003e _marked_up_nets;"
+    },
+    {
+        "file":  "include/ctomtProblemGenerator.h",
+        "line":  74,
+        "text":  "std::unordered_set\u003cndmInst*\u003e _marked_up_insts;"
+    },
+    {
+        "file":  "include/ctomtGlsLevelFlow.h",
+        "line":  87,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms);"
+    },
+    {
+        "file":  "include/ctomtGlsLevelFlow.h",
+        "line":  98,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 seedMapHigh,"
+    },
+    {
+        "file":  "include/ctomtGlsLevelFlow.h",
+        "line":  103,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e\u0026 seedMapHigh,"
+    },
+    {
+        "file":  "include/ctomtEndpointTypes.h",
+        "line":  47,
+        "text":  "const std::unordered_map\u003cndmTerm*, std::unordered_set\u003cndmTerm*\u003e\u003e\u0026 getDriverToEndpointSetMap() const { return _driverToEn"
+    },
+    {
+        "file":  "include/ctomtEndpointTypes.h",
+        "line":  56,
+        "text":  "std::unordered_map\u003cndmTerm*, std::unordered_set\u003cndmTerm*\u003e\u003e _driverToEndpointSetMap;"
+    },
+    {
+        "file":  "include/ctomtAreaLevelFlow.h",
+        "line":  50,
+        "text":  "std::unordered_map\u003cctsXformProblem*, termVecPtr\u003e\u0026 mapSeedToOutputTerms) override;"
+    },
+    {
+        "file":  "include/ctoDcdFix.h",
+        "line":  56,
+        "text":  "typedef std::unordered_set\u003cndmTerm*\u003e termUset;"
+    },
+    {
+        "file":  "include/ctoDcdFix.h",
+        "line":  57,
+        "text":  "typedef std::unordered_set\u003cndmInst*\u003e instUset;"
+    },
+    {
+        "file":  "include/ctoDcdFix.h",
+        "line":  236,
+        "text":  "std::unordered_map\u003cctsSclk, std::unordered_set\u003cndmTerm*\u003e\u003e _doneClock2Terms;"
+    },
+    {
+        "file":  "include/ctoAbsTree.h",
+        "line":  816,
+        "text":  "std::unordered_map\u003cndmTerm*, sccElrfValUmapType\u003e;"
+    },
+    {
+        "file":  "include/ctoAbsTree.h",
+        "line":  1546,
+        "text":  "std::unordered_set\u003ccnmNetwork::Edge*\u003e\u0026 visitedEdges,"
+    },
+    {
+        "file":  "include/ccdSRMgr.h",
+        "line":  48,
+        "text":  "std::unordered_map\u003cndmTerm*, float\u003e _restrMap;"
+    },
+    {
+        "file":  "ctsutil/ctsAddDelay.cc",
+        "line":  2278,
+        "text":  "std::unordered_set\u003cndmModule*\u003e legalRefModules(_leqCells.begin(), _leqCells.end());"
+    },
+    {
+        "file":  "ctsutil/dly/dlyXformProblem.h",
+        "line":  34,
+        "text":  "std::unordered_set\u003cndmInst*\u003e _uniqInsts;"
+    },
+    {
+        "file":  "ctsutil/dly/dlyCore.cc",
+        "line":  356,
+        "text":  "std::unordered_set\u003cchangeState*\u003e acceptedStateSet;"
+    },
+    {
+        "file":  "ctsutil/dly/dlyCore.cc",
+        "line":  1069,
+        "text":  "std::unordered_set\u003cchangeState*\u003e stateSet;"
+    },
+    {
+        "file":  "ctsutil/dly/dlyCore.cc",
+        "line":  3056,
+        "text":  "std::unordered_set\u003cndmModule*\u003e visitedModuleSet;"
+    },
+    {
+        "file":  "ctsutil/dly/dlyCore.cc",
+        "line":  3061,
+        "text":  "std::unordered_map\u003cndmModule*, ndmDistance\u003e tryMinDistModuleMap;"
+    },
+    {
+        "file":  "ctsutil/dly/dlyCore.cc",
+        "line":  3156,
+        "text":  "std::unordered_set\u003cndmModule*\u003e visitedModuleSet;"
+    },
+    {
+        "file":  "ctsutil/dly/dlyCore.cc",
+        "line":  3238,
+        "text":  "std::unordered_set\u003cndmModule*\u003e visitedModuleSet;"
+    },
+    {
+        "file":  "ctsutil/ctsRef.cc",
+        "line":  797,
+        "text":  "std::unordered_set\u003cctsRef*\u003e visitedCstrRefSubsets;"
+    },
+    {
+        "file":  "ctsutil/ctsPortPunchAnalyzer.cc",
+        "line":  1475,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e allOrigLoads(_loadTerms.begin(), _loadTerms.end());"
+    },
+    {
+        "file":  "ctsutil/ctsPortPunchAnalyzer.cc",
+        "line":  1476,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e bufferedLoads;"
+    },
+    {
+        "file":  "ctsutil/ctsPortPunchAnalyzer.cc",
+        "line":  1477,
+        "text":  "std::unordered_map\u003cndmHier*, ndmTerm*\u003e newDriverHiers;"
+    },
+    {
+        "file":  "ctsutil/ctsPortPunchAnalyzer.cc",
+        "line":  1518,
+        "text":  "isPhysLoad(const std::unordered_set\u003cndmTerm*\u003e\u0026 origLoadSet) : _origLoadSet(origLoadSet) {}"
+    },
+    {
+        "file":  "ctsutil/ctsPortPunchAnalyzer.cc",
+        "line":  1528,
+        "text":  "const std::unordered_set\u003cndmTerm*\u003e\u0026 _origLoadSet;"
+    },
+    {
+        "file":  "ctsutil/ctsPortPunchAnalyzer.cc",
+        "line":  1567,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e alreadyChecked(driverFanout.begin(), driverFanout.end());"
+    },
+    {
+        "file":  "ctsutil/ctsPortPunchAnalyzer.cc",
+        "line":  1661,
+        "text":  "using TermHashSetType = std::unordered_set\u003cndmTerm*\u003e;"
+    },
+    {
+        "file":  "ctssch/ctsSchBase.cc",
+        "line":  1109,
+        "text":  "std::unordered_set\u003cndmInst*\u003e snappedSinks;"
+    },
+    {
+        "file":  "ctssch/ctsPowerDrivenGateRelocator.cc",
+        "line":  1057,
+        "text":  "std::unordered_map\u003cndmInst*, ndmInst*\u003e visitedICGs;"
+    },
+    {
+        "file":  "ctssch/ctsPowerDrivenGateRelocator.cc",
+        "line":  1058,
+        "text":  "std::unordered_map\u003cndmInst*, ndmInst*\u003e icgsForProcess;"
+    },
+    {
+        "file":  "ctsutil/ctsClockTreeStats.h",
+        "line":  143,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _visited;"
+    },
+    {
+        "file":  "ctssc/lazytns/ctsLazyCostGroup.cc",
+        "line":  1033,
+        "text":  "std::unordered_set\u003ccostEp*\u003e visitedEp;"
+    },
+    {
+        "file":  "ctssc/ctsscMvMgr.cc",
+        "line":  825,
+        "text":  "std::unordered_set\u003cndmHier*\u003e restrictedHierUnbufferedSinkSet;"
+    },
+    {
+        "file":  "ctssc/ctsscGlobal.h",
+        "line":  782,
+        "text":  "void collectTransparentQ(std::unordered_set\u003cndmTerm*\u003e\u0026 lauSet, std::vector\u003cctsPathTracer::fullPath*\u003e\u0026 pathVec);"
+    },
+    {
+        "file":  "ctssc/ctsscGlobal.h",
+        "line":  1032,
+        "text":  "std::unordered_set\u003cndmTerm*\u003e _setNetTerms;"
+    },
+    {
+        "file":  "ctssc/ctsscGlobal.cc",
+        "line":  7013,
+        "text":  "ctsscGlobal::collectTransparentQ(std::unordered_set\u003cndmTerm*\u003e\u0026 lauSet, std::vector\u003cctsPathTracer::fullPath*\u003e\u0026 pathVec)"
+    }
+]

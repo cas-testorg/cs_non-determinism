@@ -1,0 +1,2387 @@
+[
+    {
+        "file":  "ctssplit/ctsSplitState.cc",
+        "line":  422,
+        "text":  "std::set\u003cctsTreeNode*\u003e splitStateDrivers;"
+    },
+    {
+        "file":  "mscts/preroutes/msPreroutes.cc",
+        "line":  2421,
+        "text":  "msPreroutes::ndmObjectVec\u0026 component, std::set\u003cndmObject*\u003e\u0026 assigned)"
+    },
+    {
+        "file":  "mscts/preroutes/msPreroutes.cc",
+        "line":  2504,
+        "text":  "std::set\u003cndmObject*\u003e assigned;"
+    },
+    {
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  78,
+        "text":  "std::set\u003ctimingInfo*\u003e::iterator itr = _sinkPinTimingInfoSet.begin();"
+    },
+    {
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  628,
+        "text":  "std::set\u003ctimingInfo*\u003e::iterator itr = _sinkPinTimingInfoSet.begin();"
+    },
+    {
+        "file":  "ctssch/ctsTimingDrivenTransitionTargets.cc",
+        "line":  833,
+        "text":  "std::set\u003ctimingInfo*\u003e::iterator itr = _sinkPinTimingInfoSet.begin();"
+    },
+    {
+        "file":  "ctssch/ctsTask.h",
+        "line":  654,
+        "text":  "void markCriticialEchelons(cnmEchelon* theEchelon, float criticality, std::set\u003ccnmEchelon*\u003e\u0026 criticalEchelonSet);"
+    },
+    {
+        "file":  "ctssch/ctsTask.cc",
+        "line":  2468,
+        "text":  "ctsTaskManager::markCriticialEchelons(cnmEchelon* theEchelon, float criticality, std::set\u003ccnmEchelon*\u003e\u0026 criticalEchelonS"
+    },
+    {
+        "file":  "ctssch/ctsTask.cc",
+        "line":  2661,
+        "text":  "std::set\u003ccnmEchelon*\u003e criticalEchelonSet;"
+    },
+    {
+        "file":  "mscts/msutil/msUtil.cc",
+        "line":  1635,
+        "text":  "std::set\u003cndmVoltageArea *\u003e    l_vas;"
+    },
+    {
+        "file":  "mscts/msutil/msUtil.cc",
+        "line":  1636,
+        "text":  "std::set\u003cndmSupplySet *\u003e      l_supplies;"
+    },
+    {
+        "file":  "mscts/msutil/msProfiler.cc",
+        "line":  182,
+        "text":  "std::set\u003cmsProfiler*\u003e printedSet ;"
+    },
+    {
+        "file":  "mscts/msutil/msProfiler.cc",
+        "line":  314,
+        "text":  "std::set\u003cmsProfiler*\u003e printedSet ;"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.h",
+        "line":  665,
+        "text":  "void removeTapLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.h",
+        "line":  718,
+        "text":  "void removeHTreeLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.h",
+        "line":  726,
+        "text":  "void removeMeshLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.h",
+        "line":  880,
+        "text":  "void removeLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.cc",
+        "line":  5022,
+        "text":  "msCstrDesign::RegGroup::removeTapLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove)"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.cc",
+        "line":  5034,
+        "text":  "msCstrDesign::RegGroup::removeHTreeLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove)"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.cc",
+        "line":  5046,
+        "text":  "msCstrDesign::RegGroup::removeMeshLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove)"
+    },
+    {
+        "file":  "mscts/msutil/msCstrDesign.cc",
+        "line":  6672,
+        "text":  "msCstrDesign::IrregGroup::removeLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove)"
+    },
+    {
+        "file":  "ctssch/ctsSchCts.cc",
+        "line":  1640,
+        "text":  "typedef std::set\u003cctsTreeNode*\u003e    NodeList;"
+    },
+    {
+        "file":  "ctssch/ctsSchCts.cc",
+        "line":  3549,
+        "text":  "std::set\u003cndmTerm*\u003e driverSet;"
+    },
+    {
+        "file":  "ctssch/ctsSch.h",
+        "line":  673,
+        "text":  "typedef std::set\u003cctsTreeNode*\u003e      NodeList;"
+    },
+    {
+        "file":  "ctssch/ctsSch.cc",
+        "line":  380,
+        "text":  "std::set\u003cndmTerm*\u003e driverSet;"
+    },
+    {
+        "file":  "ctssch/ctsSch.cc",
+        "line":  2973,
+        "text":  "std::set\u003cndmInst*\u003e markedInsts;"
+    },
+    {
+        "file":  "ctssch/ctsSch.cc",
+        "line":  2981,
+        "text":  "std::set\u003cndmTerm*\u003e visitedTerms;"
+    },
+    {
+        "file":  "ctssch/ctsMultiClockAnalysis.cc",
+        "line":  733,
+        "text":  "std::set\u003cctsTreeNode*\u003e visited;"
+    },
+    {
+        "file":  "ctssch/ctsMultiClockAnalysis.cc",
+        "line":  933,
+        "text":  "std::set\u003cctsTreeNode*\u003e visited;"
+    },
+    {
+        "file":  "ctssch/ctsMultiClockAnalysis.cc",
+        "line":  2030,
+        "text":  "std::set\u003cctsTreeNode*\u003e visited;"
+    },
+    {
+        "file":  "ctssch/ctsIntSkewGroupBal.h",
+        "line":  112,
+        "text":  "std::set\u003cctscstrInterClockBalance*\u003e \t\t_processedGroups;"
+    },
+    {
+        "file":  "ctssch/ctsIntSkewGroupBal.h",
+        "line":  152,
+        "text":  "std::set\u003cctsTreeNode*\u003e        _visited;"
+    },
+    {
+        "file":  "ctssch/ctsIntSkewGroupBal.cc",
+        "line":  632,
+        "text":  "for (std::set\u003cctscstrInterClockBalance*\u003e::iterator it = _processedGroups.begin();"
+    },
+    {
+        "file":  "ctssch/ctsInterClockBalance.cc",
+        "line":  1407,
+        "text":  "std::set\u003cctsBalanceRoot*\u003e targetRoots;"
+    },
+    {
+        "file":  "ctssch/ctsClockTree.cc",
+        "line":  554,
+        "text":  "std::set\u003cctsTreeNode*\u003e visited;"
+    },
+    {
+        "file":  "ctssch/ctsClockTree.cc",
+        "line":  1265,
+        "text":  "std::set\u003cndmTerm*\u003e visitedTerms;"
+    },
+    {
+        "file":  "mscts/msui/msuiSynthesizeGlobalTree.cc",
+        "line":  671,
+        "text":  "//std::set\u003cndmDesign*\u003e blocksToRoute;"
+    },
+    {
+        "file":  "mscts/msui/msuiRemovePowerTaps.cc",
+        "line":  754,
+        "text":  "std::set\u003cndmLayerShape*\u003e targetShieldShapes;"
+    },
+    {
+        "file":  "mscts/msui/msuiReconnectClockDrivers.h",
+        "line":  73,
+        "text":  "bool deletePort(ndmPort* port, std::set\u003cndmPort*\u003e\u0026 hierPortsRaw,"
+    },
+    {
+        "file":  "mscts/msui/msuiReconnectClockDrivers.h",
+        "line":  74,
+        "text":  "std::set\u003cndmPort*\u003e\u0026 alreadyDeleted);"
+    },
+    {
+        "file":  "mscts/msui/msuiReconnectClockDrivers.cc",
+        "line":  334,
+        "text":  "std::set\u003cndmPort*\u003e processedPorts; // Track ports we\u0027ve already processed"
+    },
+    {
+        "file":  "mscts/msui/msuiReconnectClockDrivers.cc",
+        "line":  830,
+        "text":  "msuiReconnectClockDriversCmd::deletePort(ndmPort *port, std::set\u003cndmPort*\u003e\u0026 hierPortsRaw,"
+    },
+    {
+        "file":  "mscts/msui/msuiReconnectClockDrivers.cc",
+        "line":  831,
+        "text":  "std::set\u003cndmPort*\u003e\u0026 alreadyDeleted)"
+    },
+    {
+        "file":  "mscts/msui/msuiReconnectClockDrivers.cc",
+        "line":  963,
+        "text":  "std::set\u003cndmPort*\u003e hierPortsRaw(hierPorts.begin(), hierPorts.end());"
+    },
+    {
+        "file":  "mscts/msui/msuiGetPowerTaps.cc",
+        "line":  717,
+        "text":  "std::set\u003cndmLayerShape*\u003e targetShieldShapes;"
+    },
+    {
+        "file":  "mscts/msui/msuiCreateClockDrivers.h",
+        "line":  104,
+        "text":  "void setAttributeOnPorts(const std::set\u003cndmPort*\u003e\u0026 ports,"
+    },
+    {
+        "file":  "mscts/msui/msuiCreateClockDrivers.h",
+        "line":  108,
+        "text":  "std::set\u003cndmPort*\u003e collectPortsFromClockTree();"
+    },
+    {
+        "file":  "mscts/msui/msuiCreateClockDrivers.cc",
+        "line":  943,
+        "text":  "std::set\u003cndmPort*\u003e clockTreePorts = collectPortsFromClockTree();"
+    },
+    {
+        "file":  "mscts/msui/msuiCreateClockDrivers.cc",
+        "line":  1085,
+        "text":  "msCreateClockDriversCmd::setAttributeOnPorts(const std::set\u003cndmPort*\u003e\u0026 ports,"
+    },
+    {
+        "file":  "mscts/msui/msuiCreateClockDrivers.cc",
+        "line":  1127,
+        "text":  "std::set\u003cndmPort*\u003e"
+    },
+    {
+        "file":  "mscts/msui/msuiCreateClockDrivers.cc",
+        "line":  1130,
+        "text":  "std::set\u003cndmPort*\u003e collectedPorts;"
+    },
+    {
+        "file":  "ctssc/lazytns/ctsSkewSlackCollector.h",
+        "line":  212,
+        "text":  "std::set\u003cndmTerm*\u003e                        _fromTerms;"
+    },
+    {
+        "file":  "ctssc/lazytns/ctsSkewSlackCollector.h",
+        "line":  213,
+        "text":  "std::set\u003cndmTerm*\u003e                        _toTerms;"
+    },
+    {
+        "file":  "ctssc/lazytns/ctsLazyModel.cc",
+        "line":  2131,
+        "text":  "std::set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "mscts/mstap/msTapSynthesis.cc",
+        "line":  1551,
+        "text":  "std::set\u003cmsLoadGroup*\u003e visited;"
+    },
+    {
+        "file":  "mscts/mstap/msTapSubtreeSyn.cc",
+        "line":  269,
+        "text":  "std::set\u003cndmTerm*\u003e visitedTerms;"
+    },
+    {
+        "file":  "mscts/mstap/msFlexibleTapPartition.cc",
+        "line":  1872,
+        "text":  "std::set\u003cmsTapClusterGroup *\u003e clusterGroupSet;"
+    },
+    {
+        "file":  "mscts/mstap/msFlexibleTapPartition.cc",
+        "line":  1881,
+        "text":  "std::set\u003cmsTapClusterGroup*\u003e::iterator itrS = clusterGroupSet.begin(), itrE = clusterGroupSet.end();"
+    },
+    {
+        "file":  "mscts/mstap/msFlexibleTapPartition.cc",
+        "line":  2121,
+        "text":  "std::set\u003cmsLoadGroup*\u003e visited;"
+    },
+    {
+        "file":  "mscts/mstap/msFlexibleTapPartition.cc",
+        "line":  2279,
+        "text":  "std::set\u003cmsLoadGroup*\u003e visited;"
+    },
+    {
+        "file":  "ctssc/ctsscMvMgr.h",
+        "line":  194,
+        "text":  "void filterRefMod(std::vector\u003cndmModule*\u003e\u0026 repeators,std::set\u003cndmModule*\u003e\u0026 refModSet) const;"
+    },
+    {
+        "file":  "ctssc/ctsscMvMgr.cc",
+        "line":  239,
+        "text":  "std::set\u003cndmHier*\u003e hierSet;"
+    },
+    {
+        "file":  "ctssc/ctsscMvMgr.cc",
+        "line":  292,
+        "text":  "std::set\u003cndmHier*\u003e hierSet;"
+    },
+    {
+        "file":  "ctssc/ctsscMvMgr.cc",
+        "line":  531,
+        "text":  "std::set\u003cndmModule*\u003e refModSet;"
+    },
+    {
+        "file":  "ctssc/ctsscMvMgr.cc",
+        "line":  611,
+        "text":  "void ctsscMvMgr::filterRefMod(std::vector\u003cndmModule*\u003e\u0026 repeators,std::set\u003cndmModule*\u003e\u0026 refModSet) const{"
+    },
+    {
+        "file":  "ctssc/ctsscConflictChecker.h",
+        "line":  120,
+        "text":  "std::set\u003cndmInst*\u003e _insts;"
+    },
+    {
+        "file":  "ctssc/ctsBuffer.h",
+        "line":  638,
+        "text":  "virtual bool getPrunedRepeaters(ctsCharacterizer* ctsChar, ctsCharContext \u0026charCntxt, std::vector\u003cndmModule *\u003e\u0026 vecRepea"
+    },
+    {
+        "file":  "ctssc/ctsBuffer.cc",
+        "line":  2832,
+        "text":  "std::set\u003cndmModule*\u003e* validModuleSet)"
+    },
+    {
+        "file":  "mscts/msmesh/msSplitEnable.cc",
+        "line":  801,
+        "text":  "std::set\u003cmsTreeNode*\u003e visitedNodes;"
+    },
+    {
+        "file":  "mscts/msmesh/msSplitEnable.cc",
+        "line":  802,
+        "text":  "std::set\u003cmsCstrDesign::Group*\u003e visitedGroups;"
+    },
+    {
+        "file":  "mscts/msmesh/msSplit.h",
+        "line":  732,
+        "text":  "void getDRCViolations(float pctVioForFixing, msDrcTypes drcTypes, std::set\u003cmsTreeNode*\u003e\u0026 totVios, std::set\u003cmsTreeNode*\u003e\u0026"
+    },
+    {
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  8284,
+        "text":  "std::set\u003cndmFlatNet*\u003e visited;"
+    },
+    {
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  8347,
+        "text":  "msSplit::getDRCViolations(float pctVioForFixing, msDrcTypes drcTypes, std::set\u003cmsTreeNode*\u003e\u0026 totVios, std::set\u003cmsTreeNod"
+    },
+    {
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  8411,
+        "text":  "std::set\u003cmsTreeNode*\u003e allVioNodes ;"
+    },
+    {
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  8412,
+        "text":  "std::set\u003cmsTreeNode*\u003e filteredVioNodes ;"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportSettings.cc",
+        "line":  94,
+        "text":  "std::set\u003cndmNet*\u003e     \t_countedNets;"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  763,
+        "text":  "std::set\u003cndmNet*\u003e             _countedNets;"
+    },
+    {
+        "file":  "mscts/msmesh/msmtmesh/msmtLatencyFlowProblemGenerator.cc",
+        "line":  418,
+        "text":  "std::set\u003cmsTreeNode*\u003e visited;"
+    },
+    {
+        "file":  "mscts/msmesh/msmtmesh/msmtLatencyFlowProblemGenerator.cc",
+        "line":  1189,
+        "text":  "std::set\u003cmsTreeNode*\u003e processedNodes;"
+    },
+    {
+        "file":  "ctsrpt/ctsrptReportClockPower.h",
+        "line":  189,
+        "text":  "std::set\u003cndmNet*\u003e          _countedNets;"
+    },
+    {
+        "file":  "mscts/msmesh/msLevelBalancer.cc",
+        "line":  2638,
+        "text":  "std::set\u003cndmTerm*\u003e loadSet;"
+    },
+    {
+        "file":  "ctsrpt/ctsGetClockTreePins.cc",
+        "line":  518,
+        "text":  "std::set\u003cndmNet *\u003e *_stopNetsSet;"
+    },
+    {
+        "file":  "ctsrpt/ctsGetClockTreePins.cc",
+        "line":  528,
+        "text":  "std::set\u003cndmTerm*\u003e _drivers;"
+    },
+    {
+        "file":  "ctsrpt/ctsGetClockTreePins.cc",
+        "line":  4829,
+        "text":  "retreiver._stopNetsSet =  new std::set\u003cndmNet*\u003e;"
+    },
+    {
+        "file":  "mscts/msmesh/msIncrMerger.cc",
+        "line":  241,
+        "text":  "std::set\u003cmsTreeNode *\u003e mergedNodeSet;"
+    },
+    {
+        "file":  "mscts/msmesh/msIncrMerger.cc",
+        "line":  242,
+        "text":  "std::set\u003cmsTreeNode *\u003e outputNodeSet;"
+    },
+    {
+        "file":  "mscts/msmesh/msEnSnap.cc",
+        "line":  757,
+        "text":  "std::set\u003cmsTreeNode*\u003e elDriverNodeSet;"
+    },
+    {
+        "file":  "mscts/msmesh/msBufferInserter.cc",
+        "line":  749,
+        "text":  "std::set\u003cndmNet*\u003e::iterator iter = dontTouchNets.begin();"
+    },
+    {
+        "file":  "ctsmisc/ctsRemove.cc",
+        "line":  128,
+        "text":  "std::set\u003cndmInst*\u003e                                    _inverterSet;"
+    },
+    {
+        "file":  "ctsmisc/ctsCheck.h",
+        "line":  102,
+        "text":  "bool getIgnoreRoutingLayers(std::set\u003cndmTechLayer*\u003e *setOfIgnoredLayers);"
+    },
+    {
+        "file":  "ctsmisc/ctsCheck.cc",
+        "line":  149,
+        "text":  "std::set\u003cndmTechLayer*\u003e ignoredLayers;"
+    },
+    {
+        "file":  "ctsmisc/ctsCheck.cc",
+        "line":  150,
+        "text":  "std::set\u003cndmTechLayer*\u003e::iterator ignoredLayersIter;"
+    },
+    {
+        "file":  "ctsmisc/ctsCheck.cc",
+        "line":  2884,
+        "text":  "bool ctsCheckClockTree::getIgnoreRoutingLayers(std::set\u003cndmTechLayer*\u003e *setOfIgnoredLayers) {"
+    },
+    {
+        "file":  "ctsmisc/ctsAutoBalancePoint.h",
+        "line":  96,
+        "text":  "float targetSlack, float\u0026 achievedSlack, float firstTarget, const cstrScenario* scenario, std::set\u003cndmTerm*\u003e visitedTerm"
+    },
+    {
+        "file":  "ctsmisc/ctsAutoBalancePoint.h",
+        "line":  98,
+        "text":  "void getOffSetForLaunchChainNoSlack(ndmTerm *term, ctsLatchGraph *latchGraph, float targetOffset, float\u0026 achievedOffset,"
+    },
+    {
+        "file":  "ctsmisc/ctsAutoBalancePoint.cc",
+        "line":  825,
+        "text":  "std::set\u003cndmTerm*\u003e visitedTerms;"
+    },
+    {
+        "file":  "ctsmisc/ctsAutoBalancePoint.cc",
+        "line":  960,
+        "text":  "ctsAutoBalancePoint::getOffSetForLaunchChain(ndmTerm *term, ctsLatchGraph *latchGraph, float targetOffset, float\u0026 achiev"
+    },
+    {
+        "file":  "ctsmisc/ctsAutoBalancePoint.cc",
+        "line":  1200,
+        "text":  "ctsAutoBalancePoint::getOffSetForLaunchChainNoSlack(ndmTerm *term, ctsLatchGraph *latchGraph, float targetOffset, float\u0026"
+    },
+    {
+        "file":  "mscts/msgts/msgtsUtil.cc",
+        "line":  2063,
+        "text":  "std::set\u003cmsLayer *\u003e         l_set;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsReport.h",
+        "line":  468,
+        "text":  "std::set\u003creportNode *\u003e        _summaryNodes;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsOptions.h",
+        "line":  192,
+        "text":  "std::set\u003cndmModule*\u003e  getLibCells"
+    },
+    {
+        "file":  "mscts/msgts/msgtsOptions.h",
+        "line":  856,
+        "text":  "std::set\u003cndmModule*\u003e _allLibCells;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsOptions.cc",
+        "line":  531,
+        "text":  "std::set\u003cndmModule*\u003e"
+    },
+    {
+        "file":  "mscts/msgts/msgtsOptions.cc",
+        "line":  537,
+        "text":  "std::set\u003cndmModule*\u003e allLibCell;"
+    },
+    {
+        "file":  "ctsinterf/ctsGuiQorInterf.h",
+        "line":  40,
+        "text":  "std::set\u003ccstrClock\u003e\u0026 clocks, std::set\u003ccstrSkewGroup*\u003e\u0026 sgs,"
+    },
+    {
+        "file":  "ctsinterf/ctsGuiQorInterf.h",
+        "line":  74,
+        "text":  "std::set\u003ccstrSkewGroup*\u003e\u0026          _skewGroups;"
+    },
+    {
+        "file":  "ctsinterf/ctsGuiQorInterf.cc",
+        "line":  34,
+        "text":  "std::set\u003ccstrSkewGroup*\u003e\u0026 sgs     = _args._skewGroups;"
+    },
+    {
+        "file":  "ctsinterf/ctsGuiQorInterf.cc",
+        "line":  37,
+        "text":  "for (std::set\u003ccstrSkewGroup*\u003e::iterator sgIt = sgs.begin();"
+    },
+    {
+        "file":  "mscts/msgts/msgtsFlow.h",
+        "line":  464,
+        "text":  "std::set\u003cndmModule*\u003e  _allLibCells;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.h",
+        "line":  440,
+        "text":  "typedef std::set\u003cmsgtsRepeater *\u003e     repSetType;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  1565,
+        "text":  "std::set\u003cmsgtsCluster *\u003e     l_duals;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  1566,
+        "text":  "std::set\u003cmsgtsCluster *\u003e     l_singles;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  2649,
+        "text":  "std::set\u003cmsgtsCluster *\u003e     l_duals;"
+    },
+    {
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  2650,
+        "text":  "std::set\u003cmsgtsCluster *\u003e     l_singles;"
+    },
+    {
+        "file":  "mscts/mscore/msTreeNode.cc",
+        "line":  4593,
+        "text":  "std::set\u003cmsLoadGroup*\u003e visited;"
+    },
+    {
+        "file":  "mscts/mscore/msTreeNode.cc",
+        "line":  4628,
+        "text":  "std::set\u003cmsLoadGroup*\u003e visited;"
+    },
+    {
+        "file":  "mscts/mscore/msTreeNode.cc",
+        "line":  4667,
+        "text":  "std::set\u003cmsTreeNode*\u003e succNodes ;"
+    },
+    {
+        "file":  "mscts/mscore/msTreeNode.cc",
+        "line":  4819,
+        "text":  "std::set\u003cmsLoadGroup*\u003e visited;"
+    },
+    {
+        "file":  "mscts/mscore/msTreeCheck.cc",
+        "line":  793,
+        "text":  "std::set\u003cndmTerm*\u003e succTerms;"
+    },
+    {
+        "file":  "mscts/mscore/msTreeCheck.cc",
+        "line":  794,
+        "text":  "std::set\u003cmsLoadGroup*\u003e visitedLoadGroups;"
+    },
+    {
+        "file":  "mscts/mscore/msInterfApi.h",
+        "line":  50,
+        "text":  "bool getSubtreeDrivers(ndmModule* topModule, /*add LINTER_BYPASS*/ std::set\u003cndmTerm*\u003e\u0026 drivers, cstrClock clock); //add "
+    },
+    {
+        "file":  "mscts/mscore/msInterfApi.cc",
+        "line":  990,
+        "text":  "msCtsNS::getSubtreeDrivers(ndmModule* topModule, /*add LINTER_BYPASS*/ std::set\u003cndmTerm*\u003e\u0026 drivers, cstrClock clock) //a"
+    },
+    {
+        "file":  "mscts/mscore/msInterf.cc",
+        "line":  1692,
+        "text":  "bool msWrapper::getSubtreeDrivers(ndmModule* topModule, std::set\u003cndmTerm*\u003e\u0026 drivers, cstrClock clock)"
+    },
+    {
+        "file":  "ctscto/totalskew/ctoAbsTree.cc",
+        "line":  1084,
+        "text":  "std::set\u003cctsTreeNode*\u003e validTreeNodes;"
+    },
+    {
+        "file":  "mscts/mscore/msDataModel.h",
+        "line":  986,
+        "text":  "std::set\u003cndmTerm*\u003e             _userIdealRootDrivers ;"
+    },
+    {
+        "file":  "mscts/mscore/msDataModel.cc",
+        "line":  4522,
+        "text":  "std::set\u003cmsCstrDesign::Group *\u003e addedGroups;"
+    },
+    {
+        "file":  "mscts/mscore/msDataModel.cc",
+        "line":  10520,
+        "text":  "std::set\u003cndmBlkNet*\u003e visited;"
+    },
+    {
+        "file":  "mscts/mscore/msCharacterizer.cc",
+        "line":  410,
+        "text":  "std::set\u003cmsLibCell*\u003e ELCPLibCells;"
+    },
+    {
+        "file":  "ctscto/ctoSize.h",
+        "line":  249,
+        "text":  "std::set\u003cndmInst*\u003e _sizedInstSet;"
+    },
+    {
+        "file":  "mscts/include/msSplit.h",
+        "line":  732,
+        "text":  "void getDRCViolations(float pctVioForFixing, msDrcTypes drcTypes, std::set\u003cmsTreeNode*\u003e\u0026 totVios, std::set\u003cmsTreeNode*\u003e\u0026"
+    },
+    {
+        "file":  "ctscto/ctosc/include/ctoscOnRouteLoc.h",
+        "line":  53,
+        "text":  "bool findTarget(const ndmCoord\u0026 startPoint, const ndmLine* startLine, const std::vector\u003cndmLine*\u003e \u0026lineVector, const ndm"
+    },
+    {
+        "file":  "mscts/include/msPDXingMgr.h",
+        "line":  61,
+        "text":  "typedef std::set\u003cndmTerm *\u003e               termSetType;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscProblemGenerator.h",
+        "line":  231,
+        "text":  "std::set\u003cndmTerm*\u003e _debugSeedTermSet; // LINTER_BYPASS"
+    },
+    {
+        "file":  "mscts/include/msInterfApi.h",
+        "line":  50,
+        "text":  "bool getSubtreeDrivers(ndmModule* topModule, /*add LINTER_BYPASS*/ std::set\u003cndmTerm*\u003e\u0026 drivers, cstrClock clock); //add "
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscOnRouteLoc.h",
+        "line":  53,
+        "text":  "bool findTarget(const ndmCoord\u0026 startPoint, const ndmLine* startLine, const std::vector\u003cndmLine*\u003e \u0026lineVector, const ndm"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscOnRouteLoc.cc",
+        "line":  253,
+        "text":  "std::set\u003cndmLine*\u003e visitedRouteLines;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscOnRouteLoc.cc",
+        "line":  368,
+        "text":  "std::set\u003cndmLine*\u003e visitedLines;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoscOnRouteLoc.cc",
+        "line":  416,
+        "text":  "bool ctoscOnRouteLoc::findTarget(const ndmCoord\u0026 startPoint, const ndmLine* startLine, const std::vector\u003cndmLine*\u003e \u0026line"
+    },
+    {
+        "file":  "mscts/include/msgtsReport.h",
+        "line":  468,
+        "text":  "std::set\u003creportNode *\u003e        _summaryNodes;"
+    },
+    {
+        "file":  "mscts/include/msgtsOptions.h",
+        "line":  192,
+        "text":  "std::set\u003cndmModule*\u003e  getLibCells"
+    },
+    {
+        "file":  "mscts/include/msgtsOptions.h",
+        "line":  856,
+        "text":  "std::set\u003cndmModule*\u003e _allLibCells;"
+    },
+    {
+        "file":  "mscts/include/msgtsFlow.h",
+        "line":  464,
+        "text":  "std::set\u003cndmModule*\u003e  _allLibCells;"
+    },
+    {
+        "file":  "mscts/include/msDrivers.h",
+        "line":  417,
+        "text":  "std::set\u003cndmNet*\u003e* getLoadNetSet() const { return _loadNetSet;}"
+    },
+    {
+        "file":  "mscts/include/msDrivers.h",
+        "line":  493,
+        "text":  "std::set\u003cndmNet*\u003e* _loadNetSet;"
+    },
+    {
+        "file":  "mscts/include/msDrivers.h",
+        "line":  1137,
+        "text":  "static void setKeepoutMarginForLibCell(std::set\u003cndmModule*\u003e allLibCells, float x, float y);"
+    },
+    {
+        "file":  "mscts/include/msDrivers.h",
+        "line":  1138,
+        "text":  "static void removeKeepoutMarginForLibCell(std::set\u003cndmModule*\u003e allLibCells);"
+    },
+    {
+        "file":  "mscts/include/msDrivers.h",
+        "line":  1309,
+        "text":  "std::set\u003cndmInst*\u003e _unusedTemplateCells;"
+    },
+    {
+        "file":  "mscts/include/msDriverRemoval.h",
+        "line":  201,
+        "text":  "//  , std::set\u003cndmConn*\u003e\u0026 conns"
+    },
+    {
+        "file":  "mscts/include/msDriverRemoval.h",
+        "line":  295,
+        "text":  "std::set\u003cndmDesign*\u003e    _visitedSubDesigns;"
+    },
+    {
+        "file":  "mscts/include/msDataModel.h",
+        "line":  986,
+        "text":  "std::set\u003cndmTerm*\u003e             _userIdealRootDrivers ;"
+    },
+    {
+        "file":  "mscts/include/msCstrDesign.h",
+        "line":  665,
+        "text":  "void removeTapLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "mscts/include/msCstrDesign.h",
+        "line":  718,
+        "text":  "void removeHTreeLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "mscts/include/msCstrDesign.h",
+        "line":  726,
+        "text":  "void removeMeshLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "mscts/include/msCstrDesign.h",
+        "line":  880,
+        "text":  "void removeLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctoNfoProblemGenerator.cc",
+        "line":  240,
+        "text":  "std::set\u003cflowTermBag*\u003e bagSet;"
+    },
+    {
+        "file":  "mscts/fishbone/prMain.cc",
+        "line":  459,
+        "text":  "std::set\u003cndmNonDefaultRule*\u003e visited;"
+    },
+    {
+        "file":  "mscts/fishbone/fbRouteInterf.cc",
+        "line":  286,
+        "text":  "std::set\u003cndmNonDefaultRule*\u003e visited;"
+    },
+    {
+        "file":  "mscts/fishbone/fbMain.cc",
+        "line":  239,
+        "text":  "std::set\u003cndmNonDefaultRule*\u003e visited;"
+    },
+    {
+        "file":  "mscts/export/msInterfApi.h",
+        "line":  50,
+        "text":  "bool getSubtreeDrivers(ndmModule* topModule, /*add LINTER_BYPASS*/ std::set\u003cndmTerm*\u003e\u0026 drivers, cstrClock clock); //add "
+    },
+    {
+        "file":  "mscts/drivers/msPDXingMgr.h",
+        "line":  61,
+        "text":  "typedef std::set\u003cndmTerm *\u003e               termSetType;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.h",
+        "line":  417,
+        "text":  "std::set\u003cndmNet*\u003e* getLoadNetSet() const { return _loadNetSet;}"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.h",
+        "line":  493,
+        "text":  "std::set\u003cndmNet*\u003e* _loadNetSet;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.h",
+        "line":  1137,
+        "text":  "static void setKeepoutMarginForLibCell(std::set\u003cndmModule*\u003e allLibCells, float x, float y);"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.h",
+        "line":  1138,
+        "text":  "static void removeKeepoutMarginForLibCell(std::set\u003cndmModule*\u003e allLibCells);"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.h",
+        "line":  1309,
+        "text":  "std::set\u003cndmInst*\u003e _unusedTemplateCells;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  122,
+        "text":  "typedef std::set\u003cndmConn *\u003e          connSetType;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  123,
+        "text":  "typedef std::set\u003cndmPowerDomain *\u003e   pdSetType;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  711,
+        "text":  "std::set\u003cndmNet*\u003e* loadNetSet = _msOptions.getLoadNetSet();"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  713,
+        "text":  "std::set\u003cndmNet*\u003e::iterator itrS = loadNetSet-\u003ebegin(), itrE = loadNetSet-\u003eend();"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  1604,
+        "text":  "std::set\u003cndmModule*\u003e libCells;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  2471,
+        "text":  "std::set\u003cndmNet*\u003e::iterator itrS = _msOptions.getLoadNetSet()-\u003ebegin(), itrE = _msOptions.getLoadNetSet()-\u003eend();"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  2535,
+        "text":  "std::set\u003cndmTerm*\u003e visitedTerms;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  3224,
+        "text":  "std::set\u003cndmTerm*\u003e visitedTerms;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  7107,
+        "text":  "std::set\u003cndmPowerDomain *\u003e  l_restrcited;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  9145,
+        "text":  "std::set\u003cndmHier*\u003e hierSet;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  9155,
+        "text":  "std::set\u003cndmHier*\u003e::iterator hIter = hierSet.begin();"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  9342,
+        "text":  ", const std::set\u003cndmConn *\u003e \u0026  p_pdPorts"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  10179,
+        "text":  "std::set\u003cndmPowerDomain*\u003e visited;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  10309,
+        "text":  "_loadNetSet = new std::set\u003cndmNet*\u003e();"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  11285,
+        "text":  "std::set\u003cndmHier*\u003e uncommittedHiers;"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  11645,
+        "text":  "void msClockDrivers::setKeepoutMarginForLibCell(std::set\u003cndmModule*\u003e allLibCells, float x, float y)"
+    },
+    {
+        "file":  "mscts/drivers/msDrivers.cc",
+        "line":  11676,
+        "text":  "void msClockDrivers::removeKeepoutMarginForLibCell(std::set\u003cndmModule*\u003e allLibCells)"
+    },
+    {
+        "file":  "mscts/drivers/msDriverRemoval.h",
+        "line":  201,
+        "text":  "//  , std::set\u003cndmConn*\u003e\u0026 conns"
+    },
+    {
+        "file":  "mscts/drivers/msDriverRemoval.h",
+        "line":  295,
+        "text":  "std::set\u003cndmDesign*\u003e    _visitedSubDesigns;"
+    },
+    {
+        "file":  "mscts/drivers/msDriverRemoval.cc",
+        "line":  150,
+        "text":  "std::set\u003cndmConn*\u003e l_conns;"
+    },
+    {
+        "file":  "mscts/drivers/msDriverRemoval.cc",
+        "line":  167,
+        "text":  "std::set\u003cndmConn*\u003e l_templateConns;"
+    },
+    {
+        "file":  "mscts/drivers/msDriverRemoval.cc",
+        "line":  205,
+        "text":  ", std::set\u003cndmConn*\u003e\u0026 conns"
+    },
+    {
+        "file":  "mscts/drivers/msAutoTapFlow.cc",
+        "line":  1306,
+        "text":  "std::set\u003cndmModule*\u003e allLibCells;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtBuffer.h",
+        "line":  287,
+        "text":  "virtual bool getPrunedRepeaters(ctsCharacterizer* ctsChar, ctsCharContext \u0026charCntxt, std::vector\u003cndmModule *\u003e\u0026 vecRepea"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtBuffer.cc",
+        "line":  2365,
+        "text":  "std::set\u003cndmModule*\u003e mveRefSet(mve.getRefVec().begin(), mve.getRefVec().end());"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtBuffer.cc",
+        "line":  2590,
+        "text":  "std::set\u003cndmModule*\u003e* validModuleSet)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtBuffer.cc",
+        "line":  3150,
+        "text":  "std::set\u003cndmModule *\u003e ctsSeqSet(ctsSeqVec.begin(), ctsSeqVec.end());"
+    },
+    {
+        "file":  "irs/irsMgr.h",
+        "line":  62,
+        "text":  "std::set\u003cndmTerm *\u003e     _icgDrivers; // icg drivers that need to be rebuffered"
+    },
+    {
+        "file":  "irs/irsMgr.cc",
+        "line":  151,
+        "text":  "std::set\u003cndmTerm *\u003e _icgSet;"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.h",
+        "line":  116,
+        "text":  "bool addSeed(grNode node, std::map\u003cgrNodeId, ctomtARProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.h",
+        "line":  121,
+        "text":  "bool addSizingSeed(grNode loadNode, std::map\u003cgrNodeId, ctomtARProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.h",
+        "line":  139,
+        "text":  "bool isValidSeedForSizingRemoval(grNode node, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lowRefs);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.h",
+        "line":  140,
+        "text":  "bool isValidSeedForSizing(grNode sink, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lowRefs);"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.cc",
+        "line":  347,
+        "text":  "std::set\u003cndmModule*\u003e lowRefs; // low area ref module"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.cc",
+        "line":  560,
+        "text":  "ctomtAreaProblemGenerator::isValidSeedForSizingRemoval(grNode node, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.cc",
+        "line":  581,
+        "text":  "ctomtAreaProblemGenerator::isValidSeedForSizing(grNode sink, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.cc",
+        "line":  762,
+        "text":  "std::map\u003cgrNodeId, ctomtARProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ctscto/ctosc/ctomt/ctomtAreaProblemGenerator.cc",
+        "line":  948,
+        "text":  "std::map\u003cgrNodeId, ctomtARProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ips/ipsSplitter.cc",
+        "line":  261,
+        "text":  "std::set\u003cndmTerm *\u003e  \u0026parentAdj = _ipsG-\u003egetAdjSet(parent);"
+    },
+    {
+        "file":  "ips/ipsSplitter.cc",
+        "line":  888,
+        "text":  "std::set\u003cndmInst*\u003e _visitedICGs;"
+    },
+    {
+        "file":  "ips/ipsManager.cc",
+        "line":  102,
+        "text":  "std::set\u003cndmInst *\u003e    _hangingInstSet;"
+    },
+    {
+        "file":  "ctscto/ctoRestruct.h",
+        "line":  78,
+        "text":  "std::set\u003cndmInst*\u003e _ctoOrigBuffers;"
+    },
+    {
+        "file":  "ips/ipsGlobalTiming.h",
+        "line":  152,
+        "text":  "std::set\u003cndmTerm *\u003e \u0026getAdjSet(ndmTerm* node) { return _adjMap[node];}"
+    },
+    {
+        "file":  "ips/ipsGlobalTiming.h",
+        "line":  159,
+        "text":  "std::set\u003cndmTerm*\u003e getEnableFanouts(ndmTerm *anchor) { return _cloneIcgMap[anchor]; }"
+    },
+    {
+        "file":  "ips/ipsGlobalTiming.cc",
+        "line":  331,
+        "text":  "std::set\u003cndmTerm *\u003e adjSet= getAdjSet(icgNode);"
+    },
+    {
+        "file":  "ctscto/ctoRestruct.cc",
+        "line":  203,
+        "text":  "for (std::set\u003cndmInst*\u003e::iterator it = _flow-\u003e_ctoBuffers.begin(); it != _flow-\u003e_ctoBuffers.end(); ++it) {"
+    },
+    {
+        "file":  "ctscto/ctoPath.cc",
+        "line":  283,
+        "text":  "std::set\u003cndmInst *\u003e instLoop;"
+    },
+    {
+        "file":  "ctscto/ctoPath.cc",
+        "line":  284,
+        "text":  "std::set\u003cndmInst *\u003e detectedLoopingScenario;"
+    },
+    {
+        "file":  "ctscto/ctoLocalSkew.cc",
+        "line":  596,
+        "text":  "std::set\u003cflowTermBag*\u003e bagSet;"
+    },
+    {
+        "file":  "ctscto/ctoLocalSkew.cc",
+        "line":  617,
+        "text":  "for (std::set\u003cflowTermBag*\u003e::iterator it = bagSet.begin();"
+    },
+    {
+        "file":  "ctscto/ctoLayerOpt.cc",
+        "line":  244,
+        "text":  "std::set\u003cndmBlkNet*\u003e _visitedBlkNets;"
+    },
+    {
+        "file":  "ctscto/ctoFlowClone.cc",
+        "line":  1884,
+        "text":  "std::set\u003cndmTerm*\u003e candidates;"
+    },
+    {
+        "file":  "ctscto/ctoFlowClone.cc",
+        "line":  1885,
+        "text":  "std::set\u003cndmTerm*\u003e lpCandidates;"
+    },
+    {
+        "file":  "ctscto/ctoFlowClone.cc",
+        "line":  1993,
+        "text":  "for (std::set\u003cndmTerm*\u003e::iterator it = lpCandidates.begin(); it != lpCandidates.end(); ++it) {"
+    },
+    {
+        "file":  "ctscto/ctoFlowClone.cc",
+        "line":  2025,
+        "text":  "for (std::set\u003cndmTerm*\u003e::iterator it = candidates.begin(); it != candidates.end(); ++it) {"
+    },
+    {
+        "file":  "ctscto/ctoFlow.h",
+        "line":  772,
+        "text":  "//void restructFlow(std::set\u003cndmTerm*\u003e candidates, std::set\u003cndmTerm*\u003e lpCandidates, int maxClockTree);"
+    },
+    {
+        "file":  "ctscto/ctoFlow.cc",
+        "line":  5804,
+        "text":  "std::set\u003cctsClockGroup*\u003e allCkgSet;"
+    },
+    {
+        "file":  "ctscto/ctoFlow.cc",
+        "line":  5805,
+        "text":  "std::set\u003cctsClockGroup*\u003e canInsertSet;"
+    },
+    {
+        "file":  "ctscto/ctoFlow.cc",
+        "line":  5842,
+        "text":  "for (std::set\u003cctsClockGroup*\u003e::iterator cgIter = allCkgSet.begin();"
+    },
+    {
+        "file":  "ctscto/ctoFlow.cc",
+        "line":  14058,
+        "text":  "std::set\u003cndmTerm*\u003e sizedDrvSet;"
+    },
+    {
+        "file":  "ctscto/ctoArea.h",
+        "line":  97,
+        "text":  "bool removeInst(ndmTerm* driverTerm, std::set\u003cndmTerm *\u003e \u0026removedDrvTerms, std::set\u003cndmTerm *\u003e \u0026undoDrvTerms, bool tryVP"
+    },
+    {
+        "file":  "ctscto/ctoArea.cc",
+        "line":  692,
+        "text":  "std::set\u003cndmTerm*\u003e processedDrvSet;"
+    },
+    {
+        "file":  "ctscto/ctoArea.cc",
+        "line":  693,
+        "text":  "std::set\u003cndmTerm *\u003e removedDrvTerms;"
+    },
+    {
+        "file":  "ctscto/ctoArea.cc",
+        "line":  694,
+        "text":  "std::set\u003cndmTerm *\u003e undoDrvTerms;"
+    },
+    {
+        "file":  "ctscto/ctoArea.cc",
+        "line":  765,
+        "text":  "ctoArea::removeInst(ndmTerm* driverTerm, std::set\u003cndmTerm *\u003e \u0026removedDrvTerms, std::set\u003cndmTerm*\u003e \u0026undoDrvTerms, bool tr"
+    },
+    {
+        "file":  "cts/ctsManager.cc",
+        "line":  864,
+        "text":  "std::set\u003cndmVoltageArea*\u003e VAs;"
+    },
+    {
+        "file":  "cts/ctsManager.cc",
+        "line":  1033,
+        "text":  "std::set\u003cndmTerm*\u003e netlinkPins;"
+    },
+    {
+        "file":  "cts/ctsManager.cc",
+        "line":  1798,
+        "text":  "std::set\u003cndmModule*\u003e dontPruneThisSet;"
+    },
+    {
+        "file":  "cts/ctsManager.cc",
+        "line":  3602,
+        "text":  "std::set\u003cndmModule*\u003e::const_iterator sit;"
+    },
+    {
+        "file":  "cts/ctsInfraApiNwtn.h",
+        "line":  206,
+        "text":  "bool getFanoutLeafPorts(abufPin driver, abufPortVector \u0026leafTerms, std::set\u003cndmTerm*\u003e \u0026terminatedNetLinks, std::map\u003cabuf"
+    },
+    {
+        "file":  "cts/ctsInfraApiNwtn.h",
+        "line":  472,
+        "text":  "bool finalizeImrdNet(abufNet net,std::set\u003cndmBlkNet*\u003e\u0026 preservedBlkNets);"
+    },
+    {
+        "file":  "cts/ctsInfraApiNwtn.h",
+        "line":  633,
+        "text":  "bool getFanoutLeafPortsRecur(abufPin driver, abufPortVector \u0026leafTerms, std::set\u003cndmTerm*\u003e \u0026terminatedNetLinks, //LINTER"
+    },
+    {
+        "file":  "cts/ctsInfraApiNwtn.cc",
+        "line":  1128,
+        "text":  "bool ctsInfraApiNwtn::getFanoutLeafPorts(ctsPin driver, ctsPinVector \u0026leafPortVec, std::set\u003cndmTerm*\u003e \u0026terminatedNetLink"
+    },
+    {
+        "file":  "cts/ctsInfraApiNwtn.cc",
+        "line":  1135,
+        "text":  "bool ctsInfraApiNwtn::getFanoutLeafPortsRecur(ctsPin driver, ctsPinVector \u0026leafPortVec, std::set\u003cndmTerm*\u003e \u0026terminatedNe"
+    },
+    {
+        "file":  "cts/ctsInfraApiNwtn.cc",
+        "line":  3965,
+        "text":  "std::set\u003cndmVoltageArea*\u003e uniqueVas;"
+    },
+    {
+        "file":  "cts/ctsInfraApiNwtn.cc",
+        "line":  4316,
+        "text":  "bool ctsInfraApiNwtn::finalizeImrdNet(abufNet net, std::set\u003cndmBlkNet*\u003e\u0026 preservedBlkNets)"
+    },
+    {
+        "file":  "cts/ctsInfraApiNwtn.cc",
+        "line":  4695,
+        "text":  "std::set\u003cabufLibcellModel*\u003e nonAllowedModels;"
+    },
+    {
+        "file":  "ccd/util/ccdUtil.cc",
+        "line":  1635,
+        "text":  "std::set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "include/msInterfApi.h",
+        "line":  50,
+        "text":  "bool getSubtreeDrivers(ndmModule* topModule, /*add LINTER_BYPASS*/ std::set\u003cndmTerm*\u003e\u0026 drivers, cstrClock clock); //add "
+    },
+    {
+        "file":  "include/msCstrDesign.h",
+        "line":  665,
+        "text":  "void removeTapLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "include/msCstrDesign.h",
+        "line":  718,
+        "text":  "void removeHTreeLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "include/msCstrDesign.h",
+        "line":  726,
+        "text":  "void removeMeshLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "include/msCstrDesign.h",
+        "line":  880,
+        "text":  "void removeLibCells(const std::set\u003cndmModule*\u003e\u0026 toRemove);"
+    },
+    {
+        "file":  "include/ipsGlobalTiming.h",
+        "line":  152,
+        "text":  "std::set\u003cndmTerm *\u003e \u0026getAdjSet(ndmTerm* node) { return _adjMap[node];}"
+    },
+    {
+        "file":  "include/ipsGlobalTiming.h",
+        "line":  159,
+        "text":  "std::set\u003cndmTerm*\u003e getEnableFanouts(ndmTerm *anchor) { return _cloneIcgMap[anchor]; }"
+    },
+    {
+        "file":  "include/ctsTask.h",
+        "line":  654,
+        "text":  "void markCriticialEchelons(cnmEchelon* theEchelon, float criticality, std::set\u003ccnmEchelon*\u003e\u0026 criticalEchelonSet);"
+    },
+    {
+        "file":  "include/ctsSkewSlackCollector.h",
+        "line":  212,
+        "text":  "std::set\u003cndmTerm*\u003e                        _fromTerms;"
+    },
+    {
+        "file":  "include/ctsSkewSlackCollector.h",
+        "line":  213,
+        "text":  "std::set\u003cndmTerm*\u003e                        _toTerms;"
+    },
+    {
+        "file":  "ccd/skewopt/soMacroBank.cc",
+        "line":  537,
+        "text":  "std::set\u003cndmFlatNet*\u003e clusters;"
+    },
+    {
+        "file":  "include/ctsscMvMgr.h",
+        "line":  194,
+        "text":  "void filterRefMod(std::vector\u003cndmModule*\u003e\u0026 repeators,std::set\u003cndmModule*\u003e\u0026 refModSet) const;"
+    },
+    {
+        "file":  "include/ctsSch.h",
+        "line":  673,
+        "text":  "typedef std::set\u003cctsTreeNode*\u003e      NodeList;"
+    },
+    {
+        "file":  "ccd/skewopt/soClockGate.h",
+        "line":  108,
+        "text":  "std::set\u003csoSink*\u003e _sinksSet;"
+    },
+    {
+        "file":  "include/ctsscConflictChecker.h",
+        "line":  120,
+        "text":  "std::set\u003cndmInst*\u003e _insts;"
+    },
+    {
+        "file":  "include/ctsrptReportClockPower.h",
+        "line":  189,
+        "text":  "std::set\u003cndmNet*\u003e          _countedNets;"
+    },
+    {
+        "file":  "include/ctsLocalSkew.h",
+        "line":  171,
+        "text":  "std::set\u003ctrialCtsNode *\u003e \u0026 getChildren(void) { return _children; } // clock nodes that are directly driven by the curren"
+    },
+    {
+        "file":  "include/ctsLocalSkew.h",
+        "line":  192,
+        "text":  "std::set\u003ctrialCtsNode *\u003e _parents; // clock nodes that are directly driving the current node"
+    },
+    {
+        "file":  "include/ctsLocalSkew.h",
+        "line":  193,
+        "text":  "std::set\u003ctrialCtsNode *\u003e _children; // clock nodes that are directly driven by the current node"
+    },
+    {
+        "file":  "include/ctsIntSkewGroupBal.h",
+        "line":  112,
+        "text":  "std::set\u003cctscstrInterClockBalance*\u003e \t\t_processedGroups;"
+    },
+    {
+        "file":  "include/ctsIntSkewGroupBal.h",
+        "line":  152,
+        "text":  "std::set\u003cctsTreeNode*\u003e        _visited;"
+    },
+    {
+        "file":  "include/ctsInfraApiNwtn.h",
+        "line":  206,
+        "text":  "bool getFanoutLeafPorts(abufPin driver, abufPortVector \u0026leafTerms, std::set\u003cndmTerm*\u003e \u0026terminatedNetLinks, std::map\u003cabuf"
+    },
+    {
+        "file":  "include/ctsInfraApiNwtn.h",
+        "line":  472,
+        "text":  "bool finalizeImrdNet(abufNet net,std::set\u003cndmBlkNet*\u003e\u0026 preservedBlkNets);"
+    },
+    {
+        "file":  "include/ctsInfraApiNwtn.h",
+        "line":  633,
+        "text":  "bool getFanoutLeafPortsRecur(abufPin driver, abufPortVector \u0026leafTerms, std::set\u003cndmTerm*\u003e \u0026terminatedNetLinks, //LINTER"
+    },
+    {
+        "file":  "include/ctsGuiQorInterf.h",
+        "line":  40,
+        "text":  "std::set\u003ccstrClock\u003e\u0026 clocks, std::set\u003ccstrSkewGroup*\u003e\u0026 sgs,"
+    },
+    {
+        "file":  "include/ctsGuiQorInterf.h",
+        "line":  74,
+        "text":  "std::set\u003ccstrSkewGroup*\u003e\u0026          _skewGroups;"
+    },
+    {
+        "file":  "include/ctsDelayLookup.h",
+        "line":  265,
+        "text":  "void resetType(std::set\u003cndmModule*\u003e\u0026 allowedRefVec);"
+    },
+    {
+        "file":  "include/ctsDelayLookup.h",
+        "line":  266,
+        "text":  "void resetType(std::set\u003cndmModule*\u003e\u0026 allowedRefVec, ctsDelayGroup\u0026 ds);"
+    },
+    {
+        "file":  "include/ctsCheck.h",
+        "line":  102,
+        "text":  "bool getIgnoreRoutingLayers(std::set\u003cndmTechLayer*\u003e *setOfIgnoredLayers);"
+    },
+    {
+        "file":  "include/ctsCharacterizer.h",
+        "line":  175,
+        "text":  "void getPrunnedDefault(ctsCharContext cntxt, charEnum::type type, std::vector\u003cndmModule *\u003e \u0026repeaters, charEnum::pruneSt"
+    },
+    {
+        "file":  "include/ctsCharacterizer.h",
+        "line":  237,
+        "text":  "bool getPrunnedRepeaters(ctsCharContext cntxt, charEnum::type type, charEnum::pruneStrategy strategy, std::vector\u003cndmMod"
+    },
+    {
+        "file":  "include/ctsBuffer.h",
+        "line":  638,
+        "text":  "virtual bool getPrunedRepeaters(ctsCharacterizer* ctsChar, ctsCharContext \u0026charCntxt, std::vector\u003cndmModule *\u003e\u0026 vecRepea"
+    },
+    {
+        "file":  "ccd/ctsccd/voltagedrop/ccdvdProblemGenerator.h",
+        "line":  185,
+        "text":  "void addLowPowRefs(std::set\u003cndmModule*\u003e\u0026 lpr) { _lowPowRefs = lpr; }"
+    },
+    {
+        "file":  "ccd/ctsccd/voltagedrop/ccdvdProblemGenerator.h",
+        "line":  215,
+        "text":  "std::set\u003cndmModule*\u003e_lowPowRefs;"
+    },
+    {
+        "file":  "include/ctsAutoBalancePoint.h",
+        "line":  96,
+        "text":  "float targetSlack, float\u0026 achievedSlack, float firstTarget, const cstrScenario* scenario, std::set\u003cndmTerm*\u003e visitedTerm"
+    },
+    {
+        "file":  "include/ctsAutoBalancePoint.h",
+        "line":  98,
+        "text":  "void getOffSetForLaunchChainNoSlack(ndmTerm *term, ctsLatchGraph *latchGraph, float targetOffset, float\u0026 achievedOffset,"
+    },
+    {
+        "file":  "include/ctoscProblemGenerator.h",
+        "line":  231,
+        "text":  "std::set\u003cndmTerm*\u003e _debugSeedTermSet; // LINTER_BYPASS"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  720,
+        "text":  "void addSeed(SEED_INFO\u0026 si, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_insts, bo"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  721,
+        "text":  "bool addBufferingSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  722,
+        "text":  "bool addSizingSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_ins"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  723,
+        "text":  "bool addResizeSinkSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  724,
+        "text":  "bool addResizeIcgSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  725,
+        "text":  "bool addKsizeSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_inst"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  726,
+        "text":  "void addDsizeSeed(ndmTerm* driverTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marke"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  727,
+        "text":  "bool addPreponeBufferingSeed(grNode driverNode, ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_ma"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  728,
+        "text":  "bool addPostponeBufferingSeed(grNode driverNode, ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_m"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  732,
+        "text":  "void markInsts(grNode node, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  733,
+        "text":  "bool isMarked(grNode node, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  734,
+        "text":  "bool isMarked(ndmTerm* tm, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  735,
+        "text":  "bool isMarked(std::vector\u003cndmTerm*\u003e\u0026 vec, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  736,
+        "text":  "void markInsts(ndmTerm* tm, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.h",
+        "line":  737,
+        "text":  "void markInsts(std::vector\u003cndmTerm*\u003e\u0026 vec, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1053,
+        "text":  "std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_insts, bool noNewSeed)"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1104,
+        "text":  "std::set\u003cndmInst*\u003e\u0026 marked_insts, ccdtwnsProblemSeed::SEED_INFO\u0026 si, bool isPrepone, bool isSetup,"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1146,
+        "text":  "std::set\u003cndmInst*\u003e\u0026 marked_insts, bool isSetup, bool noNewSeed)"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1227,
+        "text":  "std::set\u003cndmInst*\u003e\u0026 marked_insts, bool isSetup, bool noNewSeed)"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1383,
+        "text":  "ccdtwnsProblemGenerator::addSizingSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::s"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1412,
+        "text":  "ccdtwnsProblemGenerator::addResizeSinkSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, st"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1444,
+        "text":  "ccdtwnsProblemGenerator::addDebankSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::s"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1485,
+        "text":  "ccdtwnsProblemGenerator::addResizeIcgSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1568,
+        "text":  "ccdtwnsProblemGenerator::addKsizeSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::se"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1609,
+        "text":  "ccdtwnsProblemGenerator::addDsizeSeed(ndmTerm* driverTerm, std::multimap\u003cgrNodeId, ccdtwnsProblemSeed*\u003e\u0026 seed_map, std::"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1714,
+        "text":  "std::set\u003cndmInst*\u003e marked_insts;"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1800,
+        "text":  "ccdtwnsProblemGenerator::markInsts(std::vector\u003cndmTerm*\u003e\u0026 vec, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1817,
+        "text":  "ccdtwnsProblemGenerator::markInsts(grNode node, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1833,
+        "text":  "ccdtwnsProblemGenerator::markInsts(ndmTerm* tm, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1894,
+        "text":  "ccdtwnsProblemGenerator::isMarked(grNode node, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1909,
+        "text":  "ccdtwnsProblemGenerator::isMarked(std::vector\u003cndmTerm*\u003e\u0026 vec, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/twns/ccdtwnsProblemGenerator.cc",
+        "line":  1928,
+        "text":  "ccdtwnsProblemGenerator::isMarked(ndmTerm* tm, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "include/ctomtBuffer.h",
+        "line":  287,
+        "text":  "virtual bool getPrunedRepeaters(ctsCharacterizer* ctsChar, ctsCharContext \u0026charCntxt, std::vector\u003cndmModule *\u003e\u0026 vecRepea"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.h",
+        "line":  185,
+        "text":  "void addLowPowRefs(std::set\u003cndmModule*\u003e\u0026 lpr) { _lowPowRefs = lpr; }"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.h",
+        "line":  206,
+        "text":  "std::set\u003cndmModule*\u003e_lowPowRefs;"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.h",
+        "line":  311,
+        "text":  "bool addResizeSinkSeed(grNode loadNode, ndmInst* loadInst, std::map\u003cgrNodeId, ccdpwProblemSeed*\u003e\u0026 seed_map, std::set\u003cndm"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.h",
+        "line":  312,
+        "text":  "bool addSizingSeed(grNode loadNode, std::map\u003cgrNodeId, ccdpwProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs);"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.h",
+        "line":  316,
+        "text":  "bool addSeed(grNode node, std::map\u003cgrNodeId, ccdpwProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs);"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.h",
+        "line":  334,
+        "text":  "bool isValidSeed(grNode node, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lowRefs);"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.h",
+        "line":  335,
+        "text":  "bool isValidSeedForSizing(grNode sink, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lowRefs);"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.h",
+        "line":  339,
+        "text":  "void filterForPower(ndmInst* inst, std::vector\u003cndmModule *\u003e\u0026 sizes, grNode node, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lo"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.cc",
+        "line":  473,
+        "text":  "std::set\u003cndmModule*\u003e lowRefs; // low power ref module"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.cc",
+        "line":  678,
+        "text":  "std::map\u003cgrNodeId, ccdpwProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.cc",
+        "line":  829,
+        "text":  "std::map\u003cgrNodeId, ccdpwProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.cc",
+        "line":  860,
+        "text":  "std::map\u003cgrNodeId, ccdpwProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.cc",
+        "line":  1154,
+        "text":  "ccdpwProblemGenerator::isValidSeed(grNode node, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.cc",
+        "line":  1189,
+        "text":  "ccdpwProblemGenerator::isValidSeedForSizing(grNode sink, ndmTerm* load, std::set\u003cndmModule*\u003e\u0026 lowRefs)"
+    },
+    {
+        "file":  "ccd/ctsccd/power/ccdpwProblemGenerator.cc",
+        "line":  1339,
+        "text":  "ccdpwProblemGenerator::filterForPower(ndmInst* inst, std::vector\u003cndmModule *\u003e\u0026 sizes, grNode node, ndmTerm* load, std::s"
+    },
+    {
+        "file":  "include/ccdscUskuMgr.h",
+        "line":  461,
+        "text":  "void findFmaxOnRouteBufferGroupShielding(ctsscRCNode* theNode, std::vector\u003cccdOnRouteInfo\u003e\u0026 capVector, std::set\u003cctsscRCN"
+    },
+    {
+        "file":  "include/ccdscUskuMgr.h",
+        "line":  462,
+        "text":  "void findFmaxOnRouteBufferGroupDelay(ctsscRCNode* theNode, std::vector\u003cccdOnRouteInfo\u003e\u0026 capVector, std::set\u003cctsscRCNode*"
+    },
+    {
+        "file":  "include/ccdscGlobal.h",
+        "line":  232,
+        "text":  "std::set\u003cndmTerm*\u003e\u0026 visitedTerms, int reparentLevel);"
+    },
+    {
+        "file":  "include/ccdscGlobal.h",
+        "line":  233,
+        "text":  "void collectOffRouteTermsPg(grNode\u0026 node, int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndmTerm*\u003e\u0026 visitedTerms);"
+    },
+    {
+        "file":  "include/ccdscGlobal.h",
+        "line":  235,
+        "text":  "int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndmTerm*\u003e\u0026 visitedTerms);"
+    },
+    {
+        "file":  "include/ccdscGlobal.h",
+        "line":  236,
+        "text":  "void collectOffRouteTermsPg(cstrScenario\u0026 scenario, int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndmTerm*\u003e\u0026 visit"
+    },
+    {
+        "file":  "include/ccdInfra.h",
+        "line":  329,
+        "text":  "std::set\u003cstd::string\u003e\u0026 changingNets, std::set\u003cndmInst*\u003e\u0026 frozenFFs);"
+    },
+    {
+        "file":  "icg/ctsMergeIcg.cc",
+        "line":  320,
+        "text":  "std::set\u003cndmInst*\u003e icgs;"
+    },
+    {
+        "file":  "icg/ctsICGCloningHelper.cc",
+        "line":  1237,
+        "text":  "std::set\u003cctsTreeNode*\u003e splitNodes;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemSeed.h",
+        "line":  317,
+        "text":  "void removeVariables(std::set\u003cfmaxVariable*\u003e\u0026 removed);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemSeed.cc",
+        "line":  717,
+        "text":  "std::set\u003cfmaxVariable*\u003e removed;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemSeed.cc",
+        "line":  2607,
+        "text":  "std::set\u003cfmaxVariable*\u003e removed;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemSeed.cc",
+        "line":  2628,
+        "text":  "void fmaxProblemSeed::removeVariables(std::set\u003cfmaxVariable*\u003e\u0026 removed)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemSeed.cc",
+        "line":  2728,
+        "text":  "std::set\u003cfmaxVariable*\u003e removed;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorSolver.cc",
+        "line":  233,
+        "text":  "std::set\u003cndmTerm*\u003e sizedDrivers;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorSolver.cc",
+        "line":  267,
+        "text":  "std::set\u003cndmTerm*\u003e drvSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorSolver.cc",
+        "line":  301,
+        "text":  "std::set\u003cndmTerm*\u003e sizedDrivers;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorSolver.cc",
+        "line":  343,
+        "text":  "std::set\u003cndmTerm*\u003e drvSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxProblemGeneratorSolver.cc",
+        "line":  360,
+        "text":  "std::set\u003cndmTerm*\u003e\u0026 sizedDrivers, lazyTns::lazyCriticality* cri, std::vector\u003cfloat\u003e\u0026 range)"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxMasterXformLowEffort.cc",
+        "line":  116,
+        "text":  "std::set\u003cfmaxVariable*\u003e removed;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxMasterXform.cc",
+        "line":  626,
+        "text":  "std::set\u003cfmaxVariable*\u003e removed;"
+    },
+    {
+        "file":  "export/msInterfApi.h",
+        "line":  50,
+        "text":  "bool getSubtreeDrivers(ndmModule* topModule, /*add LINTER_BYPASS*/ std::set\u003cndmTerm*\u003e\u0026 drivers, cstrClock clock); //add "
+    },
+    {
+        "file":  "export/ctsLocalSkew.h",
+        "line":  171,
+        "text":  "std::set\u003ctrialCtsNode *\u003e \u0026 getChildren(void) { return _children; } // clock nodes that are directly driven by the curren"
+    },
+    {
+        "file":  "export/ctsLocalSkew.h",
+        "line":  192,
+        "text":  "std::set\u003ctrialCtsNode *\u003e _parents; // clock nodes that are directly driving the current node"
+    },
+    {
+        "file":  "export/ctsLocalSkew.h",
+        "line":  193,
+        "text":  "std::set\u003ctrialCtsNode *\u003e _children; // clock nodes that are directly driven by the current node"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxCusDesign.cc",
+        "line":  465,
+        "text":  "std::set\u003cfmaxCusTerm*\u003e sinksMoved;"
+    },
+    {
+        "file":  "export/ctsGuiQorInterf.h",
+        "line":  40,
+        "text":  "std::set\u003ccstrClock\u003e\u0026 clocks, std::set\u003ccstrSkewGroup*\u003e\u0026 sgs,"
+    },
+    {
+        "file":  "export/ctsGuiQorInterf.h",
+        "line":  74,
+        "text":  "std::set\u003ccstrSkewGroup*\u003e\u0026          _skewGroups;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModelPrivate.cc",
+        "line":  152,
+        "text":  "std::set\u003cfmaxProblemSeed*\u003e filteredSeeds = getZeroBudgetDebankSeeds(newXps);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.h",
+        "line":  184,
+        "text":  "std::set\u003cndmInst*\u003e\u0026 getBadSeeds() { return _badSeeds; }"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.h",
+        "line":  201,
+        "text":  "std::set\u003cfmaxProblemSeed*\u003e getZeroBudgetDebankSeeds(ctsXformProblems\u0026 newXps);"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.h",
+        "line":  288,
+        "text":  "std::set\u003cndmInst*\u003e _badSeeds;"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.cc",
+        "line":  1480,
+        "text":  "std::set\u003cfmaxProblemSeed*\u003e"
+    },
+    {
+        "file":  "ccd/ctsccd/fmax/fmaxBudgetModel.cc",
+        "line":  1483,
+        "text":  "std::set\u003cfmaxProblemSeed*\u003e zeroBudgetSeeds;"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  787,
+        "text":  "void addSeed(SEED_INFO\u0026 si, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_insts, bool"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  788,
+        "text":  "bool addBufferingSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_in"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  789,
+        "text":  "bool addSizingSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_insts"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  790,
+        "text":  "bool addResizeSinkSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_i"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  791,
+        "text":  "bool addResizeIcgSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_in"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  792,
+        "text":  "bool addKsizeSeed(ndmTerm* seed, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_insts,"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  793,
+        "text":  "void addDsizeSeed(ndmTerm* driverTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  794,
+        "text":  "bool addPreponeBufferingSeed(grNode driverNode, ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map,"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  795,
+        "text":  "bool addPostponeBufferingSeed(grNode driverNode, ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  801,
+        "text":  "void markInsts(grNode node, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  802,
+        "text":  "bool isMarked(grNode node, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  803,
+        "text":  "bool isMarked(ndmTerm* tm, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  804,
+        "text":  "bool isMarked(std::vector\u003cndmTerm*\u003e\u0026 vec, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  805,
+        "text":  "void markInsts(ndmTerm* tm, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  806,
+        "text":  "void markInsts(std::vector\u003cndmTerm*\u003e\u0026 vec, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  807,
+        "text":  "/*LINTER_BYPASS*/void markInstsForMIBTHO(ndmInst *inst, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  808,
+        "text":  "/*LINTER_BYPASS*/void markMIBInsts(ndmInst *inst, std::set\u003cndmInst*\u003e\u0026 marked_insts);"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.h",
+        "line":  815,
+        "text":  "void populateCostAnchor(ccdptCostAnchor* costAnchor, ctsPathTracer::pathElement\u0026, std::set\u003cccdptProblemSeed*\u003e\u0026 visitedSe"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  979,
+        "text":  "std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cndmInst*\u003e\u0026 marked_insts, bool noNewSeed)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1029,
+        "text":  "std::set\u003cndmInst*\u003e\u0026 marked_insts, ccdptProblemSeed::SEED_INFO\u0026 si, bool isPrepone, bool isSetup,"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1073,
+        "text":  "std::set\u003cndmInst*\u003e\u0026 marked_insts, bool isSetup, bool noNewSeed, bool isDetour)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1203,
+        "text":  "std::set\u003cndmInst*\u003e\u0026 marked_insts, bool isSetup, bool noNewSeed)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1367,
+        "text":  "ccdptProblemGenerator::addSizingSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cn"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1396,
+        "text":  "ccdptProblemGenerator::addResizeSinkSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::s"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1433,
+        "text":  "ccdptProblemGenerator::addDebankSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cn"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1474,
+        "text":  "ccdptProblemGenerator::addResizeIcgSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::se"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1561,
+        "text":  "ccdptProblemGenerator::addKsizeSeed(ndmTerm* loadTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003cnd"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1609,
+        "text":  "ccdptProblemGenerator::addDsizeSeed(ndmTerm* driverTerm, std::multimap\u003cgrNodeId, ccdptProblemSeed*\u003e\u0026 seed_map, std::set\u003c"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1734,
+        "text":  "std::set\u003cndmInst*\u003e marked_insts;"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1820,
+        "text":  "ccdptProblemGenerator::markInsts(std::vector\u003cndmTerm*\u003e\u0026 vec, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1837,
+        "text":  "ccdptProblemGenerator::markInsts(grNode node, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1853,
+        "text":  "ccdptProblemGenerator::markInsts(ndmTerm* tm, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1887,
+        "text":  "/*LINTER_BYPASS*/void ccdptProblemGenerator::markMIBInsts(ndmInst *inst, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1905,
+        "text":  "/*LINTER_BYPASS*/void ccdptProblemGenerator::markInstsForMIBTHO(ndmInst *inst, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1972,
+        "text":  "ccdptProblemGenerator::isMarked(grNode node, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  1987,
+        "text":  "ccdptProblemGenerator::isMarked(std::vector\u003cndmTerm*\u003e\u0026 vec, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  2006,
+        "text":  "ccdptProblemGenerator::isMarked(ndmTerm* tm, std::set\u003cndmInst*\u003e\u0026 marked_insts)"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  2177,
+        "text":  "std::set\u003cccdptProblemSeed*\u003e visitedSeeds;"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  2217,
+        "text":  "ccdptProblemGenerator::populateCostAnchor(ccdptCostAnchor* costAnchor, ctsPathTracer::pathElement\u0026 elm, std::set\u003cccdptPr"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  2930,
+        "text":  "std::set\u003cccdptProblemSeed*\u003e visitedSeeds;"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  2976,
+        "text":  "std::set\u003cccdptProblemSeed*\u003e visitedSeeds;"
+    },
+    {
+        "file":  "ccd/ctsccd/cgbased/ccdptProblemGenerator.cc",
+        "line":  4013,
+        "text":  "std::set\u003cccdptProblemSeed*\u003e visitedSeeds;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdSubtree.h",
+        "line":  115,
+        "text":  "void collectFrozenFFs(termVecType\u0026 sinks, std::set\u003cndmInst*\u003e\u0026 frozenFFs);"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdSubtree.cc",
+        "line":  1447,
+        "text":  "std::set\u003cndmInst*\u003e frozenFFs;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdSubtree.cc",
+        "line":  1855,
+        "text":  "void ccdSubtree::collectFrozenFFs(termVecType\u0026 sinks, std::set\u003cndmInst*\u003e\u0026 frozenFFs)"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdstProblemGenerator.h",
+        "line":  196,
+        "text":  "std::set\u003cndmTerm*\u003e _excludeTermSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdstProblemGenerator.cc",
+        "line":  668,
+        "text":  "std::set\u003cccdSubTreeGroup*\u003e collectedSubtrees;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscUskuMgr.h",
+        "line":  461,
+        "text":  "void findFmaxOnRouteBufferGroupShielding(ctsscRCNode* theNode, std::vector\u003cccdOnRouteInfo\u003e\u0026 capVector, std::set\u003cctsscRCN"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscUskuMgr.h",
+        "line":  462,
+        "text":  "void findFmaxOnRouteBufferGroupDelay(ctsscRCNode* theNode, std::vector\u003cccdOnRouteInfo\u003e\u0026 capVector, std::set\u003cctsscRCNode*"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscUskuMgr.cc",
+        "line":  1014,
+        "text":  "void ccdUSkewMgr::findFmaxOnRouteBufferGroupShielding(ctsscRCNode* theNode, std::vector\u003cccdOnRouteInfo\u003e\u0026 capVector, std:"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscUskuMgr.cc",
+        "line":  1054,
+        "text":  "void ccdUSkewMgr::findFmaxOnRouteBufferGroupDelay(ctsscRCNode* theNode, std::vector\u003cccdOnRouteInfo\u003e\u0026 capVector, std::set"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.h",
+        "line":  232,
+        "text":  "std::set\u003cndmTerm*\u003e\u0026 visitedTerms, int reparentLevel);"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.h",
+        "line":  233,
+        "text":  "void collectOffRouteTermsPg(grNode\u0026 node, int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndmTerm*\u003e\u0026 visitedTerms);"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.h",
+        "line":  235,
+        "text":  "int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndmTerm*\u003e\u0026 visitedTerms);"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.h",
+        "line":  236,
+        "text":  "void collectOffRouteTermsPg(cstrScenario\u0026 scenario, int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndmTerm*\u003e\u0026 visit"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.cc",
+        "line":  1862,
+        "text":  "std::set\u003cndmTerm*\u003e visitedTerms;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.cc",
+        "line":  1888,
+        "text":  "std::set\u003cndmTerm*\u003e visitedTerms;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.cc",
+        "line":  1921,
+        "text":  "void ccdscGlobal::collectOffRouteTermsPg(cstrScenario\u0026 scenario, int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndm"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.cc",
+        "line":  1946,
+        "text":  "int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndmTerm*\u003e\u0026 visitedTerms)"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.cc",
+        "line":  1988,
+        "text":  "void ccdscGlobal::collectOffRouteTermsPg(grNode\u0026 node, int mixedMode, termVecType\u0026 offrouteTerms, std::set\u003cndmTerm*\u003e\u0026 vi"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdscGlobal.cc",
+        "line":  2019,
+        "text":  "std::set\u003cndmTerm*\u003e\u0026 visitedTerms, int reparentLevel)"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdRoiCollector.h",
+        "line":  74,
+        "text":  "bool isMarked(std::set\u003cndmFlatNet*\u003e\u0026 visited, ndmTerm* drvT);"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdRoiCollector.h",
+        "line":  75,
+        "text":  "void markCan(std::set\u003cndmFlatNet*\u003e\u0026 visited, ndmTerm* drvT);"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdRoiCollector.cc",
+        "line":  293,
+        "text":  "std::set\u003cndmFlatNet*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdRoiCollector.cc",
+        "line":  315,
+        "text":  "bool ccdRoiCollector::isMarked(std::set\u003cndmFlatNet*\u003e\u0026 visited, ndmTerm* drvTerm)"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdRoiCollector.cc",
+        "line":  333,
+        "text":  "void ccdRoiCollector::markCan(std::set\u003cndmFlatNet*\u003e\u0026 visited, ndmTerm* drvTerm)"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdpgProblemGenerator.cc",
+        "line":  2047,
+        "text":  "std::set\u003cccdPathGroup*\u003e visitedPg;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdpgProblemGenerator.cc",
+        "line":  2049,
+        "text":  "std::set\u003cccdPathGroup*\u003e collectedPgs;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdpgProblemGenerator.cc",
+        "line":  2105,
+        "text":  "std::set\u003cccdPathGroup*\u003e visitedPg;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdpgProblemGenerator.cc",
+        "line":  2106,
+        "text":  "std::set\u003cccdPathGroup*\u003e collectedPgs;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdMove.cc",
+        "line":  989,
+        "text":  "std::set\u003cndmTerm *\u003e bufFOSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdMove.cc",
+        "line":  1387,
+        "text":  "std::set\u003cndmTerm *\u003e origBufFOMap;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdMarker.cc",
+        "line":  1037,
+        "text":  "std::set\u003cndmTerm*\u003e visitedDrivers;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdInfra.h",
+        "line":  329,
+        "text":  "std::set\u003cstd::string\u003e\u0026 changingNets, std::set\u003cndmInst*\u003e\u0026 frozenFFs);"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdInfra.cc",
+        "line":  1462,
+        "text":  "std::set\u003cstd::string\u003e\u0026 changingNets, std::set\u003cndmInst*\u003e\u0026 frozenFFs)"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdBuffer.cc",
+        "line":  2157,
+        "text":  "std::set\u003cndmTerm *\u003e bufFOSet;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdBuffer.cc",
+        "line":  2816,
+        "text":  "std::set\u003cndmTerm *\u003e origBufFOMap;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdBuffer.cc",
+        "line":  3593,
+        "text":  "std::set\u003cndmTerm*\u003e criticalSinks;"
+    },
+    {
+        "file":  "ccd/ctsccd/ccdarProblemGenerator.cc",
+        "line":  393,
+        "text":  "std::set\u003cccdLocalGroup*\u003e collectedGroups;"
+    },
+    {
+        "file":  "ctsutil/dly/dlyCoreUtil.cc",
+        "line":  1969,
+        "text":  "std::set\u003cndmModule*\u003e usedRefModSet;"
+    },
+    {
+        "file":  "ctsutil/ctsRouteMgr.cc",
+        "line":  1532,
+        "text":  "std::set\u003cndmBlkNet*\u003e initialDirtyBlkNets;"
+    },
+    {
+        "file":  "ctsutil/ctsRouteMgr.cc",
+        "line":  2364,
+        "text":  "std::set\u003cndmBlkNet*\u003e processedBlkNet;"
+    },
+    {
+        "file":  "ctsutil/ctsRouteMgr.cc",
+        "line":  2487,
+        "text":  "std::set\u003cndmNet *\u003e processed;"
+    },
+    {
+        "file":  "ctsutil/ctsRouteMgr.cc",
+        "line":  3051,
+        "text":  "std::set\u003cndmNet*\u003e re_createdNets;"
+    },
+    {
+        "file":  "ctsutil/ctsRouteMgr.cc",
+        "line":  3849,
+        "text":  "std::set\u003cndmNet*\u003e initialDirtyNets;"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  769,
+        "text":  "std::set\u003ccstrScenario*\u003e mismatchScenarios;"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  1260,
+        "text":  "std::set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  3290,
+        "text":  "std::set\u003cndmInst*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  3291,
+        "text":  "std::set\u003cndmInst*\u003e cycle;"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  3344,
+        "text":  "std::set\u003cndmInst*\u003e cycleStarts;"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  3499,
+        "text":  "std::set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  3626,
+        "text":  "std::set\u003cndmTerm*\u003e visited;"
+    },
+    {
+        "file":  "ctsutil/ctsPortPunchAnalyzer.cc",
+        "line":  1203,
+        "text":  "std::set\u003cctsTermConnInfo*\u003e splitLoadTerms; // store load terms"
+    },
+    {
+        "file":  "ctsutil/ctsDelayLookup.cc",
+        "line":  656,
+        "text":  "void ctsDelayTable::resetType(std::set\u003cndmModule*\u003e\u0026 allowedRefVec)"
+    },
+    {
+        "file":  "ctsutil/ctsDelayLookup.cc",
+        "line":  675,
+        "text":  "void ctsDelayTable::resetType(std::set\u003cndmModule*\u003e\u0026 allowedRefVec, ctsDelayGroup\u0026 dsg)"
+    },
+    {
+        "file":  "ctsutil/ctsDelayLookup.cc",
+        "line":  1082,
+        "text":  "std::set\u003cndmModule*\u003e allowedBufSet;"
+    },
+    {
+        "file":  "ctsutil/ctsDelayLookup.cc",
+        "line":  1090,
+        "text":  "std::set\u003cndmModule*\u003e allowedInvSet;"
+    },
+    {
+        "file":  "ctsutil/ctsCnmUtil.cc",
+        "line":  119,
+        "text":  "std::set\u003cctsTreeNode *\u003e validTreeNodes;"
+    },
+    {
+        "file":  "ctsutil/ctsCnmUtil.cc",
+        "line":  306,
+        "text":  "std::set\u003cctsTreeNode*\u003e _childNodesOfSomeNodes;"
+    },
+    {
+        "file":  "ctsutil/ctsCharacterizer.h",
+        "line":  175,
+        "text":  "void getPrunnedDefault(ctsCharContext cntxt, charEnum::type type, std::vector\u003cndmModule *\u003e \u0026repeaters, charEnum::pruneSt"
+    },
+    {
+        "file":  "ctsutil/ctsCharacterizer.h",
+        "line":  237,
+        "text":  "bool getPrunnedRepeaters(ctsCharContext cntxt, charEnum::type type, charEnum::pruneStrategy strategy, std::vector\u003cndmMod"
+    },
+    {
+        "file":  "ctsutil/ctsLocalSkew.h",
+        "line":  171,
+        "text":  "std::set\u003ctrialCtsNode *\u003e \u0026 getChildren(void) { return _children; } // clock nodes that are directly driven by the curren"
+    },
+    {
+        "file":  "ctsutil/ctsLocalSkew.h",
+        "line":  192,
+        "text":  "std::set\u003ctrialCtsNode *\u003e _parents; // clock nodes that are directly driving the current node"
+    },
+    {
+        "file":  "ctsutil/ctsLocalSkew.h",
+        "line":  193,
+        "text":  "std::set\u003ctrialCtsNode *\u003e _children; // clock nodes that are directly driven by the current node"
+    },
+    {
+        "file":  "ctsutil/ctsCharacterizer.cc",
+        "line":  736,
+        "text":  "std::set\u003cndmModule*\u003e* validModuleSet)"
+    },
+    {
+        "file":  "ctsutil/ctsCharacterizer.cc",
+        "line":  1155,
+        "text":  "std::set\u003cndmModule*\u003e* validModuleSet)"
+    },
+    {
+        "file":  "ctsutil/ctsLocalSkew.cc",
+        "line":  186,
+        "text":  "std::set\u003cclkNode *\u003e::iterator iter=_sp_pairs.find(otherNode);"
+    },
+    {
+        "file":  "ctsutil/ctsLocalSkew.cc",
+        "line":  190,
+        "text":  "std::set\u003cclkNode *\u003e::iterator iter2=_ep_pairs.find(otherNode);"
+    },
+    {
+        "file":  "ctsutil/ctsLocalSkew.cc",
+        "line":  270,
+        "text":  "std::set \u003c clkNode* \u003e   uniqueNodes;"
+    },
+    {
+        "file":  "ctsutil/ctsLocalSkew.cc",
+        "line":  280,
+        "text":  "for (std::set \u003c clkNode* \u003e::iterator iter = uniqueNodes.begin(); iter != uniqueNodes.end(); ++iter) {"
+    },
+    {
+        "file":  "ctsutil/ctsLocalSkew.cc",
+        "line":  432,
+        "text":  "for (std::set\u003ctrialCtsNode*\u003e::iterator nodeIter = _children.begin(); nodeIter != _children.end(); nodeIter++) {"
+    },
+    {
+        "file":  "ctsutil/ctsBufChainReducer.cc",
+        "line":  596,
+        "text":  "std::set\u003cndmModule*\u003e prunedSet;"
+    },
+    {
+        "file":  "ctsutil/ctsDelayLookup.h",
+        "line":  265,
+        "text":  "void resetType(std::set\u003cndmModule*\u003e\u0026 allowedRefVec);"
+    },
+    {
+        "file":  "ctsutil/ctsDelayLookup.h",
+        "line":  266,
+        "text":  "void resetType(std::set\u003cndmModule*\u003e\u0026 allowedRefVec, ctsDelayGroup\u0026 ds);"
+    },
+    {
+        "file":  "ctsui/ctsuiCreateClockBuffer.cc",
+        "line":  212,
+        "text":  "std::set\u003cndmTerm*\u003e sinkSet(sinkVector.begin(), sinkVector.end());"
+    }
+]

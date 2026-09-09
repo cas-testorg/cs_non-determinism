@@ -1,0 +1,119 @@
+ctscto/ctosc/ctoscLevelFlow.h:100	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms);
+ctscto/ctosc/ctoscLevelFlow.h:149	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms);
+ctscto/ctosc/ctoscLevelFlow.h:179	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms);
+ctscto/ctosc/ctoscLevelFlow.cc:281	std::unordered_map<ctsXformProblem*, termVecPtr> mapSeedToOutputTerms;
+ctscto/ctosc/ctoscLevelFlow.cc:310	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms)
+ctscto/ctosc/ctoscLevelFlow.cc:345	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms)
+ctscto/ctosc/ctoscLevelFlow.cc:389	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms)
+ctscto/ctosc/ctoscLevelFlow.cc:395	std::unordered_set<ndmTerm*> seedMap;
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.h:87	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms);
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.h:98	std::unordered_set<ndmTerm*>& seedMapHigh,
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.h:103	std::unordered_set<ndmTerm*>& seedMapHigh,
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1462	std::unordered_map<ndmTerm*, termVecPtr> termIndex;
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1638	std::unordered_map<ctsXformProblem*, termVecPtr> mapSeedToOutputTerms;
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1695	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms)
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1719	std::unordered_set<ndmTerm*>& seedMapHigh,
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1756	std::unordered_set<ndmTerm*>& seedMapHigh,
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1808	std::unordered_map<ctsXformProblem*,
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1815	std::unordered_set<ndmTerm*> seedMapLow;
+ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1816	std::unordered_set<ndmTerm*> seedMapHigh;
+mscts/msgts/msgtsFlow.h:257	const std::unordered_set<ndmTerm*> &tapSet
+mscts/msgts/msgtsFlow.h:263	std::unordered_map<ndmTerm*, int> &levelTable
+mscts/msgts/msgtsFlow.h:490	std::unordered_map<nbmNode*, ndmCoord> _splitCellForNonCentreLoad;
+mscts/msgts/msgtsFlow.h:491	const std::unordered_map<ndmTerm*, ndmCoord> *_sink2CentreLocMap;
+mscts/msgts/msgtsFlow.cc:4106	std::unordered_map<ndmTerm*, nbmNode*> ndmTerm2nbmNodeMap;
+mscts/msgts/msgtsFlow.cc:4733	const std::unordered_set<ndmTerm*> &tapSet
+mscts/msgts/msgtsFlow.cc:4784	std::unordered_map<ndmTerm*, int> &levelTable
+mscts/msgts/msgtsFlow.cc:4845	std::unordered_map<ndmTerm*, int> sinkLevelTable;
+mscts/msgts/msgtsFlow.cc:5392	const std::unordered_map<ndmTerm*, std::string> &_term2SectionName;
+mscts/msgts/msgtsFlow.cc:5393	const std::unordered_map<nbmNode*, ndmCoord>    &_existingSC;
+mscts/msgts/msgtsFlow.cc:5435	std::unordered_map<nbmNode*, msgtsGCRHSNode*> savedNodeTable;
+mscts/msgts/msgtsFlow.cc:5879	std::unordered_map<ndmTerm*, ndmCoord> sinkToCentreLocMap;
+mscts/msgts/msgtsFlow.cc:5880	std::unordered_set<ndmTerm*> normalSinks;
+mscts/msgts/msgtsFlow.cc:5881	std::unordered_map<ndmTerm*, std::string> term2SectionName;
+mscts/msgts/msgtsFlow.cc:5882	std::unordered_set<ndmTerm*> visitedrivers;
+mscts/msgts/msgtsFlow.cc:5994	const std::unordered_map<ndmTerm*, std::string> &sinkSectionNameTable)
+mscts/msgts/msgtsFlow.cc:6039	const std::unordered_map<ndmTerm*, std::string> &sinkSectionNameTable)
+mscts/msgts/msgtsFlow.cc:6503	std::unordered_set<ndmModule*> l_htreeLibCells;
+ccd/skewopt/soSolverUpdater.h:486	void setFixedVars(soCgSolver* solver, std::unordered_set<ndmTerm*> &fixedTerms);
+ccd/skewopt/soSolverUpdater.cc:2659	std::unordered_set<ndmTerm*> fixedTerms;
+ccd/skewopt/soSolverUpdater.cc:3232	std::unordered_set<ndmTerm*> visitedDrivers;
+ccd/skewopt/soSolverUpdater.cc:3279	std::unordered_map<ndmTerm*, unsigned int> driverClockSourceIndexMap;
+ccd/skewopt/soSolverUpdater.cc:3280	std::unordered_map<ndmTerm*, unsigned int> termIndexMap;
+ccd/skewopt/soSolverUpdater.cc:3282	std::unordered_map<ndmTerm*, float> driverToggleRateMap;
+ccd/skewopt/soSolverUpdater.cc:3283	std::unordered_map<ndmTerm*, float> driverCapacitanceMap;
+ccd/skewopt/soSolverUpdater.cc:3292	std::unordered_set<ndmTerm*> leafNetDrivers;
+ccd/skewopt/soSolverUpdater.cc:3295	std::unordered_map<ndmTerm*, unsigned int> leafNetCount;
+ccd/skewopt/soSolverUpdater.cc:3323	std::unordered_set<ndmTerm*> drivers;
+ccd/skewopt/soSolverUpdater.cc:3915	std::unordered_set<ndmTerm*> fixedTerms;
+ccd/skewopt/soSolverUpdater.cc:4055	soCgSolverUpdater::setFixedVars(soCgSolver* solver, std::unordered_set<ndmTerm*> &fixedTerms)
+ccd/skewopt/soLogicCone.h:104	std::unordered_map<ndmModule*, float> _libCellToAreaOrdering;
+ccd/skewopt/soLogicCone.h:171	std::unordered_map<ndmModule*, powerUtilTypesNS::powerData> _libCellToPowerData;
+ccd/skewopt/soLogicCone.h:331	std::vector<const std::unordered_map<ndmModule*, powerUtilTypesNS::powerData>*>& lcPwrMap) const;
+ccd/skewopt/soLogicCone.cc:618	std::unordered_set<ndmInst*> allCells;
+ccd/skewopt/soLogicCone.cc:1216	const std::unordered_map<ndmModule*, powerUtilTypesNS::powerData>* lcPwrMap = nullptr;
+ccd/skewopt/soLogicCone.cc:1660	std::vector<const std::unordered_map<ndmModule*, powerUtilTypesNS::powerData>*>& lcPwrMapVec) const {
+ccd/skewopt/soLogicCone.cc:2235	std::unordered_set<ndmModule*> libCellsSet;
+ccd/skewopt/soLogicCone.cc:3195	std::unordered_set<ndmTerm*> visitedFromTerms;
+ccd/skewopt/soLogicCone.cc:3599	std::unordered_set<ndmTerm*> visitedFromTerms;
+ccd/skewopt/soLogicCone.cc:3771	std::unordered_set<ndmTerm*> visitedFromTerms;
+ccd/skewopt/soDesign.h:70	using termToSinkMapType = std::unordered_map<ndmTerm*, std::shared_ptr<soSink>>;
+ccd/skewopt/soDesign.h:71	using termToGateMapType = std::unordered_map<ndmTerm*, soClockGate*>;
+ccd/skewopt/soDesign.h:72	using termToPortMapType = std::unordered_map<ndmTerm*, soPort*>;
+ccd/skewopt/soDesign.h:73	using termToOffsetType = std::unordered_map<ndmTerm*, float>;
+ccd/skewopt/soDesign.h:74	using sinkToSinkVecUmapType = std::unordered_map<soSink*, std::vector<soSink*>>;
+ccd/skewopt/soClockGateOpt.h:32	using termToSinkMapType = std::unordered_map<ndmTerm*, std::shared_ptr<soSink>>;
+ccd/skewopt/soClockGateOpt.h:33	using termToGateMapType = std::unordered_map<ndmTerm*, soClockGate*>;
+ccd/skewopt/soClockGateOpt.h:34	using termToPortMapType = std::unordered_map<ndmTerm*, soPort*>;
+ccd/skewopt/soClockGateOpt.h:94	std::unordered_map<ndmTerm*,float> icgLatencyControlMaxPrepones() const;
+ccd/skewopt/soClockGateOpt.h:135	std::unordered_set<soSink*, soSinkHash> icgTFOSinks(soClockGate *icg) const;
+ccd/skewopt/soClockGateOpt.cc:238	std::unordered_set<soSink*, soSinkHash>
+ccd/skewopt/soClockGateOpt.cc:240	std::unordered_set<soSink*, soSinkHash> sinks;
+ccd/skewopt/soClockGateOpt.cc:241	std::unordered_set<soClockGate*> visited;
+ccd/skewopt/soClockGateOpt.cc:278	std::unordered_map<ndmTerm*,float>
+ccd/skewopt/soClockGateOpt.cc:282	std::unordered_map<ndmTerm*,float> ctrlToLat;
+ccd/skewopt/soClockGateOpt.cc:566	const std::unordered_set<soSink*, soSinkHash> & fOSinks = icgTFOSinks(icg);
+ccd/skewopt/soClockGateOpt.cc:943	const std::unordered_set<soSink*, soSinkHash> & fOSinks = _soCGO.icgTFOSinks(icg);
+ccd/skewopt/soClockGateOpt.cc:1034	const std::unordered_set<soSink*, soSinkHash> & fOSinks = _soCGO.icgTFOSinks(icg);
+ccd/skewopt/soClockGateOpt.cc:1067	std::unordered_map<ndmTerm*, unsigned int> cntPerEpt;
+ccd/skewopt/soClockGateOpt.cc:1190	std::unordered_map<ndmTerm*, std::vector<ndmTerm*>> fromToMap;
+mscts/include/msgtsFlow.h:257	const std::unordered_set<ndmTerm*> &tapSet
+mscts/include/msgtsFlow.h:263	std::unordered_map<ndmTerm*, int> &levelTable
+mscts/include/msgtsFlow.h:490	std::unordered_map<nbmNode*, ndmCoord> _splitCellForNonCentreLoad;
+mscts/include/msgtsFlow.h:491	const std::unordered_map<ndmTerm*, ndmCoord> *_sink2CentreLocMap;
+ccd/include/soLogicCone.h:104	std::unordered_map<ndmModule*, float> _libCellToAreaOrdering;
+ccd/include/soLogicCone.h:171	std::unordered_map<ndmModule*, powerUtilTypesNS::powerData> _libCellToPowerData;
+ccd/include/soLogicCone.h:331	std::vector<const std::unordered_map<ndmModule*, powerUtilTypesNS::powerData>*>& lcPwrMap) const;
+ccd/ctsccd/fmax/fmaxClockGraph.h:119	termSetType& visited, termSetType visitLoop, std::unordered_map<ndmTerm*, fmaxProblemSeed*>& seedMap);
+ccd/ctsccd/fmax/fmaxClockGraph.h:120	bool addSeedToTermInfo(fmaxTermInfo* info, std::unordered_map<ndmTerm*, fmaxProblemSeed*>& seedMap);
+ccd/ctsccd/fmax/fmaxClockGraph.h:121	bool shouldAddToGraph(ndmTerm* term, std::unordered_map<ndmTerm*, fmaxProblemSeed*>& seedMap);
+ccd/ctsccd/fmax/fmaxClockGraph.h:123	unsigned int assignLevelsRecursive(fmaxTermInfo* info, std::unordered_set<ndmTerm*>& visited);
+ccd/ctsccd/fmax/fmaxClockGraph.h:124	void assignColorsRecursive(fmaxTermInfo* info, std::unordered_set<ndmTerm*>& visited);
+ccd/ctsccd/fmax/fmaxClockGraph.cc:97	std::unordered_map<ndmTerm*, fmaxProblemSeed*> seedMap;
+ccd/ctsccd/fmax/fmaxClockGraph.cc:150	termSetType& visited, termSetType visitLoop, std::unordered_map<ndmTerm*, fmaxProblemSeed*>& seedMap)
+ccd/ctsccd/fmax/fmaxClockGraph.cc:192	bool fmaxClockGraph::addSeedToTermInfo(fmaxTermInfo* info, std::unordered_map<ndmTerm*, fmaxProblemSeed*>& seedMap)
+ccd/ctsccd/fmax/fmaxClockGraph.cc:195	std::unordered_map<ndmTerm*, fmaxProblemSeed*>::iterator it = seedMap.find(term);
+ccd/ctsccd/fmax/fmaxClockGraph.cc:209	bool fmaxClockGraph::shouldAddToGraph(ndmTerm* term, std::unordered_map<ndmTerm*, fmaxProblemSeed*>& seedMap)
+ccd/ctsccd/fmax/fmaxClockGraph.cc:272	std::unordered_set<ndmTerm*> visited;
+ccd/ctsccd/fmax/fmaxClockGraph.cc:294	unsigned int fmaxClockGraph::assignLevelsRecursive(fmaxTermInfo* info, std::unordered_set<ndmTerm*>& visited)
+ccd/ctsccd/fmax/fmaxClockGraph.cc:323	std::unordered_set<ndmTerm*> visited;
+ccd/ctsccd/fmax/fmaxClockGraph.cc:350	void fmaxClockGraph::assignColorsRecursive(fmaxTermInfo* info, std::unordered_set<ndmTerm*>& visited)
+ccd/ctsccd/fmax/fmaxBuffer.h:109	std::shared_ptr<atomicMove> findNextMove(std::vector<std::shared_ptr<atomicMove> >& moveSequence, pseudoState*& nextPseu
+ccd/ctsccd/fmax/fmaxBuffer.h:119	void collectFocusCPs(fmaxProblemSeed* pSeed, std::unordered_set<ndmInst*>& futureCPs);
+ccd/ctsccd/fmax/fmaxBuffer.h:120	void collectFutureCPs(std::shared_ptr<atomicMove>& currentMove, std::shared_ptr<atomicMove>& futureMove, std::unordered_
+ccd/ctsccd/fmax/fmaxBuffer.h:132	std::unordered_map<ndmTerm*, ctsBufPlanNode*> _driverToPlanNode;
+ccd/ctsccd/fmax/fmaxBuffer.cc:178	std::unordered_set<ndmInst*> futureCPs;
+ccd/ctsccd/fmax/fmaxBuffer.cc:220	std::shared_ptr<atomicMove> fmaxBuffer:: findNextMove(std::vector<std::shared_ptr<atomicMove> >& moveSequence, pseudoSta
+ccd/ctsccd/fmax/fmaxBuffer.cc:562	void fmaxBuffer::collectFutureCPs(std::shared_ptr<atomicMove>& currentMove, std::shared_ptr<atomicMove>& futureMove, std
+ccd/ctsccd/fmax/fmaxBuffer.cc:584	void fmaxBuffer::collectFocusCPs(fmaxProblemSeed* pSeed, std::unordered_set<ndmInst*>& futureCPs)
+include/soDesign.h:70	using termToSinkMapType = std::unordered_map<ndmTerm*, std::shared_ptr<soSink>>;
+include/soDesign.h:71	using termToGateMapType = std::unordered_map<ndmTerm*, soClockGate*>;
+include/soDesign.h:72	using termToPortMapType = std::unordered_map<ndmTerm*, soPort*>;
+include/soDesign.h:73	using termToOffsetType = std::unordered_map<ndmTerm*, float>;
+include/soDesign.h:74	using sinkToSinkVecUmapType = std::unordered_map<soSink*, std::vector<soSink*>>;
+include/ctoscLevelFlow.h:100	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms);
+include/ctoscLevelFlow.h:149	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms);
+include/ctoscLevelFlow.h:179	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms);
+include/ctomtGlsLevelFlow.h:87	std::unordered_map<ctsXformProblem*, termVecPtr>& mapSeedToOutputTerms);
+include/ctomtGlsLevelFlow.h:98	std::unordered_set<ndmTerm*>& seedMapHigh,
+include/ctomtGlsLevelFlow.h:103	std::unordered_set<ndmTerm*>& seedMapHigh,

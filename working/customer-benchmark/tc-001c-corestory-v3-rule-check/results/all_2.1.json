@@ -1,0 +1,22 @@
+[
+    {
+        "line":  152,
+        "pattern_name":  "Time/PID-based RNG seeds",
+        "tier":  1,
+        "category":  "timing",
+        "pattern_id":  "2.1",
+        "file":  "skewgrp/ctsSkewgroup.cc",
+        "match_text":  "srand ( time(NULL) );",
+        "severity_default":  "HIGH"
+    },
+    {
+        "line":  150,
+        "pattern_name":  "Time/PID-based RNG seeds",
+        "tier":  1,
+        "category":  "timing",
+        "pattern_id":  "2.1",
+        "file":  "skewgrp/ctsDStest.cc",
+        "match_text":  "srand ( time(NULL) );",
+        "severity_default":  "HIGH"
+    }
+]

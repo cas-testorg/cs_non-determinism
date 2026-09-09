@@ -1,0 +1,158 @@
+{
+  "scope": {
+    "workspace": "C:\\Users\\carys\\cts",
+    "patterns": ["1.1", "1.2", "1.3"],
+    "inputs": [
+      ".cursor/nd-scan/prio_1.1_nocmp.json",
+      ".cursor/nd-scan/prio_1.2_suspect.json",
+      ".cursor/nd-scan/prio_1.3_suspect.json"
+    ],
+    "corestory_project_id": 10,
+    "note": "Quality-over-quantity triage; only HIGH/MEDIUM real findings promoted. Max ~10."
+  },
+  "findings": [
+    {
+      "id": "ND-1.2-001",
+      "pattern": "1.2",
+      "severity": "HIGH",
+      "realness": "Real",
+      "confidence": "high",
+      "file": "mscts/drivers/msDrivers.cc",
+      "line": 711,
+      "symbol": "msClockDrivers::findDriverTerm / msDriversOptions::_loadNetSet",
+      "title": "Pointer-ordered std::set<ndmNet*> last-driver selection under MLPH multi-net leaf path",
+      "construct_md": "`_loadNetSet` is `new std::set<ndmNet*>()` (default pointer comparator) at msDrivers.cc:10308-10310. In `findDriverTerm` when `enableMLPHFlow && loadNetSet->size()>1 && leafLevel`, the loop at :713-723 walks the set in address order and overwrites `l_drvTerm` each iteration, returning the last pointer-ordered driver.",
+      "downstream_observability_md": "Return value is consumed without neutralization when callers pass an empty/dummy `drvTerms` set or use the returned term before `getTopLevelDrvTerm`. Strong sinks: `msAutoTapFlow.cc:4477-4489` (`dummy` set) uses `drvTerm` for `getAClockOnTerm` and `collectClockTreeSinkAndIcgTerms`, which drives tap-section synthesis topology; `msAutoTapFlow.cc:5190-5208` uses returned `drvTerm` for clock selection and `evaluateTapConfiguration`. Different last nets across ASLR/allocator runs can change clock choice, sink sets, and tap placement/QoR.",
+      "controls_md": "Requires `_appOptions.enableMLPHFlow`, `_loadNetSet` populated with >1 net, and `leafLevel==true`. `termSetType` (`std::set<ndmTerm*, ndmObjPtrCmpType>`) used for `drvTerms`/`unassignedLoads` is already stable; defect is specifically `_loadNetSet` + returned last driver.",
+      "build_inclusion_md": "mscts/drivers is in the indexed CTS production tree (CoreStory project cts-code).",
+      "suggested_fix_version_a_md": "Replace pointer set with ID-stable ordering:\n```cpp\n// Version A\n_loadNetSet = new std::set<ndmNet*, ndmObjPtrCmpType>();\n// and/or canonicalize return:\nreturn drvTerms.empty() ? nullptr : *drvTerms.begin(); // termSetType already uses ndmObjPtrCmpType\n```\nPrefer returning a deterministic pick from the accumulated `drvTerms` (e.g. `getTopLevelDrvTerm(drvTerms)`) instead of last loadNetSet iterator.",
+      "performance_note_md": "Comparator change is O(log n) per insert with n=load nets (small). No hot-loop concern."
+    },
+    {
+      "id": "ND-1.2-002",
+      "pattern": "1.2",
+      "severity": "HIGH",
+      "realness": "Real",
+      "confidence": "high",
+      "file": "ctssch/ctsTimingDrivenTransitionTargets.h",
+      "line": 181,
+      "symbol": "timingDrivenSinkTargetTransitionManager::compareTimInfo / targetNWorstSinks",
+      "title": "timingInfo* set comparator lacks stable identity tiebreak; drives tight max-tran sink selection",
+      "construct_md": "`typedef std::set<timingInfo*, compareTimInfo> timingInfoSet` at :192. `compareTimInfo` (:181-188) orders only by `getScore()` and uses `cmpVal <= 0` (not strict `<`), so equal/near-equal scores are not a valid strict-weak-ordering and have no `getIdLong`/term-id tiebreak. Scores are written when `sortByCriticality` (default true) in processSinkTimingInfo.",
+      "downstream_observability_md": "`targetNWorstSinks` (ctsTimingDrivenTransitionTargets.cc:833-848) iterates `_sinkPinTimingInfoSet.begin()` and inserts the first `sinksToTarget` entries into `_tightTransitionSinkPinSet`. Those sinks later receive tightened max-transition DRC via `setMaxTransition` / scenario `drcMgr.setCstr` — observable constraint and QoR/area impact. Comment at :804 claims the set is 'already sorted' for N-worst selection.",
+      "controls_md": "TD sink transition recipe (`runTDSinkTargetTransitionRecipe`); `sortByCriticality` defaults true; `targetNWorstSinks` gated on that option.",
+      "build_inclusion_md": "ctssch timing-driven transition path is production CTS scheduling code.",
+      "suggested_fix_version_a_md": "Version A — strict weak order with stable tiebreak:\n```cpp\nstruct compareTimInfo {\n  bool operator()(const timingInfo* a, const timingInfo* b) const {\n    int c = nwmathFloat::compare(a->getScore(), b->getScore(), 0.0001);\n    if (c != 0) return c < 0; // ascending score (worst first)\n    ndmTerm* ta = const_cast<timingInfo*>(a)->getTerm();\n    ndmTerm* tb = const_cast<timingInfo*>(b)->getTerm();\n    return ndmObjectHandleNS::compareObjPtr{}(ta, tb); // or getIdLong()\n  }\n};\n```",
+      "performance_note_md": "Tiebreak is O(1) getIdLong; set size is sink-count scale, not inner-loop critical."
+    },
+    {
+      "id": "ND-1.3-001",
+      "pattern": "1.3",
+      "severity": "MEDIUM",
+      "realness": "Real",
+      "confidence": "medium",
+      "file": "ccd/skewopt/soClockGateOpt.cc",
+      "line": 1190,
+      "symbol": "soClockGateOptStats::StartEndReport::populateWorstStartEndPaths",
+      "title": "Unordered map<ndmTerm*, vector<ndmTerm*>> iterated for path-trace / report construction",
+      "construct_md": "`std::unordered_map<ndmTerm*, std::vector<ndmTerm*>> fromToMap` at :1190 is filled then iterated at :1215 (`for (auto &fromTo : fromToMap)`). Each iteration runs `ctsPathTracer::run` and inserts paths into a slack multimap used to emit the start-end stats table.",
+      "downstream_observability_md": "Iteration order of pointer-hashed keys changes the sequence of timing queries and the relative order of equal-slack paths in the StartEnd report (`StartEndReport::write` consumes `sT`). Primarily report/message observability; not proven to mutate netlist, but clearly order-sensitive side effects on traced path recording.",
+      "controls_md": "Clock-gate opt stats / report generation path under soClockGateOpt.",
+      "build_inclusion_md": "ccd/skewopt production skew-opt reporting.",
+      "suggested_fix_version_a_md": "Version A — keep unordered for build, canonicalize before iterate:\n```cpp\nstd::vector<ndmTerm*> keys;\nkeys.reserve(fromToMap.size());\nfor (auto& kv : fromToMap) keys.push_back(kv.first);\nstd::sort(keys.begin(), keys.end(), ndmObjectHandleNS::compareObjPtr{});\nfor (ndmTerm* from : keys) {\n  auto& toVec = fromToMap[from];\n  // existing tracer loop...\n}\n```\nOr store as `ndmPtrMap`/`std::map<ndmTerm*,...,ndmObjPtrCmpType>` if map size is modest.",
+      "performance_note_md": "Sort-once at report boundary; path-trace cost dominates. Prefer boundary sort over replacing the hash map if build is hot."
+    },
+    {
+      "id": "ND-1.2-003",
+      "pattern": "1.2",
+      "severity": "MEDIUM",
+      "realness": "Real",
+      "confidence": "medium",
+      "file": "mscts/drivers/msDrivers.cc",
+      "line": 10309,
+      "symbol": "msDriversOptions::_loadNetSet",
+      "title": "Declaration site: raw pointer std::set<ndmNet*> for MLPH load nets",
+      "construct_md": "Container allocated without `ndmObjPtrCmpType` at :10308-10310; also iterated for membership accumulation into loads at `determineLoadsMLPHTemplate` (:2471-2482). Membership insert into stable `termSetType` is neutralized, but same container feeds ND-1.2-001.",
+      "downstream_observability_md": "Same causal chain as ND-1.2-001 for leaf multi-net MLPH driver/clock selection. Promote as companion declaration finding for ownership/fix targeting.",
+      "controls_md": "Same as ND-1.2-001.",
+      "build_inclusion_md": "Same as ND-1.2-001.",
+      "suggested_fix_version_a_md": "```cpp\n_loadNetSet = new std::set<ndmNet*, ndmObjPtrCmpType>();\n```\nor `ndmPtrSet`/`ndmPtrMap` idioms from ndmutil.",
+      "performance_note_md": "Negligible."
+    }
+  ],
+  "dismissed_buckets": [
+    {
+      "bucket": "1.1_numeric_or_id_sort_fp",
+      "pattern": "1.1",
+      "count_approx": 80,
+      "reason": "prio_1.1_nocmp two-arg sorts are predominantly float/int/ID/tuple sorts (coefficients, pathDelays, MsgIds, grid coords, grNodeId tuples). Not pointer-vector sorts without comparator.",
+      "examples": [
+        "ccd/skewopt/soSolverUpdater.cc:272 selectedToInfos (ints)",
+        "ccd/ccdui/ccduiReport.cc:5802 _icgEnNodes (node ids)",
+        "ccd/ctsccd/fmax/fmaxCgSolver.cc:517 pathVec of id tuples + explicit determinism comment",
+        "ctssc/lazytns/ctsLazyCostGroup.cc:932 allDsVec sorted 'to get deterministic order'"
+      ]
+    },
+    {
+      "bucket": "1.1_stable_tiebreak_or_metric_cmp",
+      "pattern": "1.1",
+      "count_approx": 5,
+      "reason": "Structs sorted via operator< with metric primary key and stable identity/name tiebreak — not raw pointer order ND.",
+      "examples": [
+        "ctssch/ctsSchCts.cc:1515 nodeAndToggleRate ties on getFirstDriverTermId()",
+        "ctsutil/ctsScnMgr.cc:896 gateDelayData ties on getFullName() (deterministic; expensive 2.2-ish, not pointer ND)",
+        "ccd/skewopt/soSolverResolution.cc:1133 pair<float, Cont> by timing float"
+      ]
+    },
+    {
+      "bucket": "1.2_membership_only_or_safe_adopter",
+      "pattern": "1.2",
+      "count_approx": 400,
+      "reason": "Most std::set/map<T*> suspects are find/insert/count only, or already use ndmObjPtrCmpType (termSetType), or iterate only for boolean membership checks.",
+      "examples": [
+        "ctssplit/ctsSplitState.cc:422 splitStateDrivers — membership pad then sort by split-state Id",
+        "ctssch/ctsIntSkewGroupBal.h:112 _processedGroups — iterated only for isAtClockList / find membership",
+        "ctssch/ctsSchCts.cc:1640 NodeList — _synthList->find membership",
+        "ccd/skewopt/soClockGate.h:108 _sinksSet — comment 'order is not important'; iteration uses _sinks vector",
+        "ccd/ctsccd/*ProblemGenerator* marked_insts — isMarked/markInsts membership",
+        "include/ctsTypes.h:124 termSetType already ndmObjPtrCmpType"
+      ]
+    },
+    {
+      "bucket": "1.3_membership_or_post_sort_neutralized",
+      "pattern": "1.3",
+      "count_approx": 300,
+      "reason": "Pointer-keyed unordered_* used as caches/visited/lookup, or converted then std::sort with compareObjPtr before observable use.",
+      "examples": [
+        "ccd/skewopt/soLogicCone.cc:2235-2245 libCellsSet → vector + sort(ndmObjPtrCmpType) before LUT build",
+        "ctscto/ctosc/ctomt/gls/ctomtGlsLevelFlow.cc:1460-1472 explicit comment: iterate deterministic problems vector, not unordered map",
+        "ccd/skewopt/soSink.cc:1073 termToLatMaxPre unordered_map — .find lookup only for bounds",
+        "mscts/mscore/msDataModel.cc:11496 ignoredTerms unordered_set — .find membership in CUS backprop",
+        "ccd/skewopt/soSolverUpdater.cc drivers/fixedTerms — size/membership; delay cost maps use ndmObjPtrCmpType"
+      ]
+    },
+    {
+      "bucket": "2.2_getFullName_glance",
+      "pattern": "2.2",
+      "count_approx": 2,
+      "reason": "Glanced; getFullName appears as deterministic sort/set tiebreak (ctsScnMgr::gateDelayData, msDrivers cmpByString), not as unstable map-key ND on algorithm hot path. No 2.2 HIGH/MEDIUM promoted.",
+      "examples": [
+        "ctsutil/ctsScnMgr.h:521 getFullName tiebreak in gateDelayData::operator<",
+        "mscts/drivers/msDrivers.h:556 cmpByString uses getFullName (stable string order)"
+      ]
+    }
+  ],
+  "summary": {
+    "promoted_high": 2,
+    "promoted_medium": 2,
+    "promoted_total": 4,
+    "pattern_1_1_promoted": 0,
+    "pattern_1_2_promoted": 3,
+    "pattern_1_3_promoted": 1,
+    "primary_fix_targets": [
+      "mscts/drivers/msDrivers.cc (_loadNetSet + findDriverTerm return)",
+      "ctssch/ctsTimingDrivenTransitionTargets.h (compareTimInfo)",
+      "ccd/skewopt/soClockGateOpt.cc (fromToMap iteration boundary sort)"
+    ]
+  }
+}

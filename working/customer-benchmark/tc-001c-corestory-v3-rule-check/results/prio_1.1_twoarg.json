@@ -1,0 +1,482 @@
+[
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/util/ccdOutputUtil.h",
+        "line":  64,
+        "match_text":  "std::sort(allowedMsgIds.begin(), allowedMsgIds.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  272,
+        "match_text":  "std::sort(selectedToInfos.begin(), selectedToInfos.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/skewopt/soSolverUpdater.cc",
+        "line":  331,
+        "match_text":  "std::sort(selectedToInfos.begin(), selectedToInfos.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/skewopt/soSolverResolution.cc",
+        "line":  1133,
+        "match_text":  "std::stable_sort(sortedClusters.begin(), sortedClusters.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/skewopt/soMacroDelay.cc",
+        "line":  101,
+        "match_text":  "std::sort(values.begin(), values.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/skewopt/soDesign.cc",
+        "line":  9122,
+        "match_text":  "std::sort(masterClocks.begin(), masterClocks.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/skewopt/soCG.cc",
+        "line":  4117,
+        "match_text":  "std::sort(slacks.begin(), slacks.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msutil/msTapCellMgr.cc",
+        "line":  4923,
+        "match_text":  "std::sort(breakpoints.begin(), breakpoints.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msui/msuiReportShieldConnections.cc",
+        "line":  204,
+        "match_text":  "std::sort(componentIds.begin(), componentIds.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/mstap/msTapSubtreeSyn.cc",
+        "line":  285,
+        "match_text":  "std::sort(termDistances.begin(), termDistances.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/mstap/msTapSubtreeSyn.cc",
+        "line":  805,
+        "match_text":  "std::sort(termDis.begin(), termDis.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/mstap/msClustering.cc",
+        "line":  671,
+        "match_text":  "std::sort(coords.begin(), coords.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverIncremental.cc",
+        "line":  1272,
+        "match_text":  "//std::sort(pathsWithRelativeViolations.begin(),pathsWithRelativeViolations.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverIncremental.cc",
+        "line":  1566,
+        "match_text":  "//std::sort(pathsWithRelativeViolations.begin(),pathsWithRelativeViolations.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverIncremental.cc",
+        "line":  2064,
+        "match_text":  "//std::sort(pathsWithRelativeViolations.begin(),pathsWithRelativeViolations.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2305,
+        "match_text":  "std::sort(hitsWithVariables.begin(), hitsWithVariables.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2470,
+        "match_text":  "std::sort(contributionsWithVariables.begin(), contributionsWithVariables.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2473,
+        "match_text":  "std::sort(potentialContributionsWithVariables.begin(), potentialContributionsWithVariables.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2568,
+        "match_text":  "std::sort(coordsWithVariables.begin(), coordsWithVariables.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolverCompressedEndpoints.cc",
+        "line":  2589,
+        "match_text":  "std::sort(coordsWithVariables.begin(), coordsWithVariables.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  3581,
+        "match_text":  "std::sort(extractedPairs.begin(), extractedPairs.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  3853,
+        "match_text":  "std::sort(occurenceVector.begin(), occurenceVector.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  4011,
+        "match_text":  "std::sort(positiveCoefficients.begin(),positiveCoefficients.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  4012,
+        "match_text":  "std::sort(negativeCoefficients.begin(),negativeCoefficients.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  4055,
+        "match_text":  "std::sort(positiveCoefficients.begin(),positiveCoefficients.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  4056,
+        "match_text":  "std::sort(negativeCoefficients.begin(),negativeCoefficients.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxLpSolver.cc",
+        "line":  5168,
+        "match_text":  "std::sort(variablesSortedByCount.begin(), variablesSortedByCount.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxEndpointCompression.cc",
+        "line":  153,
+        "match_text":  "std::sort(occurenceVector.begin(), occurenceVector.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxEndpointCompression.cc",
+        "line":  192,
+        "match_text":  "std::sort(orderingVector.begin(), orderingVector.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxEndpointCompression.cc",
+        "line":  223,
+        "match_text":  "std::sort(orderingVector.begin(), orderingVector.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ctsccd/fmax/fmaxCgSolver.cc",
+        "line":  517,
+        "match_text":  "std::sort(pathVec.begin(), pathVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msSplitTree.cc",
+        "line":  6248,
+        "match_text":  "std::stable_sort(pathDelays.begin(), pathDelays.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msSplitTree.cc",
+        "line":  8030,
+        "match_text":  "std::stable_sort(pathDelays.begin(), pathDelays.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msSplitLat.cc",
+        "line":  394,
+        "match_text":  "std::stable_sort(_pathDelays.begin(), _pathDelays.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  3899,
+        "match_text":  "std::stable_sort(pathDelays.begin(), pathDelays.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  4247,
+        "match_text":  "std::stable_sort(pathDelays.begin(), pathDelays.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  8359,
+        "match_text":  "std::stable_sort(violatingTransValues.begin(), violatingTransValues.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msSplit.cc",
+        "line":  8381,
+        "match_text":  "std::stable_sort(violatingCapValues.begin(), violatingCapValues.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msRelocator.cc",
+        "line":  142,
+        "match_text":  "std::stable_sort(pathDelays.begin(), pathDelays.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msmesh/msCto.cc",
+        "line":  301,
+        "match_text":  "std::sort(pathDelays.begin(), pathDelays.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msgts/msgtsGrid.cc",
+        "line":  517,
+        "match_text":  "std::sort(l_locs.begin(), l_locs.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msgts/msgtsGrid.cc",
+        "line":  546,
+        "match_text":  "std::sort(l_values.begin(), l_values.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  1170,
+        "match_text":  "std::sort(l_distVec.begin(),l_distVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  1324,
+        "match_text":  "std::sort(l_distVec.begin(),l_distVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/msgts/msgtsClustering.cc",
+        "line":  5539,
+        "match_text":  "std::sort(cost_vec.begin(), cost_vec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ccd/ccdui/ccduiReport.cc",
+        "line":  5802,
+        "match_text":  "std::sort(_icgEnNodes.begin(), _icgEnNodes.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/mscore/msTreeReport.cc",
+        "line":  962,
+        "match_text":  "std::sort(pathDelays.begin(),pathDelays.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/mscore/msTreeReport.cc",
+        "line":  2613,
+        "match_text":  "std::stable_sort(pathDelays.begin(), pathDelays.end()) ;"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/mscore/msTreeReport.cc",
+        "line":  3045,
+        "match_text":  "std::sort(sinkPathDelays.begin(),sinkPathDelays.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/drivers/msAutoTapFlow.cc",
+        "line":  7519,
+        "match_text":  "std::sort(gridX.begin(), gridX.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "mscts/drivers/msAutoTapFlow.cc",
+        "line":  7521,
+        "match_text":  "std::sort(gridY.begin(), gridY.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "icg/ctsICGReclusterHelper.cc",
+        "line":  702,
+        "match_text":  "std::sort(events.begin(), events.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/placer/lpTreePlacerImpl.cc",
+        "line":  2592,
+        "match_text":  "std::sort(variableDistributionSorted.begin(), variableDistributionSorted.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/placer/lpTreePlacerImpl.cc",
+        "line":  2595,
+        "match_text":  "std::sort(nonZeroDistributionSorted.begin(), nonZeroDistributionSorted.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/dly/dlyDeltaDelayInserter.cc",
+        "line":  518,
+        "match_text":  "std::stable_sort(msgVec.begin(), msgVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsSession.cc",
+        "line":  2802,
+        "match_text":  "std::sort(netWireLengths.begin(), netWireLengths.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsSession.cc",
+        "line":  3101,
+        "match_text":  "std::sort(cornerNetCaps[corner].begin(), cornerNetCaps[corner].end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsScnMgr.cc",
+        "line":  731,
+        "match_text":  "std::sort(_corners.begin(), _corners.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsScnMgr.cc",
+        "line":  896,
+        "match_text":  "std::sort(gateVec.begin(), gateVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsScnMgr.cc",
+        "line":  993,
+        "match_text":  "std::sort(_modes.begin(), _modes.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsNdrMgr.cc",
+        "line":  1270,
+        "match_text":  "std::sort(clockPeriodMap.begin(), clockPeriodMap.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsNdrMgr.cc",
+        "line":  1605,
+        "match_text":  "std::sort(clockPeriodMap.begin(), clockPeriodMap.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsNdrMgr.cc",
+        "line":  2134,
+        "match_text":  "std::sort(clockPeriodMap.begin(), clockPeriodMap.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsutil/ctsLocalSkew.cc",
+        "line":  212,
+        "match_text":  "std::sort(slackVector.begin(), slackVector.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "include/ccdOutputUtil.h",
+        "line":  64,
+        "match_text":  "std::sort(allowedMsgIds.begin(), allowedMsgIds.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctssch/ctsClockTree.cc",
+        "line":  3980,
+        "match_text":  "std::sort(idVec.begin(), idVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctssch/ctsArcBasedCts.cc",
+        "line":  2007,
+        "match_text":  "std::sort(_allArcDelaysPerUnitDistance.begin(), _allArcDelaysPerUnitDistance.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctssch/ctsSchCts.cc",
+        "line":  1515,
+        "match_text":  "std::sort(_treeNodes.begin(), _treeNodes.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctssch/ctsSchCts.cc",
+        "line":  3700,
+        "match_text":  "std::sort(clockPeriodMap.begin(), clockPeriodMap.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctssch/ctsSchCto.cc",
+        "line":  292,
+        "match_text":  "std::sort(sclkVec.begin(), sclkVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  628,
+        "match_text":  "std::sort(levels.begin(), levels.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  3352,
+        "match_text":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  3549,
+        "match_text":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  3628,
+        "match_text":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  4679,
+        "match_text":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  4737,
+        "match_text":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  4903,
+        "match_text":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctsrpt/ctsrptReportPhysical.cc",
+        "line":  5123,
+        "match_text":  "std::sort(infoVec.begin(), infoVec.end());"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctssc/lazytns/ctsLazyCostGroup.cc",
+        "line":  932,
+        "match_text":  "std::sort(allDsVec.begin(), allDsVec.end()); // sort to get deterministic order"
+    },
+    {
+        "pattern_id":  "1.1",
+        "file":  "ctssc/lazytns/ctsLazyCostGroup.cc",
+        "line":  950,
+        "match_text":  "std::sort(qVec.begin(), qVec.end());"
+    }
+]

@@ -1,0 +1,129 @@
+{
+  "module_path": "C:\\Users\\carys\\cts",
+  "module_slug": "cts",
+  "search_backend": "rg",
+  "branch": "local-mirror",
+  "patterns_evaluated": 24,
+  "min_severity": "MEDIUM",
+  "candidate_count_stage1": 15484,
+  "findings": [
+    {
+      "pattern_id": "1.2",
+      "pattern_name": "std::set / std::map with pointer key, default comparator",
+      "category": "container",
+      "tier": 1,
+      "severity": "HIGH",
+      "severity_default": "HIGH",
+      "file": "ctssch/ctsTimingDrivenTransitionTargets.h",
+      "line": 181,
+      "col": 3,
+      "title": "timingInfo* set comparator lacks strict-weak-order / ID tiebreak; drives tight max-tran sinks",
+      "description_md": "`compareTimInfo` orders `std::set<timingInfo*>` using only fuzzy score compare and `cmpVal <= 0` (not a valid strict weak ordering), with no `getIdLong` / term-id tiebreak. `targetNWorstSinks` (and `identifyTimingCriticalSinks`) iterate this set in comparator order to populate `_tightTransitionSinkPinSet`, which then receives tightened max-transition DRC via `setMaxTransition`. Equal-score sinks therefore compete by unstable set order / UB comparator behavior, changing which pins get tight transition constraints and affecting QoR/area.",
+      "snippet_ctx": "struct compareTimInfo {\n  bool operator()(const timingInfo *lhs, const timingInfo *rhs) const {\n    int cmpVal = nwmathFloat::compare(lhs->getScore(), rhs->getScore(), 0.0001);\n    if (cmpVal <= 0) return true;\n    else return false;\n  }\n};\ntypedef std::set<timingInfo*, compareTimInfo> timingInfoSet;",
+      "realness": "real",
+      "downstream_observability_md": "**Suspect:** `_sinkPinTimingInfoSet` ordered by broken `compareTimInfo`.\n**Path:** `runTDSinkTargetTransitionRecipe` → (optional) `targetNWorstSinks` when `sortByCriticality` (default true) → inserts first N into `_tightTransitionSinkPinSet` → `setMaxTransition(false,false)` applies DRC.\n**Sink:** design constraint mutation (`drcMgr` / max-transition) and subsequent buffering/sizing QoR.\n**Also:** `identifyTimingCriticalSinks` walks the same set for criticality membership.",
+      "controls_md": "Timing-driven sink transition recipe on CTS scheduling path (`runTDSinkTargetTransitionRecipe`). Gated by TD sink-tran options; `sortByCriticality` defaults **true** (`getTDsinkTranOption(\"sortByCriticality\", true)`).",
+      "app_option_defaults_md": "- `sortByCriticality` (TD sink tran): default **true** — enables N-worst selection from the set.\n- Related: `TransRatioMultiplier`, `sortAllNegativeAreaPenalty`, `degradationAverse` (default true).",
+      "regression_setting_md": "Not exhaustively traced in `nwtn/unit` from this local CTS mirror; production default enables the N-worst path.",
+      "performance_note_md": "Add O(1) `getIdLong()` / `compareObjPtr` tiebreak in the comparator. Do not replace the set with a full vector+sort inside the inner sink loop; fixing the comparator is cheapest and preserves logarithmic insert.",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\nstruct compareTimInfo {\n  bool operator()(const timingInfo* a, const timingInfo* b) const {\n    int c = nwmathFloat::compare(a->getScore(), b->getScore(), 0.0001);\n    if (c != 0) return c < 0; // ascending score (worst first)\n    ndmTerm* ta = const_cast<timingInfo*>(a)->getTerm();\n    ndmTerm* tb = const_cast<timingInfo*>(b)->getTerm();\n    return ndmObjectHandleNS::compareObjPtr{}(ta, tb);\n  }\n};\n```"
+        },
+        {
+          "label": "Version B (Robust)",
+          "code_md": "```cpp\n// Keep membership map (already stable):\n// std::map<ndmTerm*, timingInfo*, ndmObjPtrCmpType> _termTimingInfoMap;\n// For N-worst: materialize vector once, stable_sort by score then id, take prefix.\nstd::vector<timingInfo*> ranked(_sinkPinTimingInfoSet.begin(), _sinkPinTimingInfoSet.end());\nstd::stable_sort(ranked.begin(), ranked.end(), /* score then compareObjPtr */);\n```"
+        }
+      ],
+      "rationale_md": "Version A restores a valid strict weak order and deterministic tiebreak with negligible cost. Version B is useful if the set is also used for non-order-sensitive membership and you want ranking isolated to the N-worst boundary.",
+      "false_positive_check_md": "Not membership-only: set iteration selects which sinks receive max-tran. Comparator uses `<= 0` (invalid SWO) and has no identity tiebreak. Neutralizer absent before `setMaxTransition`.",
+      "ownership_md": "- **Depot:** not resolved — local CTS tree; `p4` client/tools unavailable on this host.\n- **Attribution skipped:** Stage 4b requires Perforce annotate/describe."
+    },
+    {
+      "pattern_id": "1.2",
+      "pattern_name": "std::set / std::map with pointer key, default comparator",
+      "category": "container",
+      "tier": 1,
+      "severity": "MEDIUM",
+      "severity_default": "HIGH",
+      "file": "mscts/drivers/msDrivers.cc",
+      "line": 711,
+      "col": 3,
+      "title": "Pointer-ordered std::set<ndmNet*> last-driver return under MLPH multi-net leaf path",
+      "description_md": "`msDriversOptions::_loadNetSet` is allocated as `new std::set<ndmNet*>()` (default address comparator) at ~10309. In `msClockDrivers::findDriverTerm`, when `enableMLPHFlow && loadNetSet->size()>1 && leafLevel`, the function walks nets in pointer order, inserts drivers into a stable `termSetType`, but **returns the last overwritten `l_drvTerm`**. Callers that use the returned term (not only `drvTerms`) for `getAClockOnTerm` / tap configuration can therefore pick different drivers across runs.",
+      "snippet_ctx": "std::set<ndmNet*>* loadNetSet = _msOptions.getLoadNetSet();\nif(_appOptions.enableMLPHFlow && loadNetSet && loadNetSet->size() > 1 && leafLevel) {\n  for(; itrS != itrE; itrS++) {\n    l_drvTerm = (*itrS)->getFirstFlatDriver();\n    if (l_drvTerm) drvTerms.insert(l_drvTerm);\n  }\n}\nreturn l_drvTerm; // last pointer-ordered net's driver",
+      "realness": "real",
+      "downstream_observability_md": "**Suspect:** address-ordered `_loadNetSet` + last-wins return.\n**Callers:** `msAutoTapFlow.cc` (~4477 dummy `drvTerms`, ~5190, ~6194) uses returned `drvTerm` for `getAClockOnTerm`, sink collection, `evaluateTapConfiguration`.\n**Sink:** clock selection and tap topology / QoR under MLPH.\n**Partial neutralizer:** `drvTerms` itself is `termSetType` (`ndmObjPtrCmpType`); defect is specifically the scalar return.",
+      "controls_md": "Requires `enable_mlph_flow` (**default false**, MSUI_BASIC), `_loadNetSet` with >1 net, and `leafLevel==true`.",
+      "app_option_defaults_md": "- `enable_mlph_flow` (`msuiAppOptions`): default **false**, BASIC visibility.\n- Related: `enable_mlph_flow_old` (INTERNAL, default false), `enable_mim_support` forced true when MLPH enabled.",
+      "regression_setting_md": "MLPH/tap flows that set `enable_mlph_flow` true and pass multi-net leaf loads.",
+      "performance_note_md": "Prefer `std::set<ndmNet*, ndmObjPtrCmpType>` (or `ndmPtrSet`) for `_loadNetSet`, and/or return a deterministic pick from `drvTerms` (`*drvTerms.begin()` / `getTopLevelDrvTerm`). Insert cost remains O(log n) with small n (load nets).",
+      "fix_versions": [
+        {
+          "label": "Version A (Simple)",
+          "code_md": "```cpp\n// Allocation site (~10309):\n_loadNetSet = new std::set<ndmNet*, ndmObjPtrCmpType>();\n\n// Return site: prefer stable set, not last iterator\nreturn drvTerms.empty() ? nullptr : *drvTerms.begin();\n```"
+        },
+        {
+          "label": "Version B (Robust)",
+          "code_md": "```cpp\n// Keep collecting into drvTerms, then canonicalize:\nif (!drvTerms.empty())\n  return getTopLevelDrvTerm(drvTerms); // existing hierarchy-aware picker if available\nreturn nullptr;\n```"
+        }
+      ],
+      "rationale_md": "Version A fixes both container order and return selection with project idioms already used for `termSetType`. Severity MEDIUM because the path is gated by `enable_mlph_flow` defaulting false.",
+      "false_positive_check_md": "Confirmed default `std::set<ndmNet*>` allocation; MLPH branch iterates and returns last driver; production callers consume return for clock/tap decisions. Not membership-only.",
+      "ownership_md": "- **Depot:** not resolved — local CTS tree; `p4` unavailable.\n- **Attribution skipped:** Stage 4b requires Perforce."
+    }
+  ],
+  "dismissed_buckets": [
+    {
+      "pattern_id": "1.1",
+      "bucket_label": "Two-arg std::sort on numeric/ID/tuple types (not pointer vectors)",
+      "count": 401,
+      "rationale_md": "Of ~401 production 1.1 hits, ~312 already pass a custom comparator; remaining ~83 two-arg sorts are predominantly float/int/ID/tuple containers (pathDelays, coefficients, msg ids, grid coords). Zero confirmed pointer-vector sorts without comparator promoted."
+    },
+    {
+      "pattern_id": "1.2",
+      "bucket_label": "Pointer set/map membership-only or already ndmObjPtrCmpType",
+      "count": 2900,
+      "rationale_md": "~2450 hits already show stable comparators; remaining suspects are mostly find/insert/count, boolean membership loops, or typedefs like `termSetType`. Examples: splitStateDrivers, NodeList, _processedGroups, marked_insts."
+    },
+    {
+      "pattern_id": "1.3",
+      "bucket_label": "Pointer unordered_* lookup/visited or post-sort neutralized",
+      "count": 530,
+      "rationale_md": "Caches/visited sets and maps; or vectorize+`sort(compareObjPtr)` before observable use (e.g. soLogicCone LUT). soClockGateOpt fromToMap iteration is report-order only → severity LOW (excluded by HIGH/MEDIUM floor)."
+    },
+    {
+      "pattern_id": "1.4",
+      "bucket_label": "Pointer hash functors used as membership/lookup caches",
+      "count": 16,
+      "rationale_md": "soLogicCone caches, ctscstrDesign concurrent_hash_map, ctoscFilter module cost cache: find/insert only. sclkCornerHash LoadPartition iteration is commutative weighted average — not promoted."
+    },
+    {
+      "pattern_id": "1.5",
+      "bucket_label": "Random/seed sites are test-only or fixed-seed deterministic",
+      "count": 23,
+      "rationale_md": "`srand(time(NULL))` only in DisjointSet test drivers. Production `ccdcgSolver::srand(100)` and default `mt19937` in msClustering are fixed-seed (not equivalent-run ND). `*RandomTest.cc` harnesses only."
+    },
+    {
+      "pattern_id": "2.1",
+      "bucket_label": "Time-based seeds only in test/dead paths",
+      "count": 2,
+      "rationale_md": "skewgrp DisjointSet test mains only."
+    },
+    {
+      "pattern_id": "2.2",
+      "bucket_label": "getFullName used as deterministic tiebreak / diagnostics",
+      "count": 100,
+      "rationale_md": "Glanced hot sites; name used as stable string order tiebreak or reporting, not unstable algorithm map keys on QoR path."
+    },
+    {
+      "pattern_id": "3.x/4.x",
+      "bucket_label": "Tier-2 vicinity / concurrency seeds not promoted without MT proof",
+      "count": 11000,
+      "rationale_md": "Patterns 3.2–3.7 and 4.1–4.4 dominate Stage-1 volume as vicinity/seed hits. After narrowing + spot checks (dosMap thread-safe cache comment; mutable _leafCount without proven concurrent const readers), none elevated to HIGH/MEDIUM real for this report."
+    }
+  ],
+  "module_specific_summary_md": "CTS already adopts `ndmObjPtrCmpType` / `termSetType` widely, which neutralized the majority of pointer-container scanner hits. The remaining HIGH issue is a broken score-only set comparator on the timing-driven sink max-tran recipe; the MEDIUM issue is MLPH-gated last-driver selection from an address-ordered net set. Random/time seeds and most unordered maps are test-only, fixed-seed, or membership-only.",
+  "fix_recipes_excerpt_md": "Prefer `ndmPtrMap` / `ndmObjPtrCmpType` / `ndmObjectHandleNS::compareObjPtr` over raw `std::less<T*>`. For ranking, use strict `<` on the metric then stable ID tiebreak. Canonicalize unordered iteration at the smallest observable boundary (before mutation/report), not by converting every hot lookup map to `std::map`."
+}
