@@ -86,7 +86,6 @@ Record and verify:
 - Model is pinned or otherwise verifiably controlled; do not use ambiguous Auto routing for a measured run
 - Subagent/orchestration settings are documented
 - Workspace is clean and does not contain prior ND reports, candidate files, benchmark artifacts, or held-out defect locations
-- Disk capacity is sufficient
 - Runtime/token telemetry is available and understood
 - Start/end timestamps can be captured
 
@@ -111,7 +110,7 @@ The exact client/harness-specific installation location should be confirmed duri
 3. Confirm the client can connect successfully.
 4. Confirm the intended CTS CoreStory project/workspace is visible.
 5. Execute a lightweight MCP validation call, such as listing available projects or retrieving project metadata, before the measured run.
-6. Record the MCP endpoint/configuration used, while keeping credentials/tokens out of the repository and test artifacts.
+6. Record the MCP endpoint/configuration used.
 
 Do not begin Arm B if MCP connectivity is intermittent or authentication is unresolved.
 
@@ -219,7 +218,6 @@ A run should be flagged as non-authoritative for the primary A/B comparison if a
 - Prior benchmark artifacts or held-out known defects influence discovery/qualification
 - CoreStory connectivity fails materially during Arm B
 - Significant human intervention changes the workflow
-- A major environment failure such as disk exhaustion occurs
 
 The artifact can still be retained as diagnostic evidence, but it should not be used for precise A/B claims.
 
@@ -271,5 +269,3 @@ results/
 ├── arm-a-standalone/
 └── arm-b-corestory-v3/
 ```
-
-Do not place credentials, bearer tokens, OAuth secrets, or other authentication material in this repository.
