@@ -1,0 +1,84 @@
+{
+  "module_path": "C:\\Users\\carys\\cts",
+  "module_slug": "cts",
+  "search_backend": "rg",
+  "branch": "local",
+  "patterns_evaluated": 27,
+  "findings": [],
+  "dismissed_buckets": [
+    {
+      "pattern_id": "2.1",
+      "bucket_label": "fmaxLpSolver::selectActiveVariableSubset UNIFORM RNG — dead/unused",
+      "count": 1,
+      "rationale_md": "Site `ccd/ctsccd/fmax/fmaxLpSolver.cc:3892` uses `std::random_device` under `UNIFORM`, but the only call site (`fmaxLpSolver.cc:146–147`) is fully commented out. No other callers in the tree. Classified **dead/unused**, not HIGH."
+    },
+    {
+      "pattern_id": "1.2",
+      "bucket_label": "ctoFlowClone.cc pointer set restructFlow — not in build",
+      "count": 1,
+      "rationale_md": "`ctscto/ctoFlowClone.cc` has `std::set<ndmTerm*>` iterated into mutating clone/shield, but `ctscto/Master.make` does **not** list `ctoFlowClone.cc`. Production `flowPreOptRestruct` / `restructFlow` live in `ctoRestruct.cc` and use `termSetType` (= `std::set<ndmTerm*, ndmObjPtrCmpType>` via `TYPEDEF_CONTAINER_1` in `ctsTypes.h`). Classified **dead/unused** + production path **safe-adopter**."
+    },
+    {
+      "pattern_id": "3.1",
+      "bucket_label": "fmax TimingCostFunction parallel TNS fold — config sensitivity only",
+      "count": 1,
+      "rationale_md": "`fmaxTimingCostFunction.h` partitions by `calculateRanges` then folds `resultsPerThreadTNS[threadIndex]` in index order. For fixed `maxThreads()` this is equivalent-run stable. Varying thread count can change FP association — **configuration/platform sensitivity**, not equivalent-run ND. Not promoted."
+    },
+    {
+      "pattern_id": "3.5",
+      "bucket_label": "ctoGrpLatCalc hardware_concurrency grain — no result sink",
+      "count": 1,
+      "rationale_md": "`ctoGrpLatCalc.cc:80–87` sizes TBB grain from `std::thread::hardware_concurrency()`, but writes `grpLat[i]` are disjoint per index. Grain affects schedule/perf, not computed values. Classified **false-positive** for result ND."
+    },
+    {
+      "pattern_id": "1.5",
+      "bucket_label": "msClustering default mt19937 — deterministic across equivalent runs",
+      "count": 1,
+      "rationale_md": "`mscts/mstap/msClustering.h` holds `boost::random::mt19937 _rand` used by `kMeansPPSeeding` (tap path). Default-constructed engine is fixed-seed deterministic; fresh `SinkGeoClustering` objects → same sequence across equivalent runs. Seed is not input-derived (hygiene note only). Not promoted as equivalent-run ND."
+    },
+    {
+      "pattern_id": "3.2",
+      "bucket_label": "runSccIteration parallel_reduce early-exit — associative bool OR/AND",
+      "count": 2,
+      "rationale_md": "`ctomtGlsProblemGenerator.h` `runSccIteration` uses `tbb::parallel_reduce` with `globalDone` early exit. Bodies evaluated for GLS eligibility reduce with `reduceOr`/`reduceAnd` over booleans. Final boolean is associative; log string order may vary (debug-only). No promoted QoR mutation from completion order."
+    },
+    {
+      "pattern_id": "1.2",
+      "bucket_label": "Pointer std::set membership / visited / stable-cmp adopters",
+      "count": 100,
+      "rationale_md": "Large Stage-1 surface of `std::set<ndmTerm*>` used only for `find`/`insert` (visited), or already using `ndmObjPtrCmpType` / `compareObjPtr` / `termSetType` / `dosSet` / `ndmPtrMap`. Pattern 1.2 narrowing + Stage-2 triage."
+    },
+    {
+      "pattern_id": "1.3",
+      "bucket_label": "unordered_* pointer containers used as membership or membership-only sinks",
+      "count": 40,
+      "rationale_md": "Examples: `soSolverUpdater::setFixedVars` builds `unordered_set<ndmTerm*>` then `deriveOffsetLimits` only `find`s; `backPropagateCUSLimit` membership-only. No order-sensitive mutation consumer promoted."
+    },
+    {
+      "pattern_id": "1.1",
+      "bucket_label": "std::sort on value types / custom operator<",
+      "count": 50,
+      "rationale_md": "Two-arg sorts on floats, pairs, ints, or structs with deterministic `operator<`. Not address sorts."
+    },
+    {
+      "pattern_id": "3.7",
+      "bucket_label": "Project wrappers already deterministic",
+      "count": 20,
+      "rationale_md": "`ndmPtrMap` / `ndmPtrSet` / `dosSet` / `fillTermToTermBagMapInVec` (explicit Coverity POINTER_NONDETERMINISM canonicalization in `ctoFlowMgr.cc`) — safe adopters."
+    },
+    {
+      "pattern_id": "1.5",
+      "bucket_label": "Test / debug RNG (srand(time), random test harnesses)",
+      "count": 5,
+      "rationale_md": "`skewgrp/ctsSkewgroup.cc`, `ctsDStest.cc` time seeds; `ctsui/*RandomTest*` harnesses. Not production QoR paths. `ccdcgSolver::seedAndPruneCands` uses `srand(100)` — fixed seed, deterministic."
+    },
+    {
+      "pattern_id": "4.x",
+      "bucket_label": "Static MT lazy-cache candidates — latent / MT-unreachable",
+      "count": 4,
+      "rationale_md": "Prior MT discovery (`cts_nd_details.md`, `nd_mt_candidates_discovery.md`): `_termValidSclkCache`, `_collectSclkCache`, concurrent check-then-act on GLS shared SCC cache — **latent-only** or **MT-unreachable** on audited call graphs; not elevated without TSan/prove-nd-mt."
+    }
+  ],
+  "module_specific_summary_md": "CTS is largely ND-aware on production QoR paths (`termSetType` with `ndmObjPtrCmpType`, `fillTermToTermBagMapInVec` canonicalization, TBB aggregate-then-sort in lazy TNS). After correcting false promotions from an earlier draft report, **no HIGH or MEDIUM equivalent-run ND defects** were confirmed in this pass.",
+  "fix_recipes_excerpt_md": "Prefer `ndmObjPtrCmpType` / `ndmPtrMap` for pointer keys; seed RNG from design checksum or app option; canonicalize once before first order-sensitive consumer; align MT grain with `getMaxThreadCount()`."
+}
