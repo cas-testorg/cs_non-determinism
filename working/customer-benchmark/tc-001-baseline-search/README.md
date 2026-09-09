@@ -1,12 +1,20 @@
 # TC-001 — Baseline ND Search (No CoreStory)
 
+## Status
+
+**Pilot run completed — retain for diagnostic/directional evidence, but do not use as the authoritative baseline for the final A/B comparison.**
+
+TC-001 exposed several environmental and telemetry limitations that make its quantitative results unsuitable for a controlled apples-to-apples benchmark. The artifacts are intentionally preserved because they provide useful evidence about the workflow, token economics, model-attribution challenges, and controls required for subsequent testing.
+
+A clean control rerun is defined separately as **TC-001A**.
+
 ## Purpose
 
 Establish the baseline discovery result for the controlled Synopsys nondeterminism comparison before CoreStory is introduced.
 
-This run uses the Synopsys-authored `nd-code-analyzer` workflow as-is and must not expose the held-out TSan/Coverity ground-truth data to the agent.
+This run uses the Synopsys-authored `nd-code-analyzer` workflow and must not expose the held-out TSan/Coverity ground-truth data to the agent.
 
-The matching CoreStory run will repeat this test with the same source scope, prompt, model, and session controls. The intended experimental variable is CoreStory MCP + the CoreStory governing rule.
+The matching CoreStory run will repeat the test with the same source scope, prompt, model selection, and session controls. The intended experimental variable is CoreStory MCP + the CoreStory governing rule.
 
 ## Test arm
 
@@ -17,7 +25,7 @@ The matching CoreStory run will repeat this test with the same source scope, pro
 - Synopsys skills: enabled and unmodified
 - Ground truth: hidden
 - Sub-agent delegation: disabled for this controlled run
-- Model selection: pinned; never `auto`
+- Model selection: intended to be pinned; never intentionally `auto`
 
 ## Skill under test
 
@@ -27,47 +35,44 @@ Primary skill:
 /nd-code-analyzer
 ```
 
-The skill performs mechanical candidate discovery followed by triage/deeper confirmation and false-positive filtering. Do not replace or rewrite the customer's workflow.
+The intended workflow is mechanical candidate discovery followed by triage/deeper confirmation and false-positive filtering. Do not intentionally replace or rewrite the customer's workflow.
 
 ## Source scope
-
-Set the exact source scope before execution and keep it identical for the CoreStory arm.
 
 ```text
 CTS_SCOPE=C:\Users\carys\cts
 CODE_COMMIT_OR_VIEW=NA
 ```
 
-Choose a scope small enough to complete in a practical test window without triggering broad sub-agent fan-out, while still being representative of CTS C++ code.
-
-Do not select or narrow the scope based on the held-out TSan/Coverity locations.
+Do not select or narrow the scope based on held-out TSan/Coverity locations.
 
 ## Model
 
-Search/discovery model:
+Intended search/discovery model:
 
 ```text
-Claude Opus 4.8 — High
+Claude Opus 4.8
 ```
 
-If the exact label in Cursor differs, record the exact displayed model/version below before starting.
+Cursor displayed Claude Opus 4.8 as the selected model for the run. However, the corresponding Cursor Usage telemetry recorded the large benchmark events as `auto`. The exported conversation JSONL does not independently identify the underlying model for each assistant turn. Therefore model attribution for TC-001 is **unresolved** and the run must not be represented as a verified Claude Opus 4.8 execution.
 
 ```text
-ACTUAL_MODEL=Claude Opus 4.8.
-THINKING_MODE=Name does not indicate thinking mode.  Model name above is exactly how it is displayed in Cursor. 
+UI_SELECTED_MODEL=Claude Opus 4.8
+CURSOR_USAGE_RECORDED_MODEL=auto
+VERIFIED_EXECUTION_MODEL=UNKNOWN
 ```
 
 ## Run record
 
-Record the execution boundary in UTC. Start time should be captured immediately before submitting the test prompt; end time should be captured when the agent has completed the requested analysis/report.
-
 ```text
-START_TIME_UTC=Wednesday, September 9, 2026 11:00:40 AM
-END_TIME_UTC=Wednesday, September 9, 2026 11:06:42 AM
-WALL_CLOCK_RUNTIME=
+START_TIME_UTC=2026-09-09T16:00:40Z
+END_TIME_UTC=2026-09-09T16:06:42Z
+WALL_CLOCK_RUNTIME=NOT_VALID_FOR_COMPARISON
 ```
 
-Cursor Request Traces must be enabled at `Trace` level before the run so request/composer identifiers and timestamps can be correlated with Cursor Usage telemetry afterward.
+The nominal execution boundary above is retained from the run record, but wall-clock runtime should not be used for comparison because disk exhaustion interrupted report persistence and required subsequent human intervention.
+
+Cursor Request Traces were intended to be enabled at `Trace` level for correlation with Cursor Usage telemetry.
 
 ```text
 REQUEST_TRACE_LOG_LEVEL=Trace
@@ -75,109 +80,91 @@ REQUEST_TRACE_LOG_LEVEL=Trace
 
 ## Prompt
 
-Use `prompt.md` exactly as written after replacing only `<CTS_SCOPE>` with the agreed source scope.
-
-Do not add hints from TSan, Coverity, prior CoreStory runs, prior discovery sessions, or known defect locations.
-
-## Session controls
-
-Before execution:
-
-1. Start from a fresh Cursor conversation/session.
-2. Confirm the intended CTS workspace/code view is open.
-3. Confirm `nd-code-analyzer` is available.
-4. Confirm CoreStory MCP is disabled or unavailable to this session.
-5. Confirm the CoreStory-specific `code-analysis-v2.mdc` rule is not active.
-6. Confirm the model is pinned to Opus 4.8 High and not `auto`.
-7. Confirm the held-out ground-truth CSV/files are not present in the workspace or conversation context.
-8. Confirm Cursor Request Traces are enabled and the log level is set to `Trace`.
-9. Record `START_TIME_UTC` immediately before submitting the prompt.
-
-## Execute
-
-Run the prompt in `prompt.md` once.
-
-Do not interactively steer the analysis unless the agent requires a strictly environmental clarification such as resolving the local source path. Record any such intervention because it is a test deviation.
-
-When the requested analysis/report is complete, record `END_TIME_UTC` and calculate `WALL_CLOCK_RUNTIME`.
-
-## Required output
-
-Preserve the complete final ND report/candidate output from `nd-code-analyzer`.
-
-At minimum, the result should retain the customer's normal classification/evidence fields needed to distinguish elevated findings from non-real candidates and false positives.
-
-Store run artifacts under this directory using the following shape:
+The discovery prompt was:
 
 ```text
-results/
-  cursor-transcript.md
-  nd-report.md
-  cursor-output.log
-  usage-events.csv
-  run-metadata.md
+/nd-code-analyzer scan C:\Users\carys\cts for non-determinism, only HIGH and MEDIUM issues, and generate a shareable markdown report
 ```
 
-If Cursor or the skill generates `candidates.json` / `findings.json`, preserve them as well.
+No TSan/Coverity defect locations were intentionally supplied to the discovery prompt.
 
-## Metrics to capture
+## Observed result
 
-Record the following without interpreting the ground truth yet:
+The run produced a shareable report with four elevated findings:
 
-- UTC start time
-- UTC end time
-- Wall-clock runtime
-- Exact model/version
-- Source scope and code commit/view
-- Candidate count before deeper filtering, if available
-- Final/elevated finding count
-- Non-real / dismissed classification count, if available
-- Local repository/tool calls, when recoverable from transcript/log
-- Fresh input tokens
-- Cache-read tokens
-- Output tokens
-- Total tokens
-- Any failed tool calls or retries
-- Any human intervention
+- 2 HIGH
+- 2 MEDIUM
 
-Token data may be correlated after the run from Cursor Usage CSV + Cursor `output.log`; lack of direct in-session token counters is not a test failure.
+The findings covered RNG behavior, pointer-container ordering, parallel floating-point accumulation, and hardware-concurrency-dependent behavior.
 
-## Blind-test rule
+These findings remain useful as preliminary discovery output. Ground-truth scoring is intentionally deferred until the appropriate comparison phase.
 
-The TSan and Coverity reference findings are scoring artifacts only.
+## Known limitations / deviations
 
-They must not be used to:
+### 1. Disk exhaustion interrupted the run
 
-- seed the prompt,
-- choose candidate locations,
-- steer discovery,
-- confirm/reject findings during this phase,
-- or select files for deeper analysis.
+The `C:` drive exhausted available space while Cursor attempted to persist the report. Cursor reported that the file could not be saved reliably. Disk space was then cleared and a follow-up user message requested that the report be written to file.
 
-Ground-truth comparison happens only after both baseline and CoreStory discovery/verification arms are complete.
+Impact:
 
-## Pass criteria
+- the run was not uninterrupted,
+- human intervention occurred,
+- end-to-end runtime is not representative,
+- report-writing behavior cannot be compared cleanly with another arm.
 
-TC-001 passes as an experimental run when:
+### 2. Intended skill scripts were unavailable
 
-- the run completes using the pinned model,
-- Synopsys `nd-code-analyzer` is used without modification,
-- CoreStory is not available to the agent,
-- ground truth remains hidden,
-- the exact prompt/scope are recorded,
-- the discovery output is preserved,
-- runtime and available token telemetry are captured,
-- and no material prompt/scope steering occurs during the run.
+During execution Cursor attempted to locate `scan_nd.py` and `render_report.py`, reported that they were not present in the installed skill tree, and substituted a manual workflow using repository search/ripgrep plus manual Stage 2–3 triage.
 
-A low finding count or zero findings is still a valid experimental result and is not itself a test failure.
+Impact:
 
-## Matching CoreStory arm
+- the run did not execute the intended scripted workflow exactly as expected,
+- the substitution must be held constant in any immediate directional comparison unless the environment is corrected before both arms,
+- the authoritative customer-run benchmark should validate that the intended skill package and dependencies are installed consistently.
 
-The later CoreStory discovery test must duplicate this run except for:
+### 3. Model attribution is unresolved
+
+The Cursor UI was configured for Claude Opus 4.8, but Cursor Usage telemetry labeled the associated large requests as `auto`.
+
+Impact:
+
+- the actual underlying model cannot be proven from the preserved artifacts,
+- precise model-specific token/cost attribution is not defensible,
+- subsequent tests must record both the UI-selected model and the model reported by authoritative telemetry.
+
+### 4. Token data is diagnostic, not a final benchmark result
+
+The two large Cursor Usage events associated with the benchmark session were approximately 2.98M and 710K total tokens, or approximately 3.69M combined. Much of that usage was cache-read context.
+
+Impact:
+
+- TC-001 demonstrates that repository-scale agentic discovery can involve substantial context/token consumption,
+- these numbers are useful for understanding token economics,
+- they must not be presented as the authoritative baseline for a CoreStory percentage-reduction claim because of the run deviations and unresolved model attribution.
+
+### 5. Cursor output log artifact is empty
+
+The preserved `tc-001-baseline-search-cursor.log` is zero bytes. The conversation JSONL and Usage CSV remain available for diagnostic analysis, but the expected log artifact cannot be used for request-level correlation.
+
+## Artifact retention
+
+Preserve all TC-001 artifacts. Do not overwrite this run with the clean rerun.
+
+The pilot remains useful for:
+
+- demonstrating environmental constraints encountered during testing,
+- understanding Cursor's local repository investigation behavior,
+- illustrating token economics,
+- investigating Cursor model-selection/telemetry behavior,
+- and defining the controls required for the Synopsys-owned apples-to-apples benchmark.
+
+## Disposition
 
 ```text
-CoreStory MCP: enabled
-CoreStory governing rule: enabled
+RUN_CLASSIFICATION=PILOT_WITH_LIMITATIONS
+VALID_FOR_FINAL_A_B_METRICS=NO
+VALID_FOR_DIRECTIONAL_ANALYSIS=YES
+GROUND_TRUTH_EXPOSED=NO
 ```
 
-Everything else — prompt, source scope, model, thinking mode, workspace/code version, and blind-ground-truth controls — should remain the same.
+The next baseline run is **TC-001A — Clean Baseline Control Rerun**. The matching CoreStory discovery run should use the same environment and controls as TC-001A, changing only CoreStory MCP + the CoreStory governing rule.
