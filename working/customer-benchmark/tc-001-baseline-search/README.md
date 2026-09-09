@@ -57,6 +57,22 @@ ACTUAL_MODEL=Claude Opus 4.8.
 THINKING_MODE=Name does not indicate thinking mode.  Model name above is exactly how it is displayed in Cursor. 
 ```
 
+## Run record
+
+Record the execution boundary in UTC. Start time should be captured immediately before submitting the test prompt; end time should be captured when the agent has completed the requested analysis/report.
+
+```text
+START_TIME_UTC=
+END_TIME_UTC=
+WALL_CLOCK_RUNTIME=
+```
+
+Cursor Request Traces must be enabled at `Trace` level before the run so request/composer identifiers and timestamps can be correlated with Cursor Usage telemetry afterward.
+
+```text
+REQUEST_TRACE_LOG_LEVEL=Trace
+```
+
 ## Prompt
 
 Use `prompt.md` exactly as written after replacing only `<CTS_SCOPE>` with the agreed source scope.
@@ -74,13 +90,16 @@ Before execution:
 5. Confirm the CoreStory-specific `code-analysis-v2.mdc` rule is not active.
 6. Confirm the model is pinned to Opus 4.8 High and not `auto`.
 7. Confirm the held-out ground-truth CSV/files are not present in the workspace or conversation context.
-8. Record the start time in UTC.
+8. Confirm Cursor Request Traces are enabled and the log level is set to `Trace`.
+9. Record `START_TIME_UTC` immediately before submitting the prompt.
 
 ## Execute
 
 Run the prompt in `prompt.md` once.
 
 Do not interactively steer the analysis unless the agent requires a strictly environmental clarification such as resolving the local source path. Record any such intervention because it is a test deviation.
+
+When the requested analysis/report is complete, record `END_TIME_UTC` and calculate `WALL_CLOCK_RUNTIME`.
 
 ## Required output
 
