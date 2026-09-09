@@ -63,7 +63,7 @@ Record the execution boundary in UTC. Start time should be captured immediately 
 
 ```text
 START_TIME_UTC=Wednesday, September 9, 2026 11:00:40 AM
-END_TIME_UTC=
+END_TIME_UTC=Wednesday, September 9, 2026 11:06:42 AM
 WALL_CLOCK_RUNTIME=
 ```
 
