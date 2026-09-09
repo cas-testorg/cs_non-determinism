@@ -62,7 +62,7 @@ THINKING_MODE=Name does not indicate thinking mode.  Model name above is exactly
 Record the execution boundary in UTC. Start time should be captured immediately before submitting the test prompt; end time should be captured when the agent has completed the requested analysis/report.
 
 ```text
-START_TIME_UTC=
+START_TIME_UTC=Wednesday, September 9, 2026 11:00:40 AM
 END_TIME_UTC=
 WALL_CLOCK_RUNTIME=
 ```
