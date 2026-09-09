@@ -1,0 +1,314 @@
+---
+description: CoreStory-assisted C/C++ nondeterminism, concurrency, and undefined-behavior investigation with evidence-backed findings.
+alwaysApply: true
+---
+
+# CoreStory Code Analysis
+
+Use CoreStory as the primary source of application intelligence when investigating C/C++ nondeterminism, concurrency defects, undefined behavior, object-lifetime issues, and related correctness risks.
+
+Use CoreStory to establish application-wide context, then inspect targeted source code to validate the specific mechanism.
+
+## Objective
+
+Investigate behavior that may cause:
+
+- Different results across equivalent executions
+- Schedule- or order-dependent application behavior
+- Uninitialized or indeterminate values influencing execution
+- Undefined behavior that may manifest differently across runs, builds, or platforms
+- Object-lifetime and synchronization defects
+- Platform-, compiler-, library-, or runtime-dependent behavior that may alter observable application results
+
+A suspicious construct is not necessarily a defect.
+
+Undefined behavior is not necessarily nondeterminism.
+
+For a nondeterminism finding, identify both:
+
+1. What can vary across equivalent executions.
+2. How that variability can propagate to an observable application result.
+
+## Analysis Workflow
+
+When handling an applicable request:
+
+1. Understand the user's investigation objective and preserve that objective when querying CoreStory.
+
+2. Query CoreStory for application intelligence relevant to the requested defect mechanism.
+
+3. Use the returned intelligence to narrow the investigation to relevant:
+   - Components
+   - Files
+   - Classes
+   - Functions
+   - Call paths
+   - Dependencies
+   - Shared state
+   - Data structures
+   - Integration boundaries
+   - Execution paths
+
+4. Inspect the targeted source code needed to establish or reject the suspected mechanism.
+
+5. Trace relationships across files and components when the issue cannot be established from an isolated source location.
+
+6. Distinguish between:
+   - Directly observed source evidence
+   - Strongly supported conclusions
+   - Inferences or hypotheses requiring additional validation
+
+7. Identify mitigation, guarding, ordering, ownership, synchronization, or normalization mechanisms that may prevent a suspicious construct from becoming an active defect.
+
+8. If the available evidence is insufficient, state what additional source, build, runtime, environment, or human evidence is required rather than elevating the candidate.
+
+## Investigation Patterns
+
+### Uninitialized and Undefined State
+
+Investigate patterns such as:
+
+- Local variables assigned only on some control paths
+- Object members read before constructor or initialization logic establishes a valid value
+- Pointers dereferenced before a valid object is established
+- Buffers or structures partially initialized before use
+- Indeterminate state affecting a branch, index, size, pointer, calculation, or downstream decision
+- Sentinel or optional-state values consumed without the corresponding validity guard
+
+Trace:
+
+**initialization or missing initialization**
+→ **control path**
+→ **read or use**
+→ **downstream consumer**
+→ **observable impact**
+
+Distinguish true C/C++ undefined behavior from intentional sentinel or optional-state representations.
+
+### Concurrency and Shared State
+
+Investigate patterns such as:
+
+- Multiple threads or tasks accessing the same mutable object
+- Unsynchronized global or static state
+- Shared containers
+- Lazy initialization
+- Shared caches
+- Non-thread-safe functions called concurrently
+- Object lifetime overlapping parallel work
+- Concurrent reads and writes
+- Parallel result merging
+
+Trace:
+
+**thread or task entry**
+→ **shared object or state**
+→ **conflicting operation**
+→ **synchronization or lack of synchronization**
+→ **downstream result**
+
+Do not claim a race merely because code executes in parallel. Establish the shared state, conflicting operations, and relevant synchronization behavior.
+
+### Order-Dependent Behavior
+
+Investigate patterns such as:
+
+- Pointer-address ordering or hashing
+- Unstable container traversal
+- Traversal of unordered containers where traversal order affects downstream state
+- Floating-point accumulation or reduction
+- First-result-wins or first-completed-wins behavior
+- Opportunistic search
+- Parallel result merging
+- Schedule-dependent early termination
+
+Trace:
+
+**variable ordering or completion order**
+→ **order-sensitive operation**
+→ **different downstream state or calculation**
+→ **observable application result**
+
+Examples of suspicious constructs include pointer-ordered containers, unordered traversal, parallel reductions, and first-winner selection.
+
+Do not elevate an order-sensitive operation to nondeterminism unless the source establishes that the relevant order can actually vary.
+
+### Randomness and Runtime State
+
+Investigate patterns such as:
+
+- PRNGs seeded from current time
+- `std::random_device`
+- Process- or object-identity-derived seeds
+- Default or implicit seeds
+- Wall-clock time
+- Performance counters
+- Timeouts
+- Runtime environment state
+
+Trace:
+
+**runtime-dependent source**
+→ **consumer**
+→ **decision or calculation**
+→ **observable result**
+
+Establish whether the runtime-dependent value reaches production application behavior or only tests, diagnostics, or unused code.
+
+### Platform, Compiler, and External Dependencies
+
+Investigate patterns such as:
+
+- Floating-point implementation differences
+- Fused multiply-add behavior
+- Compiler optimization differences
+- Architecture-specific behavior
+- Platform-specific APIs
+- Third-party solver backends
+- External library versions
+- Library threading models
+- Runtime configuration
+
+Distinguish:
+
+- Equivalent-run nondeterminism
+- Build sensitivity
+- Platform sensitivity
+- Version sensitivity
+- Configuration sensitivity
+
+Do not classify a difference between builds, platforms, versions, or configurations as equivalent-run nondeterminism unless the same execution conditions can still produce varying results.
+
+## Undefined Behavior
+
+When relevant, investigate C/C++ undefined behavior including:
+
+- Uninitialized or indeterminate reads
+- Invalid pointer dereferences
+- Use-after-free
+- Invalid object lifetime
+- Out-of-bounds access
+- Data races
+- Invalid synchronization
+- Signed integer overflow where applicable
+
+For each candidate, distinguish among:
+
+1. **Undefined behavior established** — source evidence is sufficient to show the language or memory-safety violation.
+2. **Nondeterministic manifestation established** — the undefined behavior is also shown to produce variable observable application behavior across equivalent executions.
+3. **Nondeterministic manifestation plausible** — UB is established or strongly supported, but the varying application manifestation requires additional evidence.
+
+Do not treat all undefined behavior as proven nondeterminism.
+
+## Relevant Defect Patterns
+
+When applicable, investigate code patterns associated with these defect classes.
+
+### Coverity
+
+- `UNINIT`
+- `UNINIT_CTOR`
+- `POINTER_NONDETERMINISM`
+
+### ThreadSanitizer
+
+- `DATA RACE`
+- `HEAP USE AFTER FREE`
+- `THREAD LEAK`
+- `UNLOCK OF AN UNLOCKED MUTEX`
+
+These names are investigation patterns, not proof that the corresponding defect exists.
+
+## Causal Evidence Requirement
+
+A suspicious construct alone is insufficient.
+
+For significant findings, establish the strongest causal chain supported by the available evidence:
+
+**source of instability or invalid behavior**
+→ **operation using that state**
+→ **application execution path**
+→ **downstream state, decision, or calculation**
+→ **observable result**
+
+For nondeterminism specifically, identify what can vary across equivalent runs.
+
+Examples:
+
+- A floating-point sum is order-sensitive, but it is not nondeterministic unless the accumulation order can vary.
+- Parallel execution is not nondeterministic unless scheduling or completion order can change observable application behavior.
+- An unordered container is not sufficient by itself; show that iteration order can affect downstream state or output.
+- A raw pointer is not a use-after-free; establish destruction followed by a reachable stale access.
+- A sentinel value is not an uninitialized read; establish whether it is intentionally valid state and whether required guards are present.
+
+## Evidence Requirements
+
+For each elevated finding, provide:
+
+- Relevant file or files
+- Function, method, class, or symbol
+- Relevant source location when available
+- Application relationship or execution path
+- Specific behavior creating the concern
+- Source of variability, invalid state, or undefined behavior
+- Supporting CoreStory application intelligence
+- Supporting source-code evidence
+- Downstream consumer or observable impact
+- Mitigating or guarding mechanism, if present
+- Confidence in the finding
+- Missing evidence or additional validation required
+
+Prefer a smaller number of well-supported findings over a large number of speculative findings.
+
+## CoreStory Tool Usage
+
+When querying CoreStory:
+
+- Preserve the user's overall investigation goal.
+- Describe the defect mechanism being investigated, not merely a generic code-search request.
+- Ask for application relationships, execution context, call paths, shared state, ownership, and downstream consumers where relevant.
+- Use CoreStory to narrow the application-wide investigation before inspecting targeted source.
+- Refine the CoreStory query when the first response does not provide sufficient causal context.
+
+Do not bypass CoreStory simply because the repository is locally available.
+
+Local source inspection complements CoreStory; it does not replace application-level intelligence when that intelligence is relevant.
+
+## Runtime and Human Validation
+
+Static source analysis may establish a defect mechanism without proving its runtime manifestation.
+
+Identify when additional validation is appropriate, including:
+
+- ThreadSanitizer
+- Coverity
+- AddressSanitizer
+- UndefinedBehaviorSanitizer
+- Compiler or assembly inspection
+- Targeted instrumentation
+- Repeated execution with identical inputs
+- Controlled thread-count variation
+- Controlled PRNG seed variation
+- Build-flag comparison
+- Platform comparison
+- Dependency-version comparison
+- Focused engineering review
+
+Do not present hypotheses as confirmed runtime defects.
+
+## Expected Final Answer
+
+For applicable requests, the final analysis should make clear:
+
+- What was discovered
+- What application context supports the finding
+- Which source locations are relevant
+- The defect or nondeterminism mechanism
+- What can vary, when applicable
+- The downstream application impact
+- Any mitigation or determinism-restoring mechanism
+- Confidence in the finding
+- Missing evidence
+- Recommended next validation step
+
+Do not manufacture findings or elevate plausible risks beyond the available evidence.
