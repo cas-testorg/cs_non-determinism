@@ -34,8 +34,8 @@ The skill performs mechanical candidate discovery followed by triage/deeper conf
 Set the exact source scope before execution and keep it identical for the CoreStory arm.
 
 ```text
-CTS_SCOPE=<fill in exact local path/module>
-CODE_COMMIT_OR_VIEW=<fill in>
+CTS_SCOPE=C:\Users\carys\cts
+CODE_COMMIT_OR_VIEW=NA
 ```
 
 Choose a scope small enough to complete in a practical test window without triggering broad sub-agent fan-out, while still being representative of CTS C++ code.
@@ -53,8 +53,8 @@ Claude Opus 4.8 — High
 If the exact label in Cursor differs, record the exact displayed model/version below before starting.
 
 ```text
-ACTUAL_MODEL=<fill in>
-THINKING_MODE=High
+ACTUAL_MODEL=Claude Opus 4.8.
+THINKING_MODE=Name does not indicate thinking mode.  Model name above is exactly how it is displayed in Cursor. 
 ```
 
 ## Prompt
