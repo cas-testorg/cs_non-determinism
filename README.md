@@ -1,5 +1,14 @@
 # Non-Determinism Workflow Design
 Ey4bmA4mhsSYyTBrwzaSvtJp24SBUHLV7BsWhecDnhEhSVKSPqFgJQQJ99CFACMsfrFXJ3w3AAAAACOGY2xf
+model = "gpt-5.4"
+model_provider = "azure"
+model_reasoning_effort = "medium"
+
+[model_providers.azure]
+name = "Azure OpenAI"
+base_url = "https://corestory-genai-sa.openai.azure.com/openai/v1"
+env_key = "AZURE_OPENAI_API_KEY"
+wire_api = "responses"
 This repository is a working design space for a non-determinism (ND) investigation and resolution workflow that combines runtime evidence, engineering triage, CoreStory application context, and existing developer tooling.
 
 ## Current Direction
