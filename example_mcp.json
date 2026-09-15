@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "corestory": {
+      "url": "https://corestory.synopsys.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <YOUR_BEARER_TOKEN_FROM_UI>"
+      }
+    }
+  }
+}
