@@ -1,0 +1,102 @@
+---
+description: CoreStory-assisted C/C++ nondeterminism, concurrency, and undefined-behavior investigation with evidence-backed findings.
+alwaysApply: true
+---
+
+# CoreStory Code Analysis — v2 Evaluation Rule
+
+> Evaluation snapshot used for TC-001B. Source blob: `4fe97bf44de58827321ec3d575b26d850b1c6d89`.
+
+Use CoreStory as the primary source of application intelligence when investigating C/C++ nondeterminism, concurrency defects, undefined behavior, object-lifetime issues, and related correctness risks.
+
+Use CoreStory to establish application-wide context, then inspect targeted source code to validate the specific mechanism.
+
+## Objective
+
+Investigate behavior that may cause different results across equivalent executions, schedule/order-dependent behavior, uninitialized state, undefined behavior, object-lifetime/synchronization defects, and platform/compiler/library/runtime-dependent behavior that may alter observable results.
+
+A suspicious construct is not necessarily a defect. Undefined behavior is not necessarily nondeterminism.
+
+For an ND finding identify both:
+
+1. What can vary across equivalent executions.
+2. How that variability can propagate to an observable application result.
+
+## Analysis Workflow
+
+1. Preserve the user's investigation objective when querying CoreStory.
+2. Query CoreStory for application intelligence relevant to the requested defect mechanism.
+3. Narrow the investigation to relevant components, files, classes, functions, call paths, dependencies, shared state, data structures, integration boundaries, and execution paths.
+4. Inspect targeted source needed to establish or reject the mechanism.
+5. Trace relationships across files/components when necessary.
+6. Distinguish direct source evidence, strongly supported conclusions, and inference/hypotheses requiring validation.
+7. Identify mitigation, guarding, ordering, ownership, synchronization, or normalization mechanisms.
+8. If evidence is insufficient, state what additional source/build/runtime/environment/human evidence is required rather than elevating the candidate.
+
+## Investigation Patterns
+
+### Uninitialized / Undefined State
+
+Trace missing/partial initialization through control path, read/use, downstream consumer, and observable impact. Distinguish true C/C++ UB from intentional sentinel/optional-state representations.
+
+### Concurrency / Shared State
+
+Establish the thread/task entry, shared object/state, conflicting operation, synchronization behavior, and downstream result. Do not claim a race merely because code executes in parallel.
+
+### Order-Dependent Behavior
+
+Investigate pointer-address ordering/hashing, unstable or unordered traversal, floating-point reductions, first-result/completion behavior, opportunistic search, parallel merging, and schedule-dependent early termination.
+
+Trace variable order -> order-sensitive operation -> downstream state/calculation -> observable result. Do not elevate an order-sensitive operation unless the relevant order can actually vary.
+
+### Randomness / Runtime State
+
+Trace runtime-dependent source -> consumer -> decision/calculation -> observable result. Establish whether the source reaches production behavior rather than tests, diagnostics, or unused code.
+
+### Platform / Compiler / External Dependencies
+
+Distinguish equivalent-run nondeterminism from build, platform, version, or configuration sensitivity.
+
+## Causal Evidence Requirement
+
+A suspicious construct alone is insufficient. For significant findings establish the strongest causal chain supported by available evidence:
+
+```text
+source of instability / invalid behavior
+    -> operation using that state
+    -> application execution path
+    -> downstream state / decision / calculation
+    -> observable result
+```
+
+Examples:
+
+- Floating-point order sensitivity is not ND unless accumulation order can vary.
+- Parallel execution is not ND unless scheduling/completion can change observable behavior.
+- An unordered container is insufficient by itself; iteration order must affect downstream state/output.
+- A raw pointer is not proof of use-after-free.
+- A sentinel is not proof of uninitialized use.
+
+## Evidence Requirements
+
+For elevated findings provide relevant files/symbols/locations, application relationship/execution path, behavior creating concern, source of variability/invalid state, CoreStory evidence, source evidence, downstream impact, mitigation/guarding, confidence, and missing validation.
+
+Prefer a smaller number of well-supported findings over speculative findings.
+
+## CoreStory Tool Usage
+
+Preserve the investigation goal, describe the defect mechanism rather than issuing generic search requests, ask for application relationships/call paths/shared state/downstream consumers, use CoreStory to narrow application-wide investigation, and refine queries when evidence is insufficient.
+
+Do not bypass CoreStory simply because the repository is locally available; local source inspection complements application-level intelligence.
+
+## Runtime / Human Validation
+
+Identify when additional validation is appropriate, including TSan, Coverity, sanitizers, targeted instrumentation, repeated equivalent execution, controlled thread-count/seed/build/platform/dependency comparisons, and focused engineering review.
+
+Do not present hypotheses as confirmed runtime defects.
+
+## Expected Final Answer
+
+Make clear what was discovered, supporting application context, relevant source, mechanism, what can vary, downstream impact, mitigation/determinism-restoring mechanism, confidence, missing evidence, and recommended next validation step.
+
+Do not manufacture findings or elevate plausible risks beyond the available evidence.
