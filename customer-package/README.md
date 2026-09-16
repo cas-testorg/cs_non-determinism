@@ -6,6 +6,13 @@ This directory contains the customer-reviewable evidence from the exploratory Co
 
 The package is designed to support technical and SME review. It preserves finding-specific implementation evidence where that evidence is useful for validating accuracy, while excluding identity, authentication, infrastructure, and unrelated debugging details.
 
+## Package Guide
+
+- **`READOUTS/Technical-Evaluation-Summary.md`** — recommended starting point and overall technical narrative.
+- **`METHODOLOGY/`** — evaluation methodology, claim boundaries, and SME review framework.
+- **`TEST-CASES/`** — sanitized evidence and conclusions for TC-001A, TC-001B, TC-001C, and the TC-002 controlled A/B methodology/status.
+- **`WORKFLOW-ASSETS/`** — manifest and audit of the Synopsys skills and CoreStory governing rules used during the evaluation.
+
 ## Sanitization Standard
 
 **Preserve evidence. Preserve enough implementation context to reproduce and validate findings. Remove identity/infrastructure details and irrelevant experimental plumbing. Retain limitations.**
@@ -17,6 +24,7 @@ Accordingly, this package may retain:
 - finding severity and experimental disposition;
 - build, reachability, runtime, propagation, neutralization, and observability evidence;
 - test prompts and controls needed to understand the experiment;
+- governing workflow instructions needed to understand agent behavior;
 - experimental limitations that affect interpretation.
 
 This package excludes or generalizes:
@@ -40,6 +48,12 @@ The customer-controlled A/B evaluation is tracked separately. Its detailed resul
 - **TC-001B — CoreStory-Assisted Analysis:** matching exploratory analysis with CoreStory application context; strongest signal was candidate qualification.
 - **TC-001C — CoreStory v3 Rule Check:** qualitative follow-up evaluating a stricter application-qualification workflow.
 - **TC-002 — Customer-Controlled A/B:** customer-owned comparison; results pending customer review.
+
+## Workflow Assets and References
+
+The package identifies the Synopsys skills and CoreStory rules that governed the evaluation because those instructions are part of the experimental configuration. Supporting references used by the installed Synopsys skills are acknowledged in the workflow-asset manifest but are not reproduced in this package.
+
+The workflow-asset audit also documents an important orchestration distinction: repository-scale `nd-code-analyzer` triage explicitly permits parallel subagents at defined thresholds, while `prove-nd` explicitly prohibits subagents during the deeper proof stage. This distinction should be considered when reviewing execution topology.
 
 ## SME Review
 
