@@ -1,0 +1,181 @@
+---
+description: CoreStory-assisted C/C++ nondeterminism, concurrency, and undefined-behavior qualification with evidence-backed application context.
+alwaysApply: true
+---
+
+# CoreStory Code Analysis v3
+
+> Evaluation snapshot used for TC-001C and the TC-002 CoreStory arm. Source blob: `b9c664e87161f47b25496a12507fd8603516e8d6`.
+
+Use CoreStory to establish application context for C/C++ nondeterminism, concurrency defects, undefined behavior, object-lifetime issues, and related correctness risks.
+
+CoreStory establishes **application context**. Targeted source inspection establishes the **local code mechanism**.
+
+Do not classify a candidate as a real defect based on a suspicious source-code pattern alone.
+
+## Objective
+
+For a nondeterminism finding, identify both:
+
+1. What can vary across equivalent executions.
+2. How that variability can propagate to an observable application result.
+
+A suspicious construct is not necessarily a defect. Undefined behavior is not necessarily nondeterminism.
+
+## Qualification Gate
+
+Before promoting a HIGH or MEDIUM finding as real, establish the strongest available evidence for each of the following:
+
+1. **Build inclusion** — relevant source is part of the production build, linked target, enabled feature set, or otherwise executable product path.
+2. **Production reachability** — a reachable caller, entry point, workflow, or application path can execute the suspect code.
+3. **Applicable runtime/configuration controls** — required flags, modes, thread counts, feature gates, or conditions are active/plausibly active.
+4. **Defect mechanism** — targeted source actually contains the suspected mechanism.
+5. **Propagation** — the mechanism can influence downstream state, ordering, calculation, mutation, selection, or control flow.
+6. **No deterministic neutralizer** — no comparator, normalization, canonicalization, synchronization, idempotence, stable merge, deterministic seed, or equivalent mechanism removes the effect before it matters.
+7. **Observable consequence** — affected state reaches an application-observable result, QoR decision, output, persistent state, externally visible behavior, crash, corruption, or other relevant product outcome.
+
+If sufficient evidence cannot be established, use an appropriate non-real or unresolved state such as:
+
+- LATENT
+- UNRESOLVED
+- DEAD/UNUSED
+- MT-UNREACHABLE
+- GATE-INACTIVE
+- NEUTRALIZED
+- SAFE-ADOPTER
+- CONFIGURATION-SENSITIVITY
+- BUILD-SENSITIVITY
+- PLATFORM-SENSITIVITY
+- FALSE-POSITIVE
+
+Prefer a smaller number of well-supported findings over a large number of speculative findings.
+
+## Analysis Workflow
+
+1. Preserve the user's investigation objective.
+2. Identify candidate mechanisms using the applicable analysis skill, source scan, or supplied candidate set.
+3. Use CoreStory to establish application relationships needed to qualify candidates: build/component relationships, files/modules, classes/functions, callers/callees, entry points/execution paths, dependencies, shared state/ownership, data structures, configuration/feature relationships, and downstream consumers.
+4. Inspect only targeted source needed to establish/reject the local mechanism.
+5. Trace relationships across files/components when needed.
+6. Apply the Qualification Gate before elevation.
+7. Distinguish direct source evidence, build/configuration evidence, CoreStory application relationship evidence, runtime/control-path evidence, and reasoned inference.
+8. Identify mitigation, guarding, ordering, ownership, synchronization, canonicalization, or normalization mechanisms.
+9. If evidence is insufficient, state what additional evidence is required rather than elevating the candidate.
+
+## Investigation Isolation
+
+Do not use prior analysis reports, previous-run candidate files, previous conversation findings, prior benchmark outputs, or held-out reference defects unless explicitly supplied as inputs to the current investigation.
+
+For controlled evaluations:
+
+- discover and qualify only from current test inputs;
+- do not search for or reuse previous benchmark artifacts;
+- do not use prior findings to choose files/functions/CoreStory queries;
+- do not use TSan/Coverity or other held-out reference findings during discovery/qualification unless the evaluation phase explicitly calls for ground-truth comparison.
+
+If prior artifacts are encountered accidentally, do not use them to guide the investigation; record the encounter when the run is measured.
+
+## Evidence Hierarchy
+
+Prefer evidence in this order:
+
+1. Direct source evidence
+2. Build and configuration evidence
+3. CoreStory application relationship evidence
+4. Runtime or control-path evidence
+5. Reasoned inference
+
+Inference may guide investigation but must not be presented as direct evidence. When sources conflict, describe the conflict and prefer direct/current evidence over assumptions or prior reports.
+
+## Investigation Patterns
+
+### Uninitialized / Undefined State
+
+Trace initialization or missing initialization -> control path -> read/use -> downstream consumer -> observable impact. Distinguish true C/C++ UB from intentional sentinel/optional-state representations.
+
+### Concurrency / Shared State
+
+Trace thread/task entry -> shared state -> conflicting operation -> synchronization/lack of synchronization -> downstream result.
+
+Do not claim a race merely because code executes in parallel. A lock can establish race freedom but does not by itself establish deterministic ordering/results.
+
+### Order-Dependent Behavior
+
+Investigate pointer-address ordering/hashing, unstable/unordered traversal, floating-point reductions, first-result/completion behavior, opportunistic search, parallel result merging, and schedule-dependent early termination.
+
+Trace variable ordering/completion order -> order-sensitive operation -> different downstream state/calculation -> observable result.
+
+Do not elevate unless the relevant order can actually vary and no downstream canonicalization neutralizes it.
+
+### Randomness / Runtime State
+
+Trace runtime-dependent source -> consumer -> decision/calculation -> observable result. Establish whether it reaches production behavior rather than tests/diagnostics/dead code.
+
+A fixed/deterministic default seed is not equivalent-run nondeterminism merely because a PRNG is present.
+
+### Platform / Compiler / External Dependencies
+
+Distinguish equivalent-run nondeterminism from build, platform, version, and configuration sensitivity.
+
+## Undefined Behavior
+
+Distinguish:
+
+1. **Undefined behavior established** — source evidence establishes the language/memory-safety violation.
+2. **Nondeterministic manifestation established** — UB is also shown to produce variable observable behavior across equivalent executions.
+3. **Nondeterministic manifestation plausible** — UB is established/supported but varying manifestation needs more evidence.
+
+Do not treat all undefined behavior as proven nondeterminism.
+
+Relevant investigation patterns include Coverity `UNINIT`, `UNINIT_CTOR`, `POINTER_NONDETERMINISM`, and TSan `DATA RACE`, `HEAP USE AFTER FREE`, `THREAD LEAK`, and `UNLOCK OF AN UNLOCKED MUTEX`. Pattern names are not proof that the defect exists.
+
+## Causal Evidence Requirement
+
+For significant findings establish the strongest supported chain:
+
+```text
+source of instability / invalid behavior
+    -> operation using that state
+    -> production execution path
+    -> downstream state / decision / calculation
+    -> observable result
+```
+
+Examples:
+
+- Floating-point order sensitivity is not ND unless accumulation order can vary.
+- Parallel execution is not ND unless scheduling/completion can change observable behavior.
+- An unordered container alone is insufficient; show downstream order sensitivity.
+- A raw pointer is not proof of use-after-free.
+- A sentinel is not proof of uninitialized use.
+- A suspicious source file is not a production defect if excluded from the active build.
+- A reachable mechanism is not a real defect if a deterministic neutralizer removes variation before observation.
+
+## Evidence Requirements
+
+For each elevated finding provide relevant files/symbols/locations, build inclusion, production reachability, runtime/configuration controls where relevant, application relationship/execution path, specific mechanism, source of variability/invalid state, CoreStory evidence, source evidence, downstream consumer/observable impact, neutralizers/mitigations, confidence, and missing evidence.
+
+For rejected/downgraded candidates, record the strongest rejection reason when useful.
+
+## CoreStory Tool Usage
+
+- Preserve the overall investigation goal.
+- Query for application relationships needed to qualify the candidate rather than generic repository search.
+- Prioritize build inclusion, callers/callees, execution context, shared state, configuration relationships, dependencies, and downstream consumers.
+- Use CoreStory to narrow application-wide relationships before targeted source inspection.
+- Refine queries when the first response is insufficient.
+- Avoid broad application context not needed for the current candidate.
+- Do not bypass CoreStory when application-level relationships are necessary.
+- Do not force CoreStory for purely local facts better established from targeted source.
+
+## Runtime / Human Validation
+
+Identify when additional validation is appropriate, including TSan, Coverity, sanitizers, compiler/assembly inspection, targeted instrumentation, repeated equivalent execution, controlled thread-count or seed variation, build/platform/dependency comparison, and focused engineering review.
+
+Do not present hypotheses as confirmed runtime defects.
+
+## Expected Final Answer
+
+Make clear what was discovered, which candidates were promoted/downgraded/rejected, supporting application context, relevant source, build/reachability, mechanism, what can vary, downstream impact, neutralizers/mitigations, confidence, missing evidence, and recommended validation.
+
+Do not manufacture findings or elevate plausible risks beyond the available evidence.
