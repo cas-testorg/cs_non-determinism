@@ -4,6 +4,22 @@
 
 **Test 1 pattern:** Found by Without MCP; not reported by With MCP.
 
+## Execution Configuration
+
+- **Client:** Cursor
+- **Model:** Claude Opus 4.8
+- **Thinking effort:** High
+- **CoreStory MCP:** Enabled
+- **CoreStory ND rule:** Removed / disabled
+- **Customer ND skills:** Removed / disabled (`nd-code-analyzer`, `non-determinism`, `prove-nd`)
+- **Enabled skill:** `agentic-bug-resolution` only
+- **Other skills:** None
+- **Prior A/B conclusions provided to agent:** No
+- **Prompt:** `prompt.md`
+- **Source:** Same CTS customer A/B source snapshot
+
+This is a focused third-view investigation, not a reproduction of the original Without-MCP or With-MCP arm.
+
 ## Objective
 
 Investigate the reported shared-map data-race mechanism independently, then determine why the With-MCP workflow did not surface it.
@@ -19,6 +35,8 @@ A `tbb::parallel_for_each` execution may perform concurrent `std::map::operator[
 Use Agentic Bug Resolution. Determine build inclusion, production reachability, parallel activation conditions, shared state, synchronization/prepopulation/thread-local protections, downstream consumers, observable behavior, blast radius, and remaining validation needs.
 
 Do not use the Test 1 comparison's final disposition as evidence. Do not modify source.
+
+Use the exact investigation prompt preserved in `prompt.md`.
 
 Save the completed result in `investigation.md` before beginning the trace map.
 

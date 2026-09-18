@@ -8,6 +8,28 @@ The goal is not to rerun the complete non-determinism scan or to produce another
 
 Each case is investigated independently before comparing it with the original A/B artifacts.
 
+## Controlled execution configuration
+
+Use the following configuration for **all four focused investigations** so the third-view investigation is consistent across cases:
+
+- **Client:** Cursor
+- **Model:** Claude Opus 4.8
+- **Thinking effort:** High
+- **CoreStory MCP:** Enabled
+- **CoreStory ND rule:** Removed / disabled
+- **Customer ND skills:** Removed / disabled
+  - `nd-code-analyzer`
+  - `non-determinism`
+  - `prove-nd`
+- **Enabled skill:** `agentic-bug-resolution` only
+- **Other skills:** None
+- **Prior A/B conclusions provided to agent:** No
+- **Source:** Same CTS customer A/B source snapshot
+
+This configuration is intentionally **not** a reproduction of either original A/B arm. It creates a consistent third view that tests focused application investigation with CoreStory while removing the ND-specific rule and customer-provided ND skills as variables.
+
+If any item above changes during a case, record the deviation in that case's README or investigation result before comparing outcomes.
+
 ## Investigation model
 
 For each case, use two layers:
@@ -78,9 +100,10 @@ The purpose is to classify the disagreement as precisely as possible: discovery,
 
 Each case contains:
 
-- `README.md` — case objective, starting hypothesis, and execution instructions.
-- `investigation.md` — placeholder for the independent Agentic Bug Resolution result.
-- `trace-map.md` — placeholder for the post-investigation A/B evidence-path comparison.
+- `README.md` — case objective, starting hypothesis, execution configuration, and instructions.
+- `prompt.md` — exact prompt used for the focused investigation when present.
+- `investigation.md` — preserved independent Agentic Bug Resolution result.
+- `trace-map.md` — post-investigation A/B evidence-path comparison.
 
 Keep the independent investigation frozen before completing the trace map.
 
