@@ -1,0 +1,1074 @@
+# nd-patterns.yaml - Non-Determinism Pattern Catalog
+#
+# This is the machine-readable catalog of ND patterns used by scan_nd.py.
+# Each entry describes one ND source. The scanner runs each regex against
+# user-specified source files and emits candidate hits; the LLM then triages
+# candidates against `false_positive_hints_md` and writes the final fix using
+# `fix_template_md` as a starting point.
+#
+# ADDING A NEW CATEGORY:
+#   Append a new entry with a fresh id. No code changes needed.
+#   Keep the narrative mirror in references/nd-patterns.md in sync.
+#
+# Schema per entry:
+#   id                     : dotted string, stable across renames
+#   name                   : one-line title
+#   severity_default       : HIGH | MEDIUM | LOW (LLM may override per site)
+#   category               : one of sorting | container | hash | random | timing
+#                                  | naming | iteration | arithmetic
+#                                  | parallel | filesystem | concurrency
+#                            (concurrency = static MT-ND patterns 4.x; their
+#                             observability requires the MT hunt / TSan)
+#   tier                   : 1 (regex-detectable) | 2 (needs LLM reasoning; regex is a seed)
+#   regex                  : list of ripgrep-compatible regex strings
+#   file_globs             : file patterns to search
+#   description_md         : why the pattern is non-deterministic
+#   fix_template_md        : generic BEFORE/AFTER with Version A/B/C where applicable
+#   false_positive_hints_md: cases where the regex fires but the code is safe
+#   example_from_plan      : filename:line from the manual-analysis plan (if any)
+
+patterns:
+
+  # =========================================================================
+  # ORIGINAL 5 CATEGORIES (from non-determinism_analysis_d3a76ce7.plan.md)
+  # =========================================================================
+
+  - id: "1.1"
+    name: "Pointer-based std::sort / std::stable_sort"
+    severity_default: HIGH
+    category: sorting
+    tier: 1
+    regex:
+      - 'std::(?:stable_)?sort\s*\([^)]*\.begin\(\)[^)]*\.end\(\)\s*\)\s*;'
+      - 'std::(?:stable_)?sort\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      `std::sort` / `std::stable_sort` called with only two iterator arguments
+      uses `std::less<T>` as the comparator. When the element type is `T*`,
+      this compares raw addresses. Address order varies across runs due to
+      ASLR, allocator state, and heap fragmentation, so the resulting order
+      is non-deterministic. If the sort is followed by `std::unique`, by
+      iteration with side effects, or by dedup of the first-of-ties, the
+      whole downstream algorithm becomes non-deterministic.
+    fix_template_md: |
+      **Version A (Simple) — assumes IDs are unique within element type/context:**
+      ```cpp
+      std::sort(vec.begin(), vec.end(),
+          [](const T* a, const T* b) {
+              return a->getIdLong() < b->getIdLong();   // O(1)
+          });
+      ```
+
+      **Version B (Robust) — handles ID collisions across types/contexts:**
+      ```cpp
+      std::sort(vec.begin(), vec.end(),
+          [](const T* a, const T* b) {
+              auto i1 = a->getIdLong();
+              auto i2 = b->getIdLong();
+              if (i1 != i2) return i1 < i2;
+              auto t1 = a->getObjectType();
+              auto t2 = b->getObjectType();
+              if (t1 != t2) return t1 < t2;
+              return ndmObjectHandleNS::compareObjPtr{}(a, b);
+          });
+      ```
+
+      **Version C (Maximum safety) — reuses the canonical comparator:**
+      ```cpp
+      std::sort(vec.begin(), vec.end(),
+          ndmObjectHandleNS::compareObjPtr{});
+      ```
+    false_positive_hints_md: |
+      Skip if the element type is a value type (`int`, `double`, `string`) or
+      a user-defined `struct` that has a deterministic `operator<`. Also skip
+      if a custom comparator is already passed (regex may over-match on
+      multi-arg `std::sort`; re-read the site).
+    example_from_plan: "ropt/flow/thermal/thermalViaDeletion.cc:384"
+
+  - id: "1.2"
+    name: "std::set / std::map with pointer key, default comparator"
+    severity_default: HIGH
+    category: container
+    tier: 1
+    regex:
+      - 'std::(?:set|map|multiset|multimap)\s*<\s*[A-Za-z_][A-Za-z0-9_:]*\s*\*[\s>,]'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      `std::set<T*>` / `std::map<T*, V>` with no explicit comparator defaults
+      to `std::less<T*>`, which compares addresses. Insertion order, iteration
+      order, and `find` ordering all become non-deterministic across runs.
+      When iteration drives further decisions (fix/skip lists, retry queues),
+      the whole algorithm diverges.
+    fix_template_md: |
+      **Option 1 (preferred for ndm objects) — use `ndmPtrMap`:**
+      ```cpp
+      #include "ndmutil/ndmPtrMap.h"
+      ndmPtrMap<T*, V> myMap;   // already uses dosContainer::keyCompare
+      ```
+
+      **Option 2 — explicit comparator:**
+      ```cpp
+      std::set<T*, ndmObjectHandleNS::compareObjPtr> mySet;
+      std::map<T*, V, ndmObjectHandleNS::compareObjPtr> myMap;
+      ```
+
+      **Option 3 — custom comparator for non-ndm types:**
+      ```cpp
+      struct StableCmp {
+          bool operator()(const T* a, const T* b) const {
+              if (a == b) return false;
+              if (!a) return true;
+              if (!b) return false;
+              if (a->getId() != b->getId()) return a->getId() < b->getId();
+              return a->getObjectType() < b->getObjectType();
+          }
+      };
+      std::set<T*, StableCmp> mySet;
+      ```
+    false_positive_hints_md: |
+      Skip if the key is a value type (`int`, `string`) or if a custom
+      comparator is already the third template argument. Skip for
+      `std::set<std::unique_ptr<T>>` only if ownership logic does not rely on
+      iteration order.
+    example_from_plan: "bufutil/roi/router/roiRtrCtl.cc:3304 (failedToPlace)"
+
+  - id: "1.3"
+    name: "std::unordered_set / unordered_map with pointer key, default hash"
+    severity_default: HIGH
+    category: container
+    tier: 1
+    regex:
+      - 'std::unordered_(?:set|map|multiset|multimap)\s*<\s*[A-Za-z_][A-Za-z0-9_:]*\s*\*[\s>,]'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      `std::unordered_*<T*>` without a custom hash uses `std::hash<T*>`, which
+      hashes the address. Bucket placement, rehash points, and therefore
+      iteration order all vary across runs. Even `find` can hit different
+      bucket depths, so timing-sensitive fast paths behave differently.
+
+      Note: fixing the hash alone does not fix iteration order for all
+      workloads — if downstream code iterates and accumulates, also sort
+      before iterating (see Category 3.2 in fix-recipes).
+    fix_template_md: |
+      **Provide a stable hash (and usually a stable equality):**
+      ```cpp
+      struct StablePtrHash {
+          template <class U>
+          size_t operator()(const U* p) const {
+              return p ? std::hash<uint64_t>{}(p->getIdLong()) : 0UL;
+          }
+      };
+      std::unordered_set<T*, StablePtrHash> s;
+      ```
+
+      **If iteration order matters, sort before iterating:**
+      ```cpp
+      std::vector<T*> v(s.begin(), s.end());
+      std::sort(v.begin(), v.end(), ndmObjectHandleNS::compareObjPtr{});
+      for (T* x : v) { /* ... */ }
+      ```
+    false_positive_hints_md: |
+      Skip if the key is a value type. Skip if the third template argument is
+      already a custom hash.
+    example_from_plan: "ropt/xforms/buffer/hBuf/hBuf.h"
+
+  - id: "1.4"
+    name: "Pointer-based hash functors (std::hash<T*>, hash_combine with pointer)"
+    severity_default: HIGH
+    category: hash
+    tier: 1
+    regex:
+      - 'std::hash\s*<\s*(?:const\s+)?[A-Za-z_][A-Za-z0-9_:]*\s*\*\s*>'
+      - 'boost::hash_combine\s*\([^,]+,\s*[A-Za-z_][A-Za-z0-9_]*\s*\)\s*;.*/\*.*ptr'
+      - 'hash_combine\s*\([^,]+,\s*[A-Za-z_][A-Za-z0-9_]*\s*->'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Custom hash functors that feed raw pointers into `std::hash` or
+      `boost::hash_combine` produce different hash values across runs. Same
+      logical key hashes to different buckets, changing bucket occupancy and
+      iteration order.
+    fix_template_md: |
+      **Version A (Simple) — use getIdLong():**
+      ```cpp
+      struct MyHash {
+          size_t operator()(const Key& k) const noexcept {
+              auto id = k.getObj() ? k.getObj()->getIdLong() : 0UL;
+              return std::hash<uint64_t>{}(id) ^ (k.getSecondary() << 1);
+          }
+      };
+      ```
+
+      **Version B (Robust) — follow dosContainer::keyHash pattern:**
+      ```cpp
+      struct MyHash {
+          size_t operator()(const Key& k) const noexcept {
+              size_t h = 0;
+              for (const dosElement* e = k.getObj(); e; e = e->getContextElement()) {
+                  boost::hash_combine(h, e->getIdLong());
+                  boost::hash_combine(h, static_cast<uint16_t>(e->getObjectType()));
+              }
+              boost::hash_combine(h, k.getSecondary());
+              return h;
+          }
+      };
+      ```
+    false_positive_hints_md: |
+      `std::hash<const char*>` is rarely an ND bug in itself but still hashes
+      by address, so review whether the underlying string is really what
+      should be hashed. `boost::hash_combine(h, enum_val)` is fine.
+    example_from_plan: "ropt/util/infeasibleMgrImpl.h:91-101 (ndmTermPairHash)"
+
+  - id: "1.5"
+    name: "Random ops without deterministic seed"
+    severity_default: HIGH
+    category: random
+    tier: 1
+    regex:
+      - '\bstd::random_shuffle\b'
+      - '\brand\s*\('
+      - '\bsrand\s*\('
+      - 'std::mt19937\s+\w+\s*;'            # default-constructed (no seed)
+      - 'std::mt19937\s+\w+\s*\(\s*\)\s*;'  # explicit default ctor
+      - 'boost::(?:random::)?mt19937\s+\w+\s*;'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      - `std::random_shuffle` is deprecated (C++14) / removed (C++17) and uses
+        an unspecified RNG, typically `rand()`.
+      - `rand()` / `srand()` use a global, platform-dependent RNG.
+      - Default-constructed `std::mt19937` is technically deterministic (seed
+        5489) but any unseeded path that *feels* random-looking is usually
+        wrong for our purposes — the seed must be derived from the input,
+        not hardcoded.
+
+      All of these cause the algorithm to see inputs in a different order
+      across compilers/platforms, which changes ML training, clustering
+      results, and tie-breaking.
+    fix_template_md: |
+      **Replace random_shuffle with seeded std::shuffle:**
+      ```cpp
+      // Derive seed from input so it is reproducible across runs
+      size_t seed = 0;
+      for (const auto* x : vec) boost::hash_combine(seed, x->getIdLong());
+      std::mt19937 rng(static_cast<unsigned int>(seed));
+      std::shuffle(vec.begin(), vec.end(), rng);
+      ```
+
+      **Seed mt19937 explicitly from design characteristics:**
+      ```cpp
+      unsigned int seed = static_cast<unsigned int>(numSamples);
+      // Better: seed from a design hash if available
+      std::mt19937 rng(seed);
+      ```
+    false_positive_hints_md: |
+      Tests that want true randomness (not run under production flows) can
+      keep `rand()` — but tag the file as such. Benchmarks that explicitly
+      want a different seed each run are OK.
+    example_from_plan: "opt/optutil/optClustering.cc:288; rail/rr/rr.h:677"
+
+  # =========================================================================
+  # TIER 1 ADDITIONS (regex-detectable, #6-14)
+  # =========================================================================
+
+  - id: "2.1"
+    name: "Time/PID-based RNG seeds"
+    severity_default: HIGH
+    category: timing
+    tier: 1
+    regex:
+      - 'srand\s*\(\s*(?:time\s*\(|getpid\s*\(|std::chrono|clock\s*\()'
+      - 'mt19937\s*\([^)]*(?:time\s*\(|getpid\s*\(|std::chrono|clock\s*\()'
+      - 'seed\s*\(\s*(?:time\s*\(|getpid\s*\(|std::chrono|clock\s*\()'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Seeding an RNG from `time(NULL)`, `getpid()`, `std::chrono::*::now()`,
+      or `clock()` gives a different sequence every run by construction.
+      This is the most direct form of non-determinism — the code *intends*
+      to randomize per run.
+    fix_template_md: |
+      **Use a deterministic seed derived from the input:**
+      ```cpp
+      // Derive seed from stable input characteristics
+      size_t seed = 0;
+      boost::hash_combine(seed, numElements);
+      boost::hash_combine(seed, designHash);  // if available
+      std::mt19937 rng(static_cast<unsigned int>(seed));
+      ```
+
+      **Or accept seed as an explicit parameter (app option):**
+      ```cpp
+      unsigned int seed = appOptions::get_deterministic_seed();  // default 42
+      std::mt19937 rng(seed);
+      ```
+    false_positive_hints_md: |
+      Test harnesses that explicitly want per-run randomness are OK. Monte
+      Carlo simulations used outside the production flow are OK.
+    example_from_plan: ""
+
+  - id: "2.2"
+    name: "getFullName() / getPathName() used as map key or hashed"
+    severity_default: MEDIUM
+    category: naming
+    tier: 1
+    regex:
+      - 'getFullName\s*\(\s*\)\s*\]'               # map[obj->getFullName()]
+      - '\[\s*[A-Za-z_]\w*->getFullName\s*\(\s*\)' # map[x->getFullName()]
+      - 'getPathName\s*\(\s*\)\s*\]'
+      - 'hash_combine\s*\([^,]+,\s*[^,]*getFullName'
+      - 'hash_combine\s*\([^,]+,\s*[^,]*getPathName'
+      - 'insert\s*\(\s*[^,)]*getFullName\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Two problems in one:
+      1. `getFullName()` / `getPathName()` is **O(hierarchy depth)** plus a
+         string allocation — profoundly expensive compared to `getIdLong()`
+         (O(1) arithmetic). Using it as a key is a perf red flag.
+      2. The string representation can subtly drift (escaping, separators,
+         hierarchy-renaming passes), making the key unstable even within
+         a single run.
+
+      Prefer the ID-based identity (which is what `ndmObjectHandleNS` does).
+    fix_template_md: |
+      **Replace name-based key with ID-based key:**
+      ```cpp
+      // Before
+      std::map<std::string, V> byName;
+      byName[obj->getFullName()] = v;
+
+      // After — use the pointer as key with stable comparator
+      std::map<T*, V, ndmObjectHandleNS::compareObjPtr> byObj;
+      byObj[obj] = v;
+      ```
+
+      **If a string key is genuinely needed (e.g. external API), cache once:**
+      ```cpp
+      auto name = obj->getFullName();  // pay O(d) once, not per lookup
+      byName[std::move(name)] = v;
+      ```
+    false_positive_hints_md: |
+      Reports / log output / user-visible diagnostics using `getFullName()`
+      are fine — they are not on the algorithm's fast path. Skip if the
+      string is only written to a file, not re-parsed.
+    example_from_plan: ""
+
+  - id: "2.3"
+    name: "std::priority_queue<T*> without custom comparator"
+    severity_default: HIGH
+    category: container
+    tier: 1
+    regex:
+      - 'std::priority_queue\s*<\s*[A-Za-z_][A-Za-z0-9_:]*\s*\*\s*>'
+      - 'std::priority_queue\s*<\s*[A-Za-z_][A-Za-z0-9_:]*\s*\*\s*,[^,>]+>\s'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      `std::priority_queue<T*>` defaults to `std::less<T*>`, so pop order is
+      driven by pointer addresses. Worklists, Dijkstra-like traversals, and
+      beam searches all become non-deterministic.
+    fix_template_md: |
+      **Provide a stable comparator (priority_queue is a max-heap, so invert
+      as needed):**
+      ```cpp
+      struct StablePtrLess {
+          bool operator()(const T* a, const T* b) const {
+              if (!a || !b) return a < b;
+              auto i1 = a->getIdLong(), i2 = b->getIdLong();
+              if (i1 != i2) return i1 < i2;
+              return a->getObjectType() < b->getObjectType();
+          }
+      };
+      std::priority_queue<T*, std::vector<T*>, StablePtrLess> pq;
+      ```
+
+      **If priority is a numeric cost, put the cost first in a pair:**
+      ```cpp
+      using Entry = std::pair<Cost, T*>;
+      auto cmp = [](const Entry& a, const Entry& b) {
+          if (a.first != b.first) return a.first < b.first;
+          return ndmObjectHandleNS::compareObjPtr{}(a.second, b.second);
+      };
+      std::priority_queue<Entry, std::vector<Entry>, decltype(cmp)> pq(cmp);
+      ```
+    false_positive_hints_md: |
+      Safe if the priority is a strict numeric cost and ties are provably
+      impossible, but this is rare — prefer adding a tiebreaker anyway.
+    example_from_plan: ""
+
+  - id: "2.4"
+    name: "std::min_element / max_element on pointer vector with pointer tiebreak"
+    severity_default: MEDIUM
+    category: container
+    tier: 1
+    regex:
+      - 'std::(?:min|max)_element\s*\([^)]*\.begin\(\)[^)]*\.end\(\)\s*\)'
+      - 'std::(?:min|max)_element\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Two-argument `std::min_element` / `max_element` use `operator<` on the
+      elements. If the elements are `T*`, ties are broken by address — so
+      the "first min" picked varies across runs when multiple elements share
+      the minimum score.
+    fix_template_md: |
+      **Supply a comparator that breaks ties deterministically:**
+      ```cpp
+      auto it = std::min_element(v.begin(), v.end(),
+          [](const T* a, const T* b) {
+              if (a->score != b->score) return a->score < b->score;
+              return a->getIdLong() < b->getIdLong();
+          });
+      ```
+    false_positive_hints_md: |
+      Safe if the element type has a deterministic `operator<` (value types,
+      user structs). Safe if the caller treats all equal-minimum elements
+      identically downstream.
+    example_from_plan: ""
+
+  - id: "2.5"
+    name: "std::unique on pointer vector without prior stable sort"
+    severity_default: MEDIUM
+    category: sorting
+    tier: 1
+    regex:
+      - 'std::unique\s*\([^)]*\.begin\(\)[^)]*\.end\(\)\s*\)'
+      - 'std::unique\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      `std::unique` removes adjacent duplicates. When the input is a pointer
+      vector and the preceding `std::sort` used the default comparator (ND),
+      the "surviving" element from each equivalence class depends on the
+      non-deterministic sort order.
+    fix_template_md: |
+      **Ensure the sort before unique is deterministic:**
+      ```cpp
+      // See fix 1.1 above — use a stable comparator
+      std::sort(v.begin(), v.end(), ndmObjectHandleNS::compareObjPtr{});
+      v.erase(std::unique(v.begin(), v.end()), v.end());
+      ```
+    false_positive_hints_md: |
+      Safe if the preceding sort is already deterministic. Scanner emits a
+      hit regardless; LLM triage must inspect the nearest `std::sort`.
+    example_from_plan: "ropt/flow/thermal/thermalViaDeletion.cc (after 384)"
+
+  - id: "2.6"
+    name: "Filesystem iteration without sorting"
+    severity_default: MEDIUM
+    category: filesystem
+    tier: 1
+    regex:
+      - '\breaddir\s*\('
+      - 'std::filesystem::directory_iterator'
+      - 'std::filesystem::recursive_directory_iterator'
+      - 'boost::filesystem::directory_iterator'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      POSIX `readdir` and `std::filesystem::directory_iterator` return
+      entries in filesystem order (inode / B-tree order), not alphabetical.
+      If the iteration drives codegen, test discovery, or any logic that
+      accumulates state, the result is non-deterministic across machines
+      and after file renames.
+    fix_template_md: |
+      **Collect entries, sort by name, then iterate:**
+      ```cpp
+      std::vector<std::filesystem::directory_entry> entries;
+      for (auto& e : std::filesystem::directory_iterator(dir)) entries.push_back(e);
+      std::sort(entries.begin(), entries.end(),
+          [](const auto& a, const auto& b) { return a.path() < b.path(); });
+      for (const auto& e : entries) { /* ... */ }
+      ```
+    false_positive_hints_md: |
+      Safe if the only use is counting entries or emitting a log line.
+    example_from_plan: ""
+
+  - id: "2.7"
+    name: "Pointer arithmetic or reinterpret_cast to integer as hash/key"
+    severity_default: MEDIUM
+    category: arithmetic
+    tier: 1
+    regex:
+      - 'reinterpret_cast\s*<\s*(?:size_t|uintptr_t|uint64_t|long)\s*>'
+      - '\(\s*size_t\s*\)\s*\(?\s*[A-Za-z_]\w*\s*-\s*[A-Za-z_]\w*\s*\)?'
+      - '\(\s*uintptr_t\s*\)'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Casting a pointer to an integer and using it as a map key, hash, or
+      sort value bakes address-based ordering into the algorithm. It is the
+      same ND source as `std::less<T*>`, just harder to spot.
+    fix_template_md: |
+      **Use the object's ID instead of its address:**
+      ```cpp
+      // Before
+      size_t key = reinterpret_cast<size_t>(obj);
+
+      // After
+      size_t key = obj ? obj->getIdLong() : 0UL;
+      ```
+    false_positive_hints_md: |
+      `reinterpret_cast<char*>(buf)` for byte-level I/O is fine. Pointer diff
+      used purely for sizing (`end - begin`) is fine.
+    example_from_plan: ""
+
+  - id: "2.8"
+    name: "boost::flat_map / flat_set with pointer key"
+    severity_default: HIGH
+    category: container
+    tier: 1
+    regex:
+      - 'boost::container::flat_(?:set|map|multiset|multimap)\s*<\s*[A-Za-z_][A-Za-z0-9_:]*\s*\*'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      `boost::container::flat_{set,map}` has the same default comparator
+      semantics as `std::{set,map}` — with a pointer key and no explicit
+      comparator, elements are ordered by address.
+    fix_template_md: |
+      **Use `ndmObjectHandleNS::compareObjPtr` as the third template arg:**
+      ```cpp
+      boost::container::flat_set<T*, ndmObjectHandleNS::compareObjPtr> s;
+      boost::container::flat_map<T*, V, ndmObjectHandleNS::compareObjPtr> m;
+      ```
+    false_positive_hints_md: |
+      Skip if a custom comparator is already provided.
+    example_from_plan: ""
+
+  - id: "2.9"
+    name: "std::weak_ptr::owner_before used for ordering"
+    severity_default: LOW
+    category: container
+    tier: 1
+    regex:
+      - '\.owner_before\s*\('
+      - 'std::owner_less\s*<'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      `weak_ptr::owner_before` orders by control-block address, which is
+      allocated at `shared_ptr` construction time and not stable across runs.
+      Used as a `std::set<std::weak_ptr<T>, std::owner_less<>>` comparator,
+      it reproduces the pointer-key ND problem for shared/weak ownership.
+    fix_template_md: |
+      **Either store a stable identifier alongside the weak_ptr, or use an
+      ID-based comparator:**
+      ```cpp
+      struct WeakPtrIdCmp {
+          bool operator()(const std::weak_ptr<T>& a, const std::weak_ptr<T>& b) const {
+              auto sa = a.lock(); auto sb = b.lock();
+              if (!sa || !sb) return static_cast<bool>(sa) < static_cast<bool>(sb);
+              return sa->getIdLong() < sb->getIdLong();
+          }
+      };
+      std::set<std::weak_ptr<T>, WeakPtrIdCmp> s;
+      ```
+    false_positive_hints_md: |
+      Safe if the set is purely a liveness tracker (only `insert`/`erase`
+      exposed, no iteration).
+    example_from_plan: ""
+
+  # =========================================================================
+  # TIER 2 ADDITIONS (needs LLM reasoning; regex is a seed only, #15-21)
+  # =========================================================================
+
+  - id: "3.1"
+    name: "Parallel floating-point reduction"
+    severity_default: HIGH
+    category: parallel
+    tier: 2
+    regex:
+      - 'tbb::parallel_reduce'
+      - '#pragma\s+omp\s+parallel[^\n]*reduction\s*\(\s*[+*-]\s*:'
+      - 'std::reduce\s*\('
+      - 'std::transform_reduce\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Floating-point `+` is not associative: `(a+b)+c != a+(b+c)` at the bit
+      level. Parallel reductions split the input into chunks whose sizes
+      depend on the thread count and scheduler. Even with the same thread
+      count, TBB's work-stealing changes chunk merges run-to-run.
+
+      **LLM deep-read required** — the regex merely locates candidate
+      reductions. The LLM must inspect the operand types (ints are safe,
+      floats/doubles are not) and the downstream use of the result (an
+      epsilon-tolerant compare is fine; an exact compare or a hash is ND).
+    fix_template_md: |
+      **Option A: force a deterministic reduction order:**
+      ```cpp
+      // Sequential sum — deterministic but slow
+      double sum = 0.0;
+      for (auto x : v) sum += x;
+      ```
+
+      **Option B: compensated / pairwise summation (Kahan):**
+      ```cpp
+      double sum = 0.0, c = 0.0;
+      for (auto x : v) {
+          double y = x - c;
+          double t = sum + y;
+          c = (t - sum) - y;
+          sum = t;
+      }
+      ```
+
+      **Option C: parallelize but with a fixed reduction tree:**
+      Use a partition-by-index scheme so the same thread always gets the
+      same input slice, independent of work-stealing.
+    false_positive_hints_md: |
+      Integer reductions are safe (`+`/`*`/`min`/`max` are associative on
+      ints). Floating-point reductions whose result is only compared with a
+      large epsilon are usually safe.
+    example_from_plan: ""
+
+  - id: "3.2"
+    name: "Multi-threaded shared container writes"
+    severity_default: HIGH
+    category: parallel
+    tier: 2
+    regex:
+      - 'tbb::concurrent_vector'
+      - 'tbb::concurrent_unordered_'
+      - 'tbb::parallel_for'
+      - '#pragma\s+omp\s+parallel\s+for'
+      - 'std::async\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      When multiple threads `push_back` or `insert` into a shared container,
+      the resulting order depends on thread scheduling. This is ND by
+      construction — same inputs, different output orders.
+
+      **LLM deep-read required** — the regex spots the parallel construct.
+      The LLM must check whether the surrounding code (a) writes to a shared
+      container, (b) iterates it for a result-affecting operation.
+    fix_template_md: |
+      **Option A: pre-size, write by index, then compact:**
+      ```cpp
+      std::vector<Result> out(n);  // pre-sized
+      tbb::parallel_for(0, n, [&](int i) {
+          out[i] = compute(input[i]);  // no shared writes
+      });
+      ```
+
+      **Option B: per-thread buffers, merge sequentially with a stable sort:**
+      ```cpp
+      // Collect into per-thread vectors (TBB enumerable_thread_specific)
+      // Then merge in deterministic thread-id order and sort by a stable key
+      ```
+    false_positive_hints_md: |
+      Safe if the container is only read concurrently, or if the downstream
+      consumer sorts before using the contents.
+    example_from_plan: ""
+
+  - id: "3.3"
+    name: "unordered_* iteration feeding algorithms"
+    severity_default: MEDIUM
+    category: iteration
+    tier: 2
+    regex:
+      - 'for\s*\(\s*(?:auto|auto&|const\s+auto&|[A-Za-z_][A-Za-z0-9_:]*\s*&?)\s+[A-Za-z_]\w*\s*:\s*[A-Za-z_]\w*\s*\)'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Even with a deterministic hash, `std::unordered_*` iteration order
+      varies with bucket count, load factor, and rehash history. Code that
+      iterates the container and (a) pushes to another ordered container
+      without re-sorting, or (b) performs side effects whose order matters,
+      is non-deterministic.
+
+      **LLM deep-read required** — the regex matches any range-for. The LLM
+      must verify (a) the iterated container is `std::unordered_*` and
+      (b) the body mutates external state order-dependently.
+    fix_template_md: |
+      **Collect, sort by a stable key, then iterate:**
+      ```cpp
+      std::vector<decltype(myUnordered)::value_type> items(
+          myUnordered.begin(), myUnordered.end());
+      std::sort(items.begin(), items.end(), byStableKey);
+      for (const auto& kv : items) { sideEffect(kv); }
+      ```
+    false_positive_hints_md: |
+      Safe if the loop body only updates commutative / idempotent state
+      (e.g. summing integers, setting a boolean). Safe if the loop reads only.
+    example_from_plan: ""
+
+  - id: "3.4"
+    name: "std::map::operator[] with side-effecting default init"
+    severity_default: LOW
+    category: iteration
+    tier: 2
+    regex:
+      - '\w+\s*\[\s*[^\]]+\s*\]\s*\.\w+\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      `myMap[key].foo()` default-constructs the value on first access. If
+      the default constructor or `foo()` has side effects and the container
+      is `std::map<T*, V>` (pointer-keyed) iterated later, the order of
+      side effects follows pointer order.
+
+      **LLM deep-read required** — this pattern is broad; the regex emits a
+      candidate only if the container is pointer-keyed AND the default
+      constructor is non-trivial.
+    fix_template_md: |
+      **Fix the container's comparator (see 1.2) AND prefer `emplace` over
+      `operator[]` when side effects matter:**
+      ```cpp
+      auto [it, inserted] = myMap.emplace(key, V{});
+      if (inserted) logInit(key);
+      it->second.foo();
+      ```
+    false_positive_hints_md: |
+      Safe if the map is keyed on a value type or the default constructor
+      is trivial.
+    example_from_plan: ""
+
+  - id: "3.5"
+    name: "Thread-count dependency in algorithm sizing"
+    severity_default: MEDIUM
+    category: parallel
+    tier: 2
+    regex:
+      - 'std::thread::hardware_concurrency\s*\('
+      - 'omp_get_num_threads\s*\('
+      - 'omp_get_max_threads\s*\('
+      - 'tbb::this_task_arena::max_concurrency\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Using the live thread count to size data structures, pick chunk sizes,
+      or decide algorithm branches makes the result depend on the machine's
+      core count and the current scheduler state.
+
+      **LLM deep-read required** — the regex finds the call; the LLM must
+      verify the value reaches a decision that affects output.
+    fix_template_md: |
+      **Use a configured, not discovered, thread count:**
+      ```cpp
+      // Bad: machine-dependent
+      int n = std::thread::hardware_concurrency();
+
+      // Good: controlled by app option / host options
+      int n = appOptions::get_max_cores();  // same value in every run
+      ```
+    false_positive_hints_md: |
+      Safe if the value is only used for scheduling (e.g. `tbb::task_arena`
+      setup) and the per-chunk computation is order-independent.
+    example_from_plan: ""
+
+  - id: "3.6"
+    name: "Post-collection use without canonical ordering"
+    severity_default: MEDIUM
+    category: iteration
+    tier: 2
+    regex:
+      - '\b(?:push_back|emplace_back|append)\s*\([^;]*(?:nodeIdx|node|row|batch|leq|knee|module|mod)'
+      - '\b(?:nodeIdxArr|nodesIdx|rows|batches|leq[A-Za-z0-9_]*|knee[A-Za-z0-9_]*|modules?)\b'
+      - '\b(?:getNodesIdxInMBB|getNodesInMBB|collect[A-Za-z0-9_]*Nodes|collect[A-Za-z0-9_]*Rows)\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Some ND fixes did not involve an obviously bad container declaration.
+      They collected graph nodes, rows, batches, LEQ/knee candidates, or
+      modules from a traversal/binning source into a vector-like container and
+      then consumed that collection immediately. If the source enumeration is
+      unstable, downstream processing observes a different order in each run.
+
+      **LLM deep-read required** - the regex only finds collection-shaped
+      code. The LLM must verify (a) the collection source has unstable
+      ordering, (b) the collection is consumed before an explicit stable sort,
+      and (c) downstream behavior is order-sensitive.
+    fix_template_md: |
+      **Collect all candidates, then sort by a stable key before use:**
+      ```cpp
+      std::vector<NodeIdx> nodes;
+      collectNodes(nodes);
+
+      std::sort(nodes.begin(), nodes.end());
+      for (NodeIdx node : nodes) {
+          process(node);
+      }
+      ```
+
+      **For pointer/object collections, use the project comparator:**
+      ```cpp
+      std::sort(items.begin(), items.end(), ndmObjectHandleNS::compareObjPtr{});
+      ```
+
+      **For multi-key rankings, make the tie-break explicit:**
+      ```cpp
+      std::sort(rows.begin(), rows.end(), [](const Row& a, const Row& b) {
+          if (a.score != b.score) return a.score < b.score;
+          return a.stableId < b.stableId;
+      });
+      ```
+    false_positive_hints_md: |
+      Safe if the vector is built from an already sorted/stable source, if the
+      downstream operation is commutative/idempotent, or if the data is only
+      used for debug logging. Do not require a second sort when a nearby helper
+      already returns canonical order by contract.
+    example_from_plan: "CLs 7720129, 9275937, 11913380, 13380520, 13530532"
+
+  - id: "3.7"
+    name: "Project wrapper containers with order-sensitive use"
+    severity_default: MEDIUM
+    category: container
+    tier: 2
+    regex:
+      - '\b(?:dosUnorderedMap|dosUnorderedSet|dosHash|hyHash|hyHashI|nwcInsOrdMap)\s*<'
+      - '\b(?:hySet|hyMap|hySetI|hyMapI|ndmPtrSet|ndmPtrMap)\s*<\s*[A-Za-z_][A-Za-z0-9_:]*\s*\*'
+      - '\b(?:std::(?:set|map|multiset|multimap)|dosMap)\s*<[^>\n]*\*,[^>\n]*(?:keyCompare|compareObjPtr|charPtrCompare)'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Several historical fixes replaced or adjusted project-specific wrapper
+      containers rather than plain STL containers. Examples include
+      `dosUnorderedMap`, `hyHashI`, `nwcInsOrdMap`, `ndmPtrSet`, and
+      comparator/hash helpers such as `dosContainer::keyCompare` and
+      `dosContainer::keyHash`. A wrapper name alone is not enough evidence:
+      some wrappers are deterministic by construction, while others preserve
+      insertion order and are only safe if the insertion sequence is stable.
+
+      **LLM deep-read required** - determine the wrapper semantics, key type,
+      insertion source, and whether iteration/first-match behavior affects a
+      result. Treat this as a wrapper-aware extension of pointer-container and
+      unordered-iteration analysis.
+    fix_template_md: |
+      **If the key is an ndm/dos object pointer and stable identity order is intended:**
+      ```cpp
+      ndmPtrMap<T*, V> byObject;
+      ndmPtrSet<T*> objects;
+      ```
+
+      **If a wrapper needs explicit comparator/hash support:**
+      ```cpp
+      dosMap<T*, V, dosContainer::keyCompare> byObject;
+      dosUnorderedMap<T*, V, dosContainer::keyHash, dosContainer::keyEqual> byObject;
+      ```
+
+      **If insertion order is intended, prove the insertion source is stable
+      or sort/canonicalize before insertion:**
+      ```cpp
+      std::sort(items.begin(), items.end(), ndmObjectHandleNS::compareObjPtr{});
+      for (auto* item : items) insertionOrderMap.insert(item, value);
+      ```
+    false_positive_hints_md: |
+      Skip wrappers that already use a stable comparator/hash and whose
+      insertion source is deterministic. `hySet`/`hyMap` insertion-order
+      traversal is useful, but it does not repair ND if items are inserted from
+      an unstable traversal. `ndmPtrSet`/`ndmPtrMap` are usually the fix, not
+      the bug, unless surrounding code relies on a different ordering contract.
+    example_from_plan: "CLs 10023555, 10347201, 10718451, 10862919, 13380520"
+
+  # =========================================================================
+  # CONCURRENCY / MT-ND CATEGORY (from the multithreading ND hunt; anchored on
+  # P2-002 "const getter that secretly writes"). These are STATIC source
+  # patterns whose *observability* requires the MT hunt / TSan confirmation.
+  # Detection is static; realness follows the same prove-nd discipline. See
+  # multithreading-nd-hunt-plan.md and mt_nd_issue_classes.md (N1..N6).
+  # =========================================================================
+
+  - id: "4.1"
+    name: "Lazy dirty-bit recompute inside a const getter (N1 / F1b)"
+    severity_default: HIGH
+    category: concurrency
+    tier: 2
+    regex:
+      - 'mutable\s+bool\s+_\w*(?:Dirty|Valid|Computed)\b'
+      - 'mutable\s+[A-Za-z_][A-Za-z0-9_:<>]*\s+_\w*(?:[Cc]ache|BBox|Bbox|Points|Area|Shape|Reg|Union)\b'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      A `mutable` cache field plus a `mutable _xDirty`/`_xValid`/`_xComputed`
+      bit, recomputed inside a `const` accessor when the bit says the cache is
+      stale. Callers reasonably treat a `const` getter as a pure read and call
+      it from worker threads, so two threads can recompute-and-write the cache
+      concurrently -> torn vector / half-built bbox / run-to-run divergence.
+
+      This is strictly broader than the first-touch variant (Pattern 4.2 /
+      P2-002): a dirty bit is re-armed by every `invalidate()`/mutation, so
+      **eager materialization at set-time does NOT close it** -- a later
+      invalidate re-lazifies the field and the next concurrent const read races
+      again.
+
+      **LLM deep-read required** (Tier 2): confirm (a) the recompute writes a
+      `mutable` member, (b) it runs on a `const` path, (c) there is an
+      invalidate path that re-arms the dirty bit, and (d) the object is (or can
+      be) shared across threads. Prove observability via the MT hunt / a TSan
+      stress test, not by regex alone.
+    fix_template_md: |
+      **Version A (preferred where no invalidate-after-publish exists):**
+      compute eagerly at set-time so the getter is a pure read.
+
+      **Version B (recompute genuinely needed): adopt the in-module guard the
+      sibling classes already use** -- e.g. ndm's `dvuAtomicBitSet` for the
+      dirty bits (fast-path plain load, no hot-path lock):
+      ```cpp
+      mutable dvuAtomicBitSet<uint8_t> _atomicBits; // _xDirty published atomically
+      ```
+      or a read mutex where recompute is heavy and rare:
+      ```cpp
+      { std::lock_guard<mtMutex> lock(_readMutex); if (_xDirty) recompute(); }
+      ```
+
+      **Version C (lock-free publish):** build into a local, then publish with
+      an atomic `store(release)` of the ready flag; readers `load(acquire)`.
+    false_positive_hints_md: |
+      Not a defect if the object is provably thread-confined (never shared),
+      if the recompute is already guarded by an atomic/mutex on ALL const
+      paths, or if the dirty bit is only set single-threaded before any
+      parallel region. Immutable-after-construction caches are safe. Do not
+      flag `mutable std::mutex`/`mutable std::atomic<>` members themselves --
+      those are the fix, not the bug.
+    example_from_plan: "ndm ndmGeoMask/ndmSiteRowData/ndmVoltageAreaData/ndmVirtualHVTree (mt_nd_issue_classes.md N1)"
+
+  - id: "4.2"
+    name: "Const getter with lazy first-touch materialization / inconsistent lazy-cache lock (N2 / F1a+F1f)"
+    severity_default: HIGH
+    category: concurrency
+    tier: 2
+    regex:
+      - '\)\s*const\b[^;{]*\{[^}]*\b_\w+\s*\.\s*(?:push_back|emplace_back|swap|assign|resize|clear)\s*\('
+      - 'if\s*\(\s*_\w+\s*\.\s*size\(\)\s*==\s*0\s*\)'
+      - 'mutable\s+std::(?:mutex|recursive_mutex|shared_mutex)\b|mutable\s+\w*[Mm]utex\b'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Two related MT-ND shapes:
+
+      (a) **First-touch materialization** (P2-002 anchor): a `const` getter
+      builds a `mutable` member the first time it is empty/unset
+      (`if (_points.size()==0) _points.push_back(...)`). Concurrent first-touch
+      of one shared object races on the hidden write.
+
+      (b) **Inconsistent lazy-cache locking discipline** (the highest-value
+      finding): the SAME lazy-cache pattern is guarded by a mutex/atomic in
+      some classes of an object family and left unguarded in others
+      ("guarded by L, except here"). The guarded siblings are direct proof
+      that the maintainers consider the pattern an MT hazard, so the unguarded
+      members are defects, not intended design.
+
+      **LLM deep-read required** (Tier 2): the `mutable ...mutex` regex is a
+      *seed* to locate the guarded siblings; then audit every class in the
+      family with the same `mutable cache + const getter` shape and flag the
+      ones missing the guard. Resolve realness with the MT hunt / TSan.
+    fix_template_md: |
+      Bring the unguarded members up to the module's existing standard rather
+      than inventing a new mechanism (lowest risk, already validated in
+      production siblings):
+      ```cpp
+      // If the family already guards the cache with an atomic bitset:
+      mutable dvuAtomicBitSet<uint8_t> _atomicBits;
+      // If the family already guards with a read mutex:
+      mutable mtMutex _readMutex; // lock only on the recompute path
+      ```
+      For first-touch caches with no later invalidate, prefer eager
+      materialization at set-time so the getter becomes a pure read (P2-002
+      Fix A). Do NOT add a lock on the already-clean fast path in hot getters.
+    false_positive_hints_md: |
+      The `mutable ...mutex` hit is usually the FIX (a safe adopter), not a
+      bug -- do not report the guarded class; use it to find its unguarded
+      siblings. A const getter that only reads is safe. A first-touch getter is
+      safe if the object is thread-confined or warmed up single-threaded before
+      any parallel region.
+    example_from_plan: "ndm ndmPolyRect getPoints/getBBox (P2-002); guarded siblings ndmGeoMask/_readMutex, ndmVoltageAreaData/_mutex, ndmModuleData/_atomicBits"
+
+  - id: "4.3"
+    name: "mutable non-atomic counter RMW on a const path (N3 / F1c)"
+    severity_default: MEDIUM
+    category: concurrency
+    tier: 2
+    regex:
+      - 'mutable\s+(?:unsigned|int|uint\w+|size_t|short|long|uint8_t|uint16_t|uint32_t)\s+_\w*(?:Depth|Count|Ref|Cnt|Refs|Level|Idx)\b'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      A `mutable` non-atomic integer counter (depth/refcount/level) that is
+      incremented/decremented on a `const` query or notify traversal. Under
+      concurrency this is a torn read-modify-write distinct from the
+      vector/bbox cache races.
+
+      **LLM deep-read required** (Tier 2): confirm the counter is mutated on a
+      const path reachable from multiple threads.
+    fix_template_md: |
+      Use `std::atomic` (or the project atomic wrapper) for the counter, or
+      confine the mutation to a single thread / guard it with the object's
+      existing lock:
+      ```cpp
+      mutable std::atomic<uint16_t> _ntfyDepth{0};
+      ```
+    false_positive_hints_md: |
+      Safe if the counter is only touched single-threaded, is a debug/stat
+      counter with no correctness effect, or is already atomic.
+    example_from_plan: "ndm ndmTopologyData._pointsNtfyDepth (mt_nd_issue_classes.md N3)"
+
+  - id: "4.4"
+    name: "concurrent_hash_map accessor check-then-act (N4)"
+    severity_default: MEDIUM
+    category: concurrency
+    tier: 2
+    regex:
+      - 'tbb::concurrent_(?:hash_map|unordered_map|unordered_set|vector)\b'
+      - '\.\s*(?:find|count|insert)\s*\([^)]*\)\s*;[^}]*\b(?:insert|erase|emplace)\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      A `tbb::concurrent_hash_map`/`concurrent_unordered_*` is per-operation
+      thread-safe, but a compound sequence (read via one accessor, decide, then
+      write via another accessor) is an atomicity violation: another thread can
+      change the entry between the two operations.
+
+      **LLM deep-read required** (Tier 2): confirm the read and the act are not
+      inside one held accessor scope.
+    fix_template_md: |
+      Hold a single write `accessor` across the compound op, or restructure so
+      the decision and mutation are atomic:
+      ```cpp
+      Map::accessor acc;
+      if (map.insert(acc, key)) { /* created */ }
+      acc->second = update(acc->second); // atomic under the held accessor
+      ```
+    false_positive_hints_md: |
+      Safe when the read and write share one held accessor, when the op is a
+      pure insert-or-lookup, or when the map is single-writer.
+    example_from_plan: "ndm ndmPhysicalQueryUtil tbbNetMap/tbbPortMap (mt_nd_issue_classes.md N4)"
+
+  - id: "4.5"
+    name: "Condition-variable lost-wakeup shape (N5)"
+    severity_default: MEDIUM
+    category: concurrency
+    tier: 2
+    regex:
+      - '\bif\s*\([^)]*\)\s*\{?\s*\w*(?:[Cc]ond|[Cc]v)\w*\s*\.\s*wait\s*\('
+      - '\.\s*wait\s*\(\s*\w+\s*\)\s*;'
+      - '\.\s*(?:notify_one|notify_all|signal|broadcast)\s*\('
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Classic Tier-1 lost-wakeup: `cond.wait(lock)` guarded by an `if` instead
+      of a `while` predicate (spurious wakeup / missed condition), or
+      `notify`/`signal` issued outside the lock so a wakeup can be lost.
+
+      **LLM deep-read required** (Tier 2): confirm the wait lacks a predicate
+      loop and/or the notify is not serialized with the predicate update.
+    fix_template_md: |
+      Wait on a predicate in a loop and notify while holding the lock:
+      ```cpp
+      std::unique_lock<std::mutex> lk(m);
+      cv.wait(lk, [&]{ return ready; });   // predicate loop, not `if`
+      // producer:
+      { std::lock_guard<std::mutex> lk(m); ready = true; } cv.notify_one();
+      ```
+    false_positive_hints_md: |
+      Safe if the wait already uses the predicate overload / a `while` loop, or
+      if the notify is intentionally outside the lock with a proven
+      happens-before. Not every `wait`/`notify` is a defect.
+    example_from_plan: "ndm ndmCutMetal _emptyCond/_fullCond (mt_nd_issue_classes.md N5)"
+
+  - id: "4.6"
+    name: "Address-keyed lock striping anti-pattern (N6)"
+    severity_default: LOW
+    category: concurrency
+    tier: 2
+    regex:
+      - '(?:reinterpret_cast<\s*(?:uintptr_t|size_t|unsigned\s+long)\s*>\s*\(\s*this\s*\)|\(\s*(?:uintptr_t|size_t)\s*\)\s*this)\b'
+      - '>>\s*\d+\s*[&%]\s*\d+'
+    file_globs: ["*.cc", "*.cpp", "*.C", "*.cxx", "*.h", "*.hh", "*.hpp"]
+    description_md: |
+      Selecting a lock from a fixed pool by hashing an object address
+      (`addr>>4 & 511`) is an ND/perf smell: address-derived selection is
+      itself non-deterministic across runs, the striping can leave the read
+      fast-path unsynchronized (no acquire/release happens-before), and it adds
+      hot-path cost. This is the *replaced* first attempt in P2-002; flag any
+      recurrence.
+    fix_template_md: |
+      Remove the address-keyed lock pool. Prefer eager materialization
+      (P2-002 Fix A), a per-object atomic ready-flag, or `std::call_once`; if a
+      lock is truly needed it must guard BOTH the read and the write path.
+    false_positive_hints_md: |
+      Address-based hashing purely for a size/bucket estimate that never feeds
+      output or a lock decision is not this defect. Some legitimate slab
+      allocators index by address deterministically within one run -- confirm
+      the value does not escape to output or ordering.
+    example_from_plan: "P2-002 retired 512-mutex ndmPolyRectLazyMutex(this) pool (mt_nd_issue_classes.md N6)"
