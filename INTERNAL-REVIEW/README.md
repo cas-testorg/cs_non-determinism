@@ -37,9 +37,15 @@ The second and third hypotheses remain worth measuring.
 - [05 Final Controlled Discovery Test](05-final-controlled-discovery-test.md)
 - [06 Evidence Synthesis and Pivot Rationale](06-evidence-synthesis-and-pivot-rationale.md)
 - [07 Recommendations Draft](07-recommendations-draft.md)
+- [08 What Would Change This Conclusion?](08-what-would-change-this-conclusion.md)
+- [Evidence Matrix](EVIDENCE/evidence-matrix.md)
 - [Evidence Index](EVIDENCE/evidence-index.md)
 
 ## Reading guidance
+
+For a leadership-level review, start with the Executive Summary, Evidence Matrix, Pivot Rationale, and Recommendations Draft.
+
+For technical review, continue through the Synopsys process, experimental progression, A/B analysis, final controlled discovery test, falsification criteria, and linked source artifacts.
 
 The recommendations section is deliberately written in first person and as a starting point. The factual sections should remain evidence-oriented. The recommendation language is intended to be edited into the presenter's own voice.
 
