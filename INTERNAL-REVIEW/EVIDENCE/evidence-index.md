@@ -2,6 +2,8 @@
 
 This index maps the internal review to the existing source artifacts. Raw and historical artifacts are referenced rather than copied.
 
+For the conclusion-to-evidence view, start with the [Evidence Matrix](evidence-matrix.md).
+
 ## Existing process and exploratory evaluation
 
 - [Customer package technical evaluation summary](../../customer-package/READOUTS/Technical-Evaluation-Summary.md)
