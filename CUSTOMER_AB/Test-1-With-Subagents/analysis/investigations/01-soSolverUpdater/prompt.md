@@ -1,4 +1,7 @@
-
+- **CoreStory workspace:** `cts-code`
+- **CoreStory project ID:** `10`
+- **Other similarly named workspace:** `cts-code2` — excluded
+  
 Use the agentic-bug-resolution playbook to investigate a reported
 non-determinism defect in Fusion Compiler CTS.
 
