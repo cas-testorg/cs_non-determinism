@@ -17,12 +17,14 @@ The evaluation began with a broad question:
 As the evaluation progressed, that question separated into three more specific hypotheses:
 
 1. **Discovery expansion:** Can CoreStory materially improve broad ND candidate discovery beyond the existing Synopsys workflow?
-2. **Application significance:** Given a candidate, can CoreStory help resolve whether it matters in the production application, reduce uncertainty, and produce better evidence for SME review?
-3. **Economics:** If application context improves the investigation, can persistent application intelligence reduce repeated context reconstruction, model/tool effort, or SME decision effort?
+2. **Application-aware defect intelligence:** Given a specialized defect or high-confidence candidate, can CoreStory accelerate the path to an actionable engineering decision by establishing production relevance, application impact, remediation scope, and validation requirements?
+3. **Economics:** Can persistent application intelligence reduce repeated context reconstruction, model/tool effort, or SME and engineering effort across that defect lifecycle?
 
 The current evidence is strongest for the first question. In the final controlled discovery run, the actual customer scanner and reference set produced 3,673 raw candidates across 27 patterns and 588 files. The customer workflow retained 334 candidates. CoreStory added 0 candidates and materially broadened 0 discovery paths.
 
 That result does not establish that CoreStory can never contribute to ND discovery. It does show that differentiated discovery value was not demonstrated in the tested configuration after correcting known experimental confounds.
+
+The second hypothesis is broader than producing a better evidence packet for an SME. SME decision support is one potential benefit. The larger question is whether CoreStory can carry a specialized finding forward through production relevance, impact understanding, engineering scope, and validation planning.
 
 The second and third hypotheses remain worth measuring.
 
@@ -44,3 +46,5 @@ The recommendations section is deliberately written in first person and as a sta
 ## Claim boundaries
 
 This package distinguishes source review, automated disposition, runtime reproduction, SME determination, and experimental inference. It does not treat source-reviewed findings as runtime-confirmed defects. It does not claim a measured token or cost reduction where reliable telemetry is unavailable. It does not attribute an outcome specifically to CoreStory MCP unless the available evidence supports that attribution.
+
+The application-aware defect intelligence hypothesis is a proposed next test, not a benefit established by the current ND experiments.
