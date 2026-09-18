@@ -1,5 +1,5 @@
 ---
-description: Preserve high-recall Synopsys non-determinism discovery while allowing CoreStory to expand candidate context without filtering candidates.
+description: Preserve the customer ND discovery reference set while using CoreStory to expand candidate discovery without filtering customer candidates.
 alwaysApply: true
 ---
 
@@ -7,39 +7,47 @@ alwaysApply: true
 
 ## Purpose
 
-Preserve the customer's existing non-determinism discovery behavior and reference set while allowing CoreStory to expand candidate context.
+Make one controlled attempt to add CoreStory value during the customer's existing high-recall non-determinism discovery process without weakening the customer's discovery reference set.
 
-This rule is intentionally thin. It does **not** perform full application qualification.
+This rule is intentionally thin. It does **not** replace the customer skill and it does not perform the later CoreStory qualification gate.
 
-## Customer Discovery Authority
+## Discovery Authority
 
-For discovery, use the customer's installed `nd-code-analyzer` skill **as-is**, including its installed supporting references, pattern catalogs, examples, and case-study material.
+Use the customer's `nd-code-analyzer` workflow and its installed supporting references, pattern catalogs, concrete examples, false-positive lessons, narrowing rules, and semantic-review guidance as the discovery authority.
 
-The concrete examples and supporting references supplied with the customer skill are part of the discovery method. Do not replace them with generic CoreStory examples, this rule, a summarized copy of the skill, or prior benchmark findings.
+For this experiment, the staged reference-set fingerprint is:
 
-If the installed supporting references are unavailable in the current environment, record **REFERENCE-SET-UNAVAILABLE** in the discovery output. Do not claim the run is directly comparable to the customer's discovery process.
+- `SKILL.md`: `203f912941c041c2e5007441035159e87c8266f5`
+- `references/nd-patterns.md`: `fe5620e8dce3d2b5ce8279cc4f7d7a9ce4e46f1d`
+- `references/nd-patterns.yaml`: `6fd5cf240db010f0dca14afc0ff390456b41aa23`
 
-Do not use held-out TSan/Coverity ground truth as discovery input unless the evaluation explicitly designates those examples as part of the customer's normal installed reference set.
+Do not replace these inputs with generic CoreStory examples, prior A/B findings, summarized pattern knowledge, or held-out ground truth.
+
+If the required reference set is unavailable to the running workflow, record `REFERENCE-SET-UNAVAILABLE` and stop measured discovery.
 
 ## Discovery Objective
 
-Maximize retention of plausible ND candidates using the customer's existing taxonomy, concrete examples, pattern references, and semantic discovery guidance.
+Maximize useful candidate coverage while preserving candidates the customer workflow would retain.
 
-A candidate discovered by the customer workflow must not be eliminated merely because application significance has not yet been established.
+A customer-discovered candidate cannot be removed by this rule because application-level evidence is incomplete or unfavorable.
 
-## CoreStory During Discovery
+## CoreStory Discovery Expansion
 
-CoreStory may **expand or enrich** a discovered candidate by helping identify:
+CoreStory may be invoked during discovery when an application relationship could expose additional source locations or candidate paths.
 
-- callers/callees;
-- wrappers and accessors;
-- implementations;
-- related production modules;
-- data/control relationships;
-- downstream consumers;
-- related code paths worth adding to the candidate record.
+Useful purposes include:
 
-CoreStory must not filter a discovered candidate because any of the following is unknown or appears unfavorable:
+- resolve wrappers/accessors to implementations;
+- find callers/callees of suspicious helpers;
+- find sibling or alternate implementations;
+- find related production modules;
+- follow data/control relationships across files;
+- identify downstream consumers;
+- identify related paths worth scanning for the same mechanism.
+
+When CoreStory exposes a new plausible source location or path, inspect that source using the customer's ND pattern/reference framework. A CoreStory relationship is a search expansion, not proof of ND.
+
+CoreStory must not filter a customer-discovered candidate because any of these is unknown or appears unfavorable:
 
 - build inclusion;
 - production reachability;
@@ -48,19 +56,30 @@ CoreStory must not filter a discovered candidate because any of the following is
 - neutralization;
 - observable consequence.
 
-If CoreStory returns evidence that may later disprove or downgrade a candidate, preserve the candidate and record the evidence for qualification.
+Record contrary evidence for later proof/qualification while retaining the discovery candidate.
+
+## Candidate Origin
+
+Every retained candidate must record one origin:
+
+- `CUSTOMER-PATTERN` — surfaced through the customer discovery/reference process;
+- `CORESTORY-EXPANSION` — first surfaced because a CoreStory relationship expanded the search;
+- `BOTH` — independently surfaced through both;
+- `OTHER` — explain.
+
+Do not label a candidate `CORESTORY-EXPANSION` merely because MCP was enabled.
 
 ## Candidate Freeze
 
-Every retained candidate receives a stable ID such as `ND-CAND-001`.
+Assign stable IDs such as `ND-CAND-001`.
 
-Before proof or qualification begins, write the complete discovery output to `candidate-set.md`.
+Before proof or qualification, write the complete discovery result to `candidate-set.md`.
 
-After the freeze:
+After freeze:
 
 - do not silently remove candidates;
-- do not rewrite discovery counts based on qualification;
-- candidates first found later must be labeled `QUALIFICATION-DISCOVERED`.
+- do not rewrite discovery counts based on later qualification;
+- candidates first found later are `QUALIFICATION-DISCOVERED`.
 
 ## Discovery Provenance
 
@@ -69,23 +88,31 @@ For each candidate record:
 - candidate ID;
 - file/function/location;
 - suspected mechanism;
-- customer reference/example or pattern family that guided discovery, when identifiable;
+- customer pattern/reference/example family, when identifiable;
 - discovery evidence;
 - severity hypothesis;
+- candidate origin;
 - whether CoreStory was used;
 - CoreStory question/purpose;
-- any path/candidate added through CoreStory expansion.
+- returned relationship/evidence;
+- path/candidate added through CoreStory expansion.
 
-Do not claim CoreStory discovered or changed a candidate unless the record shows the contribution.
+Also retain CoreStory calls that did **not** produce a useful expansion. This is needed to evaluate whether application-context queries are actually helping discovery.
+
+## Evidence Discipline
+
+CoreStory application relationships may guide where to inspect next, but exact C++ semantics still require source evidence.
+
+Do not infer pointer hashing, comparator behavior, container semantics, RNG behavior, concurrency behavior, or another load-bearing mechanism from a relationship name or type alone.
 
 ## Stage Boundary
 
 Discovery answers:
 
-> What plausible ND mechanisms should be retained for proof?
+> What plausible ND mechanisms and related source paths should be retained for proof?
 
-It does **not** answer:
+Qualification answers later:
 
 > Is this a production-relevant ND defect?
 
-Full build/reachability/configuration/propagation/neutralization/observable-impact qualification belongs to the dedicated `corestory-nd-qualification` skill after the candidate set is frozen.
+Do not let qualification criteria silently alter the discovery denominator.
