@@ -57,15 +57,27 @@ This does not prove aggregate qualification improvement. It does show that appli
 
 The evidence does not currently demonstrate differentiated value from adding CoreStory to broad ND candidate discovery in this configuration.
 
-The evidence does identify a different question worth isolating:
+The next question should be broader than whether CoreStory can produce a better evidence packet for an SME:
 
-> Can CoreStory help resolve application significance, reduce uncertainty, and produce better evidence for SME review after a candidate has already been discovered?
+> **Can CoreStory take a specialized defect identified by the existing Synopsys workflow and accelerate the path from candidate to actionable engineering decision by establishing production relevance, application impact, remediation scope, and validation requirements?**
 
-That question includes build inclusion, production reachability, runtime and configuration gates, caller behavior, propagation, neutralization, observable consequence, and missing application evidence.
+This is the **application-aware defect intelligence** hypothesis.
+
+Potential CoreStory value would span a larger part of the defect lifecycle:
+
+**specialized discovery → mechanism proof → production relevance → application impact → SME decision → remediation scope → blast radius → validation plan**
+
+Synopsys already appears strong on specialized discovery and mechanism analysis. The potential differentiation grows as the workflow requires broader application understanding.
+
+SME decision support remains important, but it becomes one outcome of the process rather than the endpoint.
+
+## Economics hypothesis
 
 A separate economics hypothesis also remains open:
 
-> Can persistent application context reduce repeated source/context reconstruction and improve the cost of reaching an SME decision?
+> Can persistent application intelligence reduce repeated application reconstruction across the defect lifecycle?
+
+The opportunity is not limited to token reduction during discovery. Application relationships may otherwise be reconstructed repeatedly during qualification, SME review, impact analysis, remediation planning, and validation planning.
 
 This should be measured, not assumed.
 
@@ -73,6 +85,12 @@ This should be measured, not assumed.
 
 Preserve the discovery evidence as a completed experimental result. Avoid another tuning cycle around broad discovery unless the experimental conditions materially change.
 
-Use the frozen candidate set to test application significance and SME decision support as a separate stage. Measure evidence quality and economics independently.
+Use a frozen set of validated or high-confidence candidates to test how far the existing workflow and a CoreStory-assisted workflow can take an engineer toward a production-ready decision.
+
+Measure at least three dimensions separately:
+
+1. **Technical depth:** production relevance, configuration scope, affected callers and flows, propagation, neutralization, application impact, remediation boundary, blast radius, and validation requirements.
+2. **Engineering efficiency:** source searches, tool work, files/context inspected, unresolved dependencies, elapsed investigation effort, and reliable token/compute measures where available.
+3. **SME efficiency:** evidence completeness, requests for additional context, time-to-decision, and agreement/disagreement/insufficient-evidence outcomes.
 
 In parallel, evaluate use cases where persistent application context is central to the problem from the beginning, such as impact analysis, cross-module dependency understanding, modernization planning, business-rule analysis, and carrying a validated engineering problem into remediation.
