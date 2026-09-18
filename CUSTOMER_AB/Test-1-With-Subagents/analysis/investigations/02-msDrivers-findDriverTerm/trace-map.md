@@ -1,3 +1,15 @@
-# Workflow Trace Map
+Primary divergence:
+Application/caller tracing depth
 
-_Pending. Complete only after the independent investigation has been preserved._
+Without MCP:
+Candidate not promoted
+
+With MCP:
+Candidate promoted
+
+Focused ABR:
+Mechanism confirmed at source level
+Most callers neutralize
+Three production callers preserve the nondeterministic scalar return
+Credible observable path exists
+Runtime trigger conditions remain unconfirmed
