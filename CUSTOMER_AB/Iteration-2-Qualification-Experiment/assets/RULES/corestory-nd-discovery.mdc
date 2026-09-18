@@ -1,0 +1,91 @@
+---
+description: Preserve high-recall Synopsys non-determinism discovery while allowing CoreStory to expand candidate context without filtering candidates.
+alwaysApply: true
+---
+
+# CoreStory ND Discovery — Thin Rule
+
+## Purpose
+
+Preserve the customer's existing non-determinism discovery behavior and reference set while allowing CoreStory to expand candidate context.
+
+This rule is intentionally thin. It does **not** perform full application qualification.
+
+## Customer Discovery Authority
+
+For discovery, use the customer's installed `nd-code-analyzer` skill **as-is**, including its installed supporting references, pattern catalogs, examples, and case-study material.
+
+The concrete examples and supporting references supplied with the customer skill are part of the discovery method. Do not replace them with generic CoreStory examples, this rule, a summarized copy of the skill, or prior benchmark findings.
+
+If the installed supporting references are unavailable in the current environment, record **REFERENCE-SET-UNAVAILABLE** in the discovery output. Do not claim the run is directly comparable to the customer's discovery process.
+
+Do not use held-out TSan/Coverity ground truth as discovery input unless the evaluation explicitly designates those examples as part of the customer's normal installed reference set.
+
+## Discovery Objective
+
+Maximize retention of plausible ND candidates using the customer's existing taxonomy, concrete examples, pattern references, and semantic discovery guidance.
+
+A candidate discovered by the customer workflow must not be eliminated merely because application significance has not yet been established.
+
+## CoreStory During Discovery
+
+CoreStory may **expand or enrich** a discovered candidate by helping identify:
+
+- callers/callees;
+- wrappers and accessors;
+- implementations;
+- related production modules;
+- data/control relationships;
+- downstream consumers;
+- related code paths worth adding to the candidate record.
+
+CoreStory must not filter a discovered candidate because any of the following is unknown or appears unfavorable:
+
+- build inclusion;
+- production reachability;
+- runtime/configuration gate;
+- propagation;
+- neutralization;
+- observable consequence.
+
+If CoreStory returns evidence that may later disprove or downgrade a candidate, preserve the candidate and record the evidence for qualification.
+
+## Candidate Freeze
+
+Every retained candidate receives a stable ID such as `ND-CAND-001`.
+
+Before proof or qualification begins, write the complete discovery output to `candidate-set.md`.
+
+After the freeze:
+
+- do not silently remove candidates;
+- do not rewrite discovery counts based on qualification;
+- candidates first found later must be labeled `QUALIFICATION-DISCOVERED`.
+
+## Discovery Provenance
+
+For each candidate record:
+
+- candidate ID;
+- file/function/location;
+- suspected mechanism;
+- customer reference/example or pattern family that guided discovery, when identifiable;
+- discovery evidence;
+- severity hypothesis;
+- whether CoreStory was used;
+- CoreStory question/purpose;
+- any path/candidate added through CoreStory expansion.
+
+Do not claim CoreStory discovered or changed a candidate unless the record shows the contribution.
+
+## Stage Boundary
+
+Discovery answers:
+
+> What plausible ND mechanisms should be retained for proof?
+
+It does **not** answer:
+
+> Is this a production-relevant ND defect?
+
+Full build/reachability/configuration/propagation/neutralization/observable-impact qualification belongs to the dedicated `corestory-nd-qualification` skill after the candidate set is frozen.
